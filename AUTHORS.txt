@@ -6,6 +6,11 @@ LIZARDIRC/BEANCOUNTER AUTHORS
 **PGP Key ID: 221A 627D D76E 2616
 **LizardIRC nickname: FastLizard4 (network staff)
 
+*William Luc Ritchie
+**Email: luc [dot] ritchie [at] gmail [dot] com
+**PGP Key ID: 8B13 1400 1489 D903 9203  B253 9683 BCE5 1A35 6CC6
+**LizardIRC nickname: TLUL (network staff)
+
 Anyone who commits to this project should be added to this list, even for a
 single minor commit!
 
