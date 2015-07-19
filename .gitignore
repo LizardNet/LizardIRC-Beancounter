@@ -1,0 +1,2 @@
+#Ignore the target folder; we don't want jarfiles in the repo
+/target/
