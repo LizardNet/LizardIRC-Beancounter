@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.lizardirc</groupId>
+  <artifactId>beancounter</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>beancounter</name>
+  <url>https://git.fastlizard4.org/gitblit/summary/?r=LizardIRC/Beancounter.git</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <description>Beancounter - a Java IRC bot to function as a game bot serving various games over IRC. Developed for use for the LizardIRC network.</description>
+  <inceptionYear>2015</inceptionYear>
+  <organization>
+  	<name>LizardIRC</name>
+  	<url>https://www.lizardirc.org</url>
+  </organization>
+  <ciManagement>
+  	<system>LizardNet Continuous Integration</system>
+  	<url>https://integration.fastlizard4.org</url>
+  </ciManagement>
+  <scm>
+  	<url>https://git.fastlizard4.org/gitblit/summary/?r=LizardIRC/Beancounter.git</url>
+  	<connection>git</connection>
+  </scm>
+</project>
