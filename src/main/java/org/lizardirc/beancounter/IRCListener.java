@@ -32,37 +32,17 @@
 
 package org.lizardirc.beancounter;
 
-import org.pircbotx.Configuration;
-import org.pircbotx.PircBotX;
-import org.pircbotx.UtilSSLSocketFactory;
+import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class Beancounter {
-    public static void main(String[] args) {
-        System.out.println("Configuring bot....");
-
-        //Eventually, we will have a parsable configuration file from which we will get
-        //things like what server to connect to, etc.
-        //For now, though, it's sufficient to just default the bot to these settings for
-        //testing.
-        Configuration<PircBotX> configuration = new Configuration.Builder<PircBotX>()
-                .setName("Beancounter")
-                .setServerHostname("irc.lizardirc.org")
-                .setServerPort(6697)
-                .addAutoJoinChannel("#lizardirc")
-                .addListener(new IRCListener())
-                .setSocketFactory(new UtilSSLSocketFactory().trustAllCertificates())
-                .buildConfiguration();
-
-        System.out.println("Creating bot....");
-        PircBotX bot = new PircBotX(configuration);
-
-        System.out.println("Launching bot....");
-        try {
-            bot.startBot();
-        } catch(Exception e) {
-            System.out.println("Exception occurred launching bot: " + e.getMessage());
-            System.out.println("Stack trace follows:");
-            e.printStackTrace();
+public class IRCListener extends ListenerAdapter {
+    @Override
+    public void onGenericMessage(GenericMessageEvent event) {
+        if(event.getMessage().startsWith("?test")) {
+            event.respond("Hello world!");
+        } else if(event.getMessage().startsWith("?quit")) {
+            event.respond("RIP in peace");
+            System.exit(0);
         }
     }
 }
