@@ -1,0 +1,18 @@
+LIZARDIRC/BEANCOUNTER AUTHORS
+
+*Andrew "FastLizard4" Adams
+**Email: fastlizard4-git-commits [at] fastlizard4 [dot] org
+**Website: https://fastlizard4.org
+**PGP Key ID: 221A 627D D76E 2616
+**LizardIRC nickname: FastLizard4 (network staff)
+
+Anyone who commits to this project should be added to this list, even for a
+single minor commit!
+
+If you are submitting a commit, even a minor one, please feel free to add
+yourself to this file!
+
+Existing authors should consider updating their information here as needed,
+whenever needed.
+
+For licensing and contributing information, please see LICENSE.txt.
