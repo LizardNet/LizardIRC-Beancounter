@@ -36,4 +36,19 @@
   	<url>https://git.fastlizard4.org/gitblit/summary/?r=LizardIRC/Beancounter.git</url>
   	<connection>git</connection>
   </scm>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.lizardirc.beancounter.Beancounter</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
