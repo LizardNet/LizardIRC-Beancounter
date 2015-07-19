@@ -1,0 +1,5 @@
+[gerrit]
+host=gerrit.fastlizard4.org
+port=1234
+project=LizardIRC/Beancounter.git
+defaultbranch=master
