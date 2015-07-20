@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a2f8d8d_8b72ed47",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-20T21:52:26Z",
+      "side": 1,
+      "message": "I would typically write it with a space. Also, some reasonably widespread style guides (such as https://google.github.io/styleguide/javaguide.html and http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-141388.html#682 ) recommend keeping the space, on the general rule that keywords should be followed by whitespace.",
+      "parentUuid": "1a2f8d8d_0b871d11",
+      "revId": "7dccf734912542a64074fad9b155cc26e94cb412",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a2f8d8d_2b82d900",
         "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-07-20T21:26:43Z",
       "side": 1,
       "message": "C-style braces; let\u0027s change these to Java-style for consistency",
+      "revId": "7dccf734912542a64074fad9b155cc26e94cb412",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_6b8fc124",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-20T21:52:26Z",
+      "side": 1,
+      "message": "Oops, done. Old habits die hard.",
+      "parentUuid": "1a2f8d8d_2b82d900",
       "revId": "7dccf734912542a64074fad9b155cc26e94cb412",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
