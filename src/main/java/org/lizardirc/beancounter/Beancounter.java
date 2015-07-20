@@ -32,36 +32,68 @@
 
 package org.lizardirc.beancounter;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.UtilSSLSocketFactory;
+import org.pircbotx.exception.IrcException;
 
 public class Beancounter {
+    private final PircBotX bot;
+
+    public Beancounter(Properties properties) {
+        String botName = properties.getProperty("botName", "Beancounter");
+        String serverHost = properties.getProperty("serverHost");
+        boolean useTls = Boolean.parseBoolean(properties.getProperty("useTls", "false"));
+        int serverPort = Integer.parseInt(properties.getProperty("serverPort", useTls ? "6697" : "6667"));
+        String[] autoJoinChannels = properties.getProperty("autoJoinChannels", "").split(",");
+
+        Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<PircBotX>()
+                .setName(botName)
+                .setServerHostname(serverHost)
+                .setServerPort(serverPort)
+                .addListener(new IRCListener());
+
+        if (useTls) {
+            // TODO add support for certificate pinning
+            confBuilder.setSocketFactory(new UtilSSLSocketFactory().trustAllCertificates());
+        }
+
+        for (String channel : autoJoinChannels) {
+            confBuilder.addAutoJoinChannel(channel);
+        }
+
+        bot = new PircBotX(confBuilder.buildConfiguration());
+    }
+
+    public void run() throws IOException, IrcException
+    {
+        bot.startBot();
+    }
+
     public static void main(String[] args) {
         System.out.println("Configuring bot....");
+        Properties properties = new Properties();
 
         //Eventually, we will have a parsable configuration file from which we will get
         //things like what server to connect to, etc.
         //For now, though, it's sufficient to just default the bot to these settings for
         //testing.
-        Configuration<PircBotX> configuration = new Configuration.Builder<PircBotX>()
-                .setName("Beancounter")
-                .setServerHostname("irc.lizardirc.org")
-                .setServerPort(6697)
-                .addAutoJoinChannel("#lizardirc")
-                .addListener(new IRCListener())
-                .setSocketFactory(new UtilSSLSocketFactory().trustAllCertificates())
-                .buildConfiguration();
+        properties.setProperty("serverHost", "irc.lizardirc.org");
+        properties.setProperty("useTls", "true");
+        properties.setProperty("autoJoinChannels", "#botspam");
 
         System.out.println("Creating bot....");
-        PircBotX bot = new PircBotX(configuration);
+        Beancounter beancounter = new Beancounter(properties);
 
         System.out.println("Launching bot....");
         try {
-            bot.startBot();
+            beancounter.run();
         } catch(Exception e) {
-            System.out.println("Exception occurred launching bot: " + e.getMessage());
-            System.out.println("Stack trace follows:");
+            System.err.println("Exception occurred launching bot: " + e.getMessage());
+            System.err.println("Stack trace follows:");
             e.printStackTrace();
         }
     }
