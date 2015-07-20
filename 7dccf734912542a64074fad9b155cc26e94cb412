@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_0b871d11",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-07-20T21:26:43Z",
+      "side": 1,
+      "message": "Another stylistic issue we should decide on - I would write this as \"if(useTls)\" - i.e., without the space between if and the condition.",
+      "revId": "7dccf734912542a64074fad9b155cc26e94cb412",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_2b82d900",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-07-20T21:26:43Z",
+      "side": 1,
+      "message": "C-style braces; let\u0027s change these to Java-style for consistency",
+      "revId": "7dccf734912542a64074fad9b155cc26e94cb412",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
