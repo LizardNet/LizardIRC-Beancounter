@@ -32,17 +32,17 @@
 
 package org.lizardirc.beancounter;
 
+import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class IRCListener extends ListenerAdapter {
+public class IRCListener <T extends PircBotX> extends ListenerAdapter<T> {
     @Override
-    public void onGenericMessage(GenericMessageEvent event) {
+    public void onGenericMessage(GenericMessageEvent<T> event) {
         if(event.getMessage().startsWith("?test")) {
             event.respond("Hello world!");
         } else if(event.getMessage().startsWith("?quit")) {
-            event.respond("RIP in peace");
-            System.exit(0);
+            event.getBot().sendIRC().quitServer("Tear in salami");
         }
     }
 }
