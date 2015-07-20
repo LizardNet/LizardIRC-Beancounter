@@ -39,9 +39,9 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 public class IRCListener <T extends PircBotX> extends ListenerAdapter<T> {
     @Override
     public void onGenericMessage(GenericMessageEvent<T> event) {
-        if(event.getMessage().startsWith("?test")) {
+        if (event.getMessage().startsWith("?test")) {
             event.respond("Hello world!");
-        } else if(event.getMessage().startsWith("?quit")) {
+        } else if (event.getMessage().startsWith("?quit")) {
             event.getBot().sendIRC().quitServer("Tear in salami");
         }
     }
