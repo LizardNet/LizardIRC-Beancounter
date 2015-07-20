@@ -16,6 +16,24 @@
       "revId": "b61ed9509f6aa38496fcb07182dd5f8e57131b19",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_4b940537",
+        "filename": "src/main/java/org/lizardirc/beancounter/IRCListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-20T21:50:15Z",
+      "side": 1,
+      "message": "In fairness, this is bad design on the part of PircBotX.",
+      "parentUuid": "1a2f8d8d_cb78f52d",
+      "revId": "b61ed9509f6aa38496fcb07182dd5f8e57131b19",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
