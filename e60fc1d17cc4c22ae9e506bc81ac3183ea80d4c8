@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_8a30abe9",
+        "filename": "src/main/java/org/lizardirc/beancounter/events/MessageEventView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-07-23T07:59:07Z",
+      "side": 1,
+      "message": "Style note: Space between MessageEventView and \u003cT?",
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_6a4d7772",
+        "filename": "src/main/java/org/lizardirc/beancounter/events/MessageEventView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-07-23T07:59:07Z",
+      "side": 1,
+      "message": "Why 41?  :P",
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_4a52b314",
+        "filename": "src/main/java/org/lizardirc/beancounter/hooks/Decorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-07-23T07:59:07Z",
+      "side": 1,
+      "message": "Style: Space between Decorator and \u003cT?",
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_2a577f04",
+        "filename": "src/main/java/org/lizardirc/beancounter/hooks/Fantasy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-07-23T07:59:07Z",
+      "side": 1,
+      "message": "Style (again): Space between Fantasy and \u003cT?",
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
