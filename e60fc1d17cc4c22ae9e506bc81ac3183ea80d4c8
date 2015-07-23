@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa5d592f_8a478b4b",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-23T08:23:44Z",
+      "side": 1,
+      "message": "Side note: might be worth style discussion on import organization?\n\nCurrent proposal: java.* and javax.*, blank line, org.lizardirc.*, blank line, all other imports, blank line, all static imports. Each grouping is sorted in ASCII sort order, not counting the trailing semicolon.\n\nI took loose inspiration from the Google Java Style guide. They recommend approximately the reverse of this order for large groupings, but I think this is better because it keeps the \"less standard\" imports closer to the class definition \u003d\u003e slightly less scrolling up to see them. Plus I\u0027m already used to it, and some IDEs I\u0027ve used have done something like this by default.",
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_aa4a4f53",
+        "filename": "src/main/java/org/lizardirc/beancounter/IRCListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-23T08:23:44Z",
+      "side": 1,
+      "message": "Style...",
+      "range": {
+        "startLine": 39,
+        "startChar": 24,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_8a30abe9",
         "filename": "src/main/java/org/lizardirc/beancounter/events/MessageEventView.java",
         "patchSetId": 1
@@ -19,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "fa5d592f_ca3d83bd",
+        "filename": "src/main/java/org/lizardirc/beancounter/events/MessageEventView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-23T08:23:44Z",
+      "side": 1,
+      "message": "For posterity: no spaces, agreed upon in IRC per several online style guides.",
+      "parentUuid": "fa5d592f_8a30abe9",
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_6a4d7772",
         "filename": "src/main/java/org/lizardirc/beancounter/events/MessageEventView.java",
         "patchSetId": 1
@@ -30,6 +88,24 @@
       "writtenOn": "2015-07-23T07:59:07Z",
       "side": 1,
       "message": "Why 41?  :P",
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_ea404737",
+        "filename": "src/main/java/org/lizardirc/beancounter/events/MessageEventView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-23T08:23:44Z",
+      "side": 1,
+      "message": "It\u0027s prime, and produces a reasonably good distribution of hash codes. It was used in the documentation/tutorial on equals/canEqual/hashCode I was following. Google says there\u0027s now Objects.hashCode() so I ought to use that, probably. Will submit a fresh revision.",
+      "parentUuid": "fa5d592f_6a4d7772",
       "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
