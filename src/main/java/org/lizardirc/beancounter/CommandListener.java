@@ -33,7 +33,6 @@
 package org.lizardirc.beancounter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +46,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 public abstract class CommandListener<T extends PircBotX> extends ListenerAdapter<T> {
     @Override
     public void onGenericMessage(GenericMessageEvent<T> event) {
-        List<String> commands = new ArrayList<String>();
+        List<String> commands = new ArrayList<>();
         Set<String> options;
         String message = event.getMessage().trim();
         while (!isNullOrEmpty(options = getSubCommands(event, commands))) {

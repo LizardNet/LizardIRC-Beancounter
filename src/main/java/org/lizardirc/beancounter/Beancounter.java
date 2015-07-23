@@ -51,12 +51,13 @@ public class Beancounter {
         boolean useTls = Boolean.parseBoolean(properties.getProperty("useTls", "false"));
         int serverPort = Integer.parseInt(properties.getProperty("serverPort", useTls ? "6697" : "6667"));
         String[] autoJoinChannels = properties.getProperty("autoJoinChannels", "").split(",");
+        String fantasyString = properties.getProperty("fantasyString", "?");
 
-        Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<PircBotX>()
+        Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<>()
                 .setName(botName)
                 .setServerHostname(serverHost)
                 .setServerPort(serverPort)
-                .addListener(new Fantasy(new IRCListener(), "?"));
+                .addListener(new Fantasy<>(new IRCListener<>(), fantasyString));
 
         if (useTls) {
             // TODO add support for certificate pinning

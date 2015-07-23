@@ -55,12 +55,12 @@ public class Fantasy<T extends PircBotX> extends Decorator<T> {
     public void onEvent(Event<T> event) throws Exception {
         if (event instanceof GenericMessageEvent) {
             if (event instanceof MessageEvent) {
-                MessageEvent me = (MessageEvent) event;
+                MessageEvent<T> me = (MessageEvent<T>) event;
                 if (!me.getMessage().startsWith(fantasyPrefix)) {
                     return;
                 }
                 String newMessage = me.getMessage().substring(fantasyLength);
-                super.onEvent(new MessageEventView<T>(me, newMessage));
+                super.onEvent(new MessageEventView<>(me, newMessage));
             } else if (event instanceof ActionEvent) {
                 return;
             } else {

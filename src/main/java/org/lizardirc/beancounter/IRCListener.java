@@ -32,7 +32,6 @@
 
 package org.lizardirc.beancounter;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +40,6 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.PircBotX;
 import org.pircbotx.User;
-import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -63,7 +61,7 @@ public class IRCListener<T extends PircBotX> extends CommandListener<T> {
                         .map(User::getNick)
                         .collect(Collectors.toSet());
         }
-        return Collections.EMPTY_SET;
+        return Collections.<String>emptySet();
     }
 
     @Override
