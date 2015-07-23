@@ -32,17 +32,63 @@
 
 package org.lizardirc.beancounter;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.ImmutableSet;
 import org.pircbotx.PircBotX;
+import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class IRCListener <T extends PircBotX> extends ListenerAdapter<T> {
+public class IRCListener <T extends PircBotX> extends CommandListener<T> {
+    private static final Set<String> COMMANDS = ImmutableSet.of("quit", "slap", "test");
+
     @Override
-    public void onGenericMessage(GenericMessageEvent<T> event) {
-        if (event.getMessage().startsWith("test")) {
-            event.respond("Hello world!");
-        } else if (event.getMessage().startsWith("quit")) {
-            event.getBot().sendIRC().quitServer("Tear in salami");
+    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+        if (commands.size() == 0) {
+            return COMMANDS;
+        }
+        switch (commands.get(0)) {
+            case "slap":
+                if (!(event instanceof GenericChannelEvent)) {
+                    break;
+                }
+                GenericChannelEvent gce = (GenericChannelEvent) event;
+                return gce.getChannel().getUsers().stream()
+                        .map(User::getNick)
+                        .collect(Collectors.toSet());
+        }
+        return Collections.EMPTY_SET;
+    }
+
+    @Override
+    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+        if (commands.size() == 0) {
+            return;
+        }
+        switch (commands.get(0)) {
+            case "quit":
+                event.getBot().sendIRC().quitServer("Tear in salami");
+                break;
+            case "slap":
+                String target = event.getUser().getNick();
+                if (commands.size() >= 2) {
+                    target = commands.get(1);
+                }
+                String channel = event.getUser().getNick();
+                if (event instanceof GenericChannelEvent) {
+                    channel = ((GenericChannelEvent) event).getChannel().getName();
+                }
+                event.getBot().sendIRC().action(channel, "slaps " + target + " around a bit with a large trout");
+                break;
+            case "test":
+                event.respond("Hello world!");
+                break;
         }
     }
 }
