@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_492be182",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-07-23T08:47:11Z",
+      "side": 1,
+      "message": "Decided on IRC that we\u0027re going to go with java \u003e javax \u003e third party \u003e own \u003e static; AKA, how we\u0027ve been doing it already",
+      "parentUuid": "da6255ed_69ffc502",
+      "revId": "e60fc1d17cc4c22ae9e506bc81ac3183ea80d4c8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_aa4a4f53",
         "filename": "src/main/java/org/lizardirc/beancounter/IRCListener.java",
         "patchSetId": 1
