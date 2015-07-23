@@ -40,6 +40,8 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.UtilSSLSocketFactory;
 import org.pircbotx.exception.IrcException;
 
+import org.lizardirc.beancounter.hooks.Fantasy;
+
 public class Beancounter {
     private final PircBotX bot;
 
@@ -54,7 +56,7 @@ public class Beancounter {
                 .setName(botName)
                 .setServerHostname(serverHost)
                 .setServerPort(serverPort)
-                .addListener(new IRCListener());
+                .addListener(new Fantasy(new IRCListener(), "?"));
 
         if (useTls) {
             // TODO add support for certificate pinning

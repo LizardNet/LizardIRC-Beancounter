@@ -30,19 +30,22 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.hooks;
 
 import org.pircbotx.PircBotX;
+import org.pircbotx.hooks.Event;
+import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class IRCListener <T extends PircBotX> extends ListenerAdapter<T> {
+public class Decorator <T extends PircBotX> extends ListenerAdapter<T> {
+    protected final Listener<T> childListener;
+
+    public Decorator(Listener<T> childListener) {
+        this.childListener = childListener;
+    }
+
     @Override
-    public void onGenericMessage(GenericMessageEvent<T> event) {
-        if (event.getMessage().startsWith("test")) {
-            event.respond("Hello world!");
-        } else if (event.getMessage().startsWith("quit")) {
-            event.getBot().sendIRC().quitServer("Tear in salami");
-        }
+    public void onEvent(Event<T> event) throws Exception {
+        childListener.onEvent(event);
     }
 }

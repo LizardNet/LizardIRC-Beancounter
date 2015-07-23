@@ -30,19 +30,42 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.hooks;
 
 import org.pircbotx.PircBotX;
-import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.Event;
+import org.pircbotx.hooks.Listener;
+import org.pircbotx.hooks.events.ActionEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+import org.pircbotx.hooks.events.MessageEvent;
 
-public class IRCListener <T extends PircBotX> extends ListenerAdapter<T> {
+import org.lizardirc.beancounter.events.MessageEventView;
+
+public class Fantasy <T extends PircBotX> extends Decorator<T> {
+    private final String fantasyPrefix;
+    private final int fantasyLength;
+
+    public Fantasy(Listener<T> childListener, String fantasyPrefix) {
+        super(childListener);
+        this.fantasyPrefix = fantasyPrefix;
+        this.fantasyLength = fantasyPrefix.length();
+    }
+
     @Override
-    public void onGenericMessage(GenericMessageEvent<T> event) {
-        if (event.getMessage().startsWith("test")) {
-            event.respond("Hello world!");
-        } else if (event.getMessage().startsWith("quit")) {
-            event.getBot().sendIRC().quitServer("Tear in salami");
+    public void onEvent(Event<T> event) throws Exception {
+        if (event instanceof GenericMessageEvent) {
+            if (event instanceof MessageEvent) {
+                MessageEvent me = (MessageEvent) event;
+                if (!me.getMessage().startsWith(fantasyPrefix)) {
+                    return;
+                }
+                String newMessage = me.getMessage().substring(fantasyLength);
+                super.onEvent(new MessageEventView<T>(me, newMessage));
+            } else if (event instanceof ActionEvent) {
+                return;
+            } else {
+                super.onEvent(event);
+            }
         }
     }
 }

@@ -30,19 +30,62 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.events;
 
 import org.pircbotx.PircBotX;
-import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.types.GenericMessageEvent;
+import org.pircbotx.hooks.events.MessageEvent;
 
-public class IRCListener <T extends PircBotX> extends ListenerAdapter<T> {
-    @Override
-    public void onGenericMessage(GenericMessageEvent<T> event) {
-        if (event.getMessage().startsWith("test")) {
-            event.respond("Hello world!");
-        } else if (event.getMessage().startsWith("quit")) {
-            event.getBot().sendIRC().quitServer("Tear in salami");
+public class MessageEventView <T extends PircBotX> extends MessageEvent<T> {
+    private final MessageEvent<T> childEvent;
+    private final String newMessage;
+
+    public MessageEventView(MessageEvent<T> childEvent, String newMessage) {
+        super(childEvent.getBot(), childEvent.getChannel(), childEvent.getUser(), newMessage);
+        this.childEvent = childEvent;
+        this.newMessage = newMessage;
+        if (newMessage == null) {
+            throw new IllegalArgumentException("newMessage cannot be null");
         }
+    }
+
+    @Override
+    public boolean canEqual(Object other) {
+        return other instanceof MessageEventView;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof MessageEventView) {
+            MessageEventView<?> that = (MessageEventView<?>) o;
+            return that.canEqual(this)
+                && newMessage.equals(that.newMessage)
+                && super.equals(that);
+        }
+        return false;
+    }
+
+    @Override
+    public long getId() {
+        return childEvent.getId();
+    }
+
+    @Override
+    public String getMessage() {
+        return newMessage;
+    }
+
+    @Override
+    public long getTimestamp() {
+        return childEvent.getTimestamp();
+    }
+
+    @Override
+    public int hashCode() {
+        return 41 * super.hashCode() + newMessage.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " -> '" + newMessage + "'";
     }
 }
