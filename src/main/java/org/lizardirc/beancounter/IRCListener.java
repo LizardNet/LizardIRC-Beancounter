@@ -34,6 +34,7 @@ package org.lizardirc.beancounter;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,8 +44,19 @@ import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
+import org.lizardirc.beancounter.AccessControl;
+
 public class IRCListener<T extends PircBotX> extends CommandListener<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("quit", "slap", "test");
+    private final AccessControl acl;
+
+    public IRCListener() {
+        // For now, hard-code LizardIRC staff as being able to execute all functions.
+        // TODO - Turn this into a configurable property a la java.util.Properties
+        HashMap<String, String> accessList = new HashMap<String, String>();
+        accessList.put("^.*!.*@lizardirc/staff/.*$", "*");
+        acl = new AccessControl(accessList);
+    }
 
     @Override
     public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
@@ -71,7 +83,11 @@ public class IRCListener<T extends PircBotX> extends CommandListener<T> {
         }
         switch (commands.get(0)) {
             case "quit":
-                event.getBot().sendIRC().quitServer("Tear in salami");
+                if (acl.hasPriv(event, "quit")) {
+                    event.getBot().sendIRC().quitServer("Tear in salami");
+                } else {
+                    event.respond("no u!  (You don't have the necessary permissions to do this.)");
+                }
                 break;
             case "slap":
                 String target = event.getUser().getNick();
