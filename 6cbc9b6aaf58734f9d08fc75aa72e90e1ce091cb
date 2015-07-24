@@ -39,6 +39,29 @@
       "revId": "6cbc9b6aaf58734f9d08fc75aa72e90e1ce091cb",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_89c0b92b",
+        "filename": "src/main/java/org/lizardirc/beancounter/AccessControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-24T22:42:53Z",
+      "side": 1,
+      "message": "We can also accept the more general GenericUserEvent.",
+      "range": {
+        "startLine": 61,
+        "startChar": 27,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "6cbc9b6aaf58734f9d08fc75aa72e90e1ce091cb",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
