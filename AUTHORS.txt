@@ -3,7 +3,7 @@ LIZARDIRC/BEANCOUNTER AUTHORS
 *Andrew "FastLizard4" Adams
 **Email: fastlizard4-git-commits [at] fastlizard4 [dot] org
 **Website: https://fastlizard4.org
-**PGP Key ID: 221A 627D D76E 2616
+**PGP Key ID: 70D9 82A5 6B59 9229 7B99  1709 221A 627D D76E 2616
 **LizardIRC nickname: FastLizard4 (network staff)
 
 *William Luc Ritchie
