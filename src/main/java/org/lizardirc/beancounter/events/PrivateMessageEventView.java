@@ -30,44 +30,64 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter.hooks;
+package org.lizardirc.beancounter.events;
+
+import java.util.Objects;
 
 import org.pircbotx.PircBotX;
-import org.pircbotx.hooks.Event;
-import org.pircbotx.hooks.Listener;
-import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 
-import org.lizardirc.beancounter.events.MessageEventView;
-import org.lizardirc.beancounter.events.PrivateMessageEventView;
+public class PrivateMessageEventView<T extends PircBotX> extends PrivateMessageEvent<T> {
+    private final PrivateMessageEvent<T> childEvent;
+    private final String newMessage;
 
-public class Fantasy<T extends PircBotX> extends Decorator<T> {
-    private final String fantasyPrefix;
-    private final int fantasyLength;
-
-    public Fantasy(Listener<T> childListener, String fantasyPrefix) {
-        super(childListener);
-        this.fantasyPrefix = fantasyPrefix;
-        this.fantasyLength = fantasyPrefix.length();
+    public PrivateMessageEventView(PrivateMessageEvent<T> childEvent, String newMessage) {
+        super(childEvent.getBot(), childEvent.getUser(), newMessage);
+        this.childEvent = childEvent;
+        this.newMessage = newMessage;
+        if (newMessage == null) {
+            throw new IllegalArgumentException("newMessage cannot be null");
+        }
     }
 
     @Override
-    public void onEvent(Event<T> event) throws Exception {
-        if (event instanceof MessageEvent) {
-            MessageEvent<T> me = (MessageEvent<T>) event;
-            if (!me.getMessage().startsWith(fantasyPrefix)) {
-                return;
-            }
-            String newMessage = me.getMessage().substring(fantasyLength);
-            super.onEvent(new MessageEventView<>(me, newMessage));
-        } else if (event instanceof PrivateMessageEvent) {
-            PrivateMessageEvent<T> me = (PrivateMessageEvent<T>) event;
-            if (me.getMessage().startsWith(fantasyPrefix)) {
-                String newMessage = me.getMessage().substring(fantasyLength);
-                super.onEvent(new PrivateMessageEventView<>(me, newMessage));
-            } else {
-                super.onEvent(me);
-            }
+    public boolean canEqual(Object other) {
+        return other instanceof PrivateMessageEventView;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof PrivateMessageEventView) {
+            PrivateMessageEventView<?> that = (PrivateMessageEventView<?>) o;
+            return that.canEqual(this)
+                && newMessage.equals(that.newMessage)
+                && super.equals(that);
         }
+        return false;
+    }
+
+    @Override
+    public long getId() {
+        return childEvent.getId();
+    }
+
+    @Override
+    public String getMessage() {
+        return newMessage;
+    }
+
+    @Override
+    public long getTimestamp() {
+        return childEvent.getTimestamp();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), newMessage);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " -> '" + newMessage + "'";
     }
 }
