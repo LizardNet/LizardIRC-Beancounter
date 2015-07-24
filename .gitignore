@@ -4,3 +4,8 @@
 #Ignore IDEA configuration
 *.iml
 .idea/*
+
+#Ignore Eclipse configuration
+.classpath
+.project
+.settings/*
