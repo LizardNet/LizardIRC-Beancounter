@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_c9f591cc",
+        "filename": "src/main/java/org/lizardirc/beancounter/hooks/Fantasy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-24T06:54:05Z",
+      "side": 1,
+      "message": "Why not `else if (event instanceof PrivateMessageEvent) {` and drop the outer if entirely?",
+      "revId": "41306ce95534974b8b5008ff71b6bf9bf1527e65",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
