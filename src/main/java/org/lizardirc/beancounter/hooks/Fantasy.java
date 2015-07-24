@@ -36,6 +36,7 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.events.ActionEvent;
+import org.pircbotx.hooks.events.NoticeEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -54,17 +55,17 @@ public class Fantasy<T extends PircBotX> extends Decorator<T> {
     @Override
     public void onEvent(Event<T> event) throws Exception {
         if (event instanceof GenericMessageEvent) {
-            if (event instanceof MessageEvent) {
-                MessageEvent<T> me = (MessageEvent<T>) event;
-                if (!me.getMessage().startsWith(fantasyPrefix)) {
-                    return;
+            if (!(event instanceof NoticeEvent || event instanceof ActionEvent)) {
+                if (event instanceof MessageEvent) {
+                    MessageEvent<T> me = (MessageEvent<T>) event;
+                    if (!me.getMessage().startsWith(fantasyPrefix)) {
+                        return;
+                    }
+                    String newMessage = me.getMessage().substring(fantasyLength);
+                    super.onEvent(new MessageEventView<>(me, newMessage));
+                } else {
+                    super.onEvent(event);
                 }
-                String newMessage = me.getMessage().substring(fantasyLength);
-                super.onEvent(new MessageEventView<>(me, newMessage));
-            } else if (event instanceof ActionEvent) {
-                return;
-            } else {
-                super.onEvent(event);
             }
         }
     }
