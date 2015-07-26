@@ -16,6 +16,24 @@
       "revId": "b5c4de1bede4d12701a26f5657a4013e5ffd6279",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_a976dd04",
+        "filename": "src/main/java/org/lizardirc/beancounter/RouletteListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-26T03:27:46Z",
+      "side": 1,
+      "message": "This is in preparation for splitting across channels. I\u0027m going to make a listener that takes a ListenerProvider and makes a new listener for each channel, forwarding messages from different channels to different listeners. I\u0027d have already done that if I didn\u0027t have a few things left to work out with `synchronized`.",
+      "parentUuid": "da6255ed_e96cd538",
+      "revId": "b5c4de1bede4d12701a26f5657a4013e5ffd6279",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
