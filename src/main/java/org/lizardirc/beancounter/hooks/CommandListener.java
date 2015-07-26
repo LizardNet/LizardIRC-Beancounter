@@ -30,7 +30,7 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.hooks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
