@@ -43,6 +43,8 @@ import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
+import org.lizardirc.beancounter.hooks.CommandListener;
+
 public class IRCListener<T extends PircBotX> extends CommandListener<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("quit", "slap", "test");
 

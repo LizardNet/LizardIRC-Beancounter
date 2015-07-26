@@ -48,9 +48,19 @@
   	<url>https://git.fastlizard4.org/gitblit/summary/?r=LizardIRC/Beancounter.git</url>
   	<connection>git</connection>
   </scm>
-  
+
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <compilerArgs>
+            <arg>-Xlint:all</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
