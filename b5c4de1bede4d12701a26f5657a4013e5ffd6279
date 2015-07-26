@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_e96cd538",
+        "filename": "src/main/java/org/lizardirc/beancounter/RouletteListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-07-26T03:24:13Z",
+      "side": 1,
+      "message": "This is the only part of the changeset that I don\u0027t really understand.  What\u0027s this for?",
+      "revId": "b5c4de1bede4d12701a26f5657a4013e5ffd6279",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
