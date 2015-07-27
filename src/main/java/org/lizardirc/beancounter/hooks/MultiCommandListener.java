@@ -89,6 +89,7 @@ public class MultiCommandListener<T extends PircBotX> extends CommandListener<T>
             }
         }
         return map.keySet().stream()
+                .filter(l -> l.size() == commands.size() + 1)
                 .map(l -> l.get(l.size() - 1)) // last element of each
                 .collect(Collectors.toSet());
     }
