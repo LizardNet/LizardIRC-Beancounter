@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_699585e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-08-01T14:44:52Z",
+      "side": 1,
+      "message": "Well, it\u0027s supposed to add these in the commit hook, but it\u0027s supposed to be on the last line. Earlier versions of gerrit wouldn\u0027t even process it unless it were the last line. Maybe now both are smart enough to put the footers in arbitrary order now (thus putting TODO: below it)?",
+      "parentUuid": "da6255ed_c9feb138",
+      "revId": "7708d8a365bec0393c27a052408663deb2b4bb41",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_a9fb7d46",
         "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2015-08-01T09:30:20Z",
       "side": 1,
       "message": "The other option flag HAL supports here is \"g\" for greedy replacement; is this possible here too?",
+      "revId": "7708d8a365bec0393c27a052408663deb2b4bb41",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_499ac115",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-08-01T14:44:52Z",
+      "side": 1,
+      "message": "If you mean HAL\u0027s \"g\" for global replacement, yes, that\u0027s handled on line 108 (can\u0027t be done with flags unfortunately). Greediness is something else, and it\u0027s controlled in-regex usually.",
+      "parentUuid": "da6255ed_a9fb7d46",
       "revId": "7708d8a365bec0393c27a052408663deb2b4bb41",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
