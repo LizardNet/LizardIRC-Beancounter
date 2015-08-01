@@ -32,21 +32,18 @@
 
 package org.lizardirc.beancounter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
+import java.util.Collections;
+import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import com.google.common.collect.ImmutableSet;
+import com.google.common.base.Supplier;
+import com.google.common.collect.EvictingQueue;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
-
-import org.lizardirc.beancounter.AccessControl;
 
 public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // There are several substring types that we match.
@@ -65,17 +62,10 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     private static final String REGEX_ABCBCB = REGEX_AB + REGEX_CB + REGEX_CB;
     private static final Pattern PATTERN_SED = Pattern.compile(REGEX_ABCBCB);
 
-    private final int windowSize;
-    private final List<String> window;
-    private int index = 0;
-    private int count = 0;
+    private final Queue<String> window;
 
     public SedListener(int windowSize) {
-        this.windowSize = windowSize;
-        window = new ArrayList<>(windowSize);
-        for (int i = 0; i < windowSize; i++) {
-            window.add(null);
-        }
+        window = EvictingQueue.create(windowSize);
     }
 
     @Override
@@ -99,9 +89,10 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 return;
             }
 
-            getWindow().map(p::matcher)
+            window.stream()
+                    .map(p::matcher)
                     .filter(Matcher::find)
-                    .findFirst()
+                    .reduce((x, y) -> y) // findLast()
                     .map(x -> {
                         StringBuilder sb = new StringBuilder(event.getUser().getNick());
                         sb.append(" meant to say: ");
@@ -114,21 +105,8 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                     })
                     .ifPresent(event.getChannel().send()::message);
         } else {
-            addMessage(message);
+            window.add(message);
         }
-    }
-
-    private void addMessage(String message) {
-        if (count < windowSize) {
-            count++;
-        }
-        index = (index + windowSize - 1) % windowSize;
-        window.set(index, message);
-    }
-
-    private Stream<String> getWindow() {
-        return Stream.concat(window.stream().skip(index), window.stream())
-                .limit(count);
     }
 
     public static class Provider<T extends PircBotX> implements Supplier<SedListener<T>> {
