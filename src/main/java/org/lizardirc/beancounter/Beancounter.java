@@ -66,7 +66,8 @@ public class Beancounter {
                 .setName(botName)
                 .setServerHostname(serverHost)
                 .setServerPort(serverPort)
-                .addListener(new Fantasy<>(commands, fantasyString));
+                .addListener(new Fantasy<>(commands, fantasyString))
+                .addListener(new SedListener<>(5));
 
         if (useTls) {
             // TODO add support for certificate pinning
