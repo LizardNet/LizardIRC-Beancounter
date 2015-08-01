@@ -62,6 +62,8 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     private static final String REGEX_ABCBCB = REGEX_AB + REGEX_CB + REGEX_CB;
     private static final Pattern PATTERN_SED = Pattern.compile(REGEX_ABCBCB);
 
+    private static final Pattern PATTERN_OPTIONS = Pattern.compile("[gi]*");
+
     private final Queue<String> window;
 
     public SedListener(int windowSize) {
@@ -76,6 +78,12 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             String regex = m.group(2);
             String replacement = m.group(4);
             String options = m.group(6);
+
+            if (!PATTERN_OPTIONS.matcher(options).matches()) {
+                event.respond("Invalid options '" + options + "'");
+                return;
+            }
+
             int flags = 0;
             if (options.contains("i")) {
                 flags = Pattern.CASE_INSENSITIVE;
