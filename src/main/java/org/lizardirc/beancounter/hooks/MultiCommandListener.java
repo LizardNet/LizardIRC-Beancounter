@@ -33,7 +33,6 @@
 package org.lizardirc.beancounter.hooks;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,7 +44,6 @@ import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
 import org.pircbotx.PircBotX;
-import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public class MultiCommandListener<T extends PircBotX> extends CommandListener<T> {

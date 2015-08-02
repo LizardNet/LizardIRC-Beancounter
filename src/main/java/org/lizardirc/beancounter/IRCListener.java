@@ -54,7 +54,7 @@ public class IRCListener<T extends PircBotX> extends CommandListener<T> {
     public IRCListener() {
         // For now, hard-code LizardIRC staff as being able to execute all functions.
         // TODO - Turn this into a configurable property a la java.util.Properties
-        HashMap<String, String> accessList = new HashMap<String, String>();
+        HashMap<String, String> accessList = new HashMap<>();
         accessList.put("^.*!.*@lizardirc/staff/.*$", "*");
         acl = new AccessControl(accessList);
     }

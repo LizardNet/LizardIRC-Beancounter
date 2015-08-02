@@ -34,6 +34,7 @@ package org.lizardirc.beancounter;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import org.pircbotx.hooks.types.GenericUserEvent;
 
@@ -66,7 +67,7 @@ public class AccessControl {
             String aclPermission = entry.getValue();
 
             if (userHostmask.matches(aclHostmask)) {
-                if (permission == aclPermission || aclPermission == "*") {
+                if (Objects.equals(permission, aclPermission) || Objects.equals(aclPermission, "*")) {
                     return true;
                 }
             }

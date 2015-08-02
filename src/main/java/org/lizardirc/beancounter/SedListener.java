@@ -32,12 +32,10 @@
 
 package org.lizardirc.beancounter;
 
-import java.util.Collections;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.EvictingQueue;
