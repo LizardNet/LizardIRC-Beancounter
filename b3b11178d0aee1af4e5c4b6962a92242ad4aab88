@@ -34,6 +34,24 @@
       "revId": "b3b11178d0aee1af4e5c4b6962a92242ad4aab88",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_ac1cab6b",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-08-02T08:19:34Z",
+      "side": 1,
+      "message": "Alrighty",
+      "parentUuid": "da6255ed_c908f12f",
+      "revId": "b3b11178d0aee1af4e5c4b6962a92242ad4aab88",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
