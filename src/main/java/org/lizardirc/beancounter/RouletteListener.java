@@ -39,6 +39,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
@@ -175,8 +176,8 @@ public class RouletteListener<T extends PircBotX> extends CommandListener<T> {
         }
     }
 
-    public static class Provider {
-        public <T extends PircBotX> RouletteListener<T> get() {
+    public static class Provider<T extends PircBotX> implements Supplier<RouletteListener<T>> {
+        public RouletteListener<T> get() {
             return new RouletteListener<T>();
         }
     }
