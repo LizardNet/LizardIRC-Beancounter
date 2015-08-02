@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_e98855c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-08-02T00:45:04Z",
+      "side": 1,
+      "message": "I guess both are smart enough now, since Gerrit would have thrown a fit if it couldn\u0027t parse your commit message for the CID.",
+      "parentUuid": "da6255ed_699585e3",
+      "revId": "7708d8a365bec0393c27a052408663deb2b4bb41",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_a9fb7d46",
         "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
         "patchSetId": 1
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "If you mean HAL\u0027s \"g\" for global replacement, yes, that\u0027s handled on line 108 (can\u0027t be done with flags unfortunately). Greediness is something else, and it\u0027s controlled in-regex usually.",
       "parentUuid": "da6255ed_a9fb7d46",
+      "revId": "7708d8a365bec0393c27a052408663deb2b4bb41",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_09a4c955",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-08-02T00:45:04Z",
+      "side": 1,
+      "message": "Ahh, yeah, I meant global replacement.  Alrighty",
+      "parentUuid": "da6255ed_499ac115",
       "revId": "7708d8a365bec0393c27a052408663deb2b4bb41",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
