@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_2912ed62",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-08-02T07:46:00Z",
+      "side": 1,
+      "message": "The bot will respond with all options here,m including valid ones.  Is this intended?",
+      "revId": "b3b11178d0aee1af4e5c4b6962a92242ad4aab88",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
