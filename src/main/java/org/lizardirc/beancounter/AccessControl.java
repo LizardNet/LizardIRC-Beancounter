@@ -66,7 +66,7 @@ public class AccessControl {
             String aclPermission = entry.getValue();
 
             if (userHostmask.matches(aclHostmask)) {
-                if (permission == aclPermission || aclPermission == "*") {
+                if (permission.equals(aclPermission) || aclPermission.equals("*")) {
                     return true;
                 }
             }
