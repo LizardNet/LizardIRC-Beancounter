@@ -59,7 +59,8 @@ public class Beancounter {
         String fantasyString = properties.getProperty("fantasyString", "?");
 
         List<CommandListener<PircBotX>> listeners = new ArrayList<>();
-        listeners.add(new IRCListener<>());
+        listeners.add(new QuitListener<>());
+        listeners.add(new SlapListener<>());
         listeners.add(new RouletteListener<>());
         MultiCommandListener<PircBotX> commands = new MultiCommandListener<>(listeners);
 
