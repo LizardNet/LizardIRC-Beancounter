@@ -47,11 +47,11 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.lizardirc.beancounter.AccessControl;
 import org.lizardirc.beancounter.hooks.CommandListener;
 
-public class IRCListener<T extends PircBotX> extends CommandListener<T> {
-    private static final Set<String> COMMANDS = ImmutableSet.of("quit", "slap", "test");
+public class QuitListener<T extends PircBotX> extends CommandListener<T> {
+    private static final Set<String> COMMANDS = ImmutableSet.of("quit");
     private final AccessControl acl;
 
-    public IRCListener() {
+    public QuitListener() {
         // For now, hard-code LizardIRC staff as being able to execute all functions.
         // TODO - Turn this into a configurable property a la java.util.Properties
         HashMap<String, String> accessList = new HashMap<>();
@@ -64,16 +64,6 @@ public class IRCListener<T extends PircBotX> extends CommandListener<T> {
         if (commands.size() == 0) {
             return COMMANDS;
         }
-        switch (commands.get(0)) {
-            case "slap":
-                if (!(event instanceof GenericChannelEvent)) {
-                    break;
-                }
-                GenericChannelEvent gce = (GenericChannelEvent) event;
-                return gce.getChannel().getUsers().stream()
-                        .map(User::getNick)
-                        .collect(Collectors.toSet());
-        }
         return Collections.<String>emptySet();
     }
 
@@ -82,28 +72,14 @@ public class IRCListener<T extends PircBotX> extends CommandListener<T> {
         if (commands.size() == 0) {
             return;
         }
-        switch (commands.get(0)) {
-            case "quit":
-                if (acl.hasPriv(event, "quit")) {
-                    event.getBot().sendIRC().quitServer("Tear in salami");
-                } else {
-                    event.respond("no u!  (You don't have the necessary permissions to do this.)");
-                }
-                break;
-            case "slap":
-                String target = event.getUser().getNick();
-                if (commands.size() >= 2) {
-                    target = commands.get(1);
-                }
-                String channel = event.getUser().getNick();
-                if (event instanceof GenericChannelEvent) {
-                    channel = ((GenericChannelEvent) event).getChannel().getName();
-                }
-                event.getBot().sendIRC().action(channel, "slaps " + target + " around a bit with a large trout");
-                break;
-            case "test":
-                event.respond("Hello world!");
-                break;
+        String quitMessage = "Tear in salami";
+        if (remainder != null && !remainder.trim().isEmpty()) {
+            quitMessage = remainder.trim();
+        }
+        if (acl.hasPriv(event, "quit")) {
+            event.getBot().sendIRC().quitServer(quitMessage);
+        } else {
+            event.respond("no u!  (You don't have the necessary permissions to do this.)");
         }
     }
 }
