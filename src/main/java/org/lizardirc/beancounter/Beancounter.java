@@ -60,6 +60,7 @@ public class Beancounter {
 
         List<CommandListener<PircBotX>> listeners = new ArrayList<>();
         listeners.add(new QuitListener<>());
+        listeners.add(new DiceListener<>());
         listeners.add(new SlapListener<>());
         listeners.add(new RouletteListener<>());
         MultiCommandListener<PircBotX> commands = new MultiCommandListener<>(listeners);
