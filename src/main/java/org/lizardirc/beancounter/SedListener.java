@@ -32,14 +32,20 @@
 
 package org.lizardirc.beancounter;
 
+import java.util.Collections;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Supplier;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.EvictingQueue;
 import org.pircbotx.PircBotX;
+import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -48,24 +54,28 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // A) any character except \
     // B) 0 or more copies of either an escaped character, or something other than \
     // C) The delimiter, as a backreference
+    // D) One or more non-whitespace characters, followed by a colon and a space
+    // We optionally match D. This is the target ("Alice" in `Alice: s/foo/bar`)
     // We match s, followed by A. This is the delimiter.
     // We then match B. This is the search regex.
     // We match C.
     // We match B. This is the replacement string.
     // We match C again.
     // We match B. These are the options.
-    private static final String REGEX_B = "((\\\\.|[^\\\\])*)";
+    private static final String REGEX_D = "(?:([^\\s]+): )?";
+    private static final String REGEX_B = "((?:\\\\.|[^\\\\])*)";
     private static final String REGEX_AB = "s([^\\\\])" + REGEX_B;
-    private static final String REGEX_CB = "\\1" + REGEX_B;
-    private static final String REGEX_ABCBCB = REGEX_AB + REGEX_CB + REGEX_CB;
-    private static final Pattern PATTERN_SED = Pattern.compile(REGEX_ABCBCB);
+    private static final String REGEX_CB = "\\2" + REGEX_B;
+    private static final String REGEX_SED = REGEX_D + REGEX_AB + REGEX_CB + REGEX_CB;
+    private static final Pattern PATTERN_SED = Pattern.compile(REGEX_SED);
 
     private static final Pattern PATTERN_OPTIONS = Pattern.compile("[gi]*");
 
-    private final Queue<String> window;
+    private final LoadingCache<User, Queue<String>> windows;
 
     public SedListener(int windowSize) {
-        window = EvictingQueue.create(windowSize);
+        windows = CacheBuilder.newBuilder()
+                .build(CacheLoader.from(() -> EvictingQueue.create(windowSize)));
     }
 
     @Override
@@ -73,9 +83,16 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
         String message = event.getMessage();
         Matcher m = PATTERN_SED.matcher(message);
         if (m.matches()) {
-            String regex = m.group(2);
+            String target = m.group(1);
+            String regex = m.group(3);
             String replacement = m.group(4);
-            String options = m.group(6);
+            String options = m.group(5);
+
+            User corrector = event.getUser();
+            User speaker = event.getChannel().getUsers().stream()
+                    .filter(u -> u.getNick().equals(target))
+                    .findFirst()
+                    .orElse(corrector);
 
             if (!PATTERN_OPTIONS.matcher(options).matches()) {
                 event.respond("Invalid options '" + options + "'");
@@ -95,23 +112,31 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 return;
             }
 
+            Queue<String> window = windows.getUnchecked(speaker);
+
             window.stream()
                     .map(p::matcher)
                     .filter(Matcher::find)
                     .reduce((x, y) -> y) // findLast()
-                    .map(x -> {
-                        StringBuilder sb = new StringBuilder(event.getUser().getNick());
-                        sb.append(" meant to say: ");
+                    .map(matcher -> {
                         if (options.contains("g")) {
-                            sb.append(x.replaceAll(replacement));
+                            return matcher.replaceAll(replacement);
                         } else {
-                            sb.append(x.replaceFirst(replacement));
+                            return matcher.replaceFirst(replacement);
                         }
-                        return sb.toString();
                     })
-                    .ifPresent(event.getChannel().send()::message);
+                    .ifPresent(s -> {
+                        window.add(s);
+
+                        StringBuilder sb = new StringBuilder(corrector.getNick());
+                        if (!corrector.equals(speaker)) {
+                            sb.append(" thinks " + speaker.getNick());
+                        }
+                        sb.append(" meant to say: ").append(s);
+                        event.getChannel().send().message(sb.toString());
+                    });
         } else {
-            window.add(message);
+            windows.getUnchecked(event.getUser()).add(message);
         }
     }
 
