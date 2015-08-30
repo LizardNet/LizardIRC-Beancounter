@@ -32,12 +32,10 @@
 
 package org.lizardirc.beancounter;
 
-import java.util.Collections;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
 
 import com.google.common.base.Supplier;
 import com.google.common.cache.CacheBuilder;
@@ -64,7 +62,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // We match B. These are the options.
     private static final String REGEX_D = "(?:([^\\s]+): )?";
     private static final String REGEX_B = "((?:\\\\.|[^\\\\])*)";
-    private static final String REGEX_AB = "s([^\\\\])" + REGEX_B;
+    private static final String REGEX_AB = "s([^\\\\A-Za-z0-9])" + REGEX_B;
     private static final String REGEX_CB = "\\2" + REGEX_B;
     private static final String REGEX_SED = REGEX_D + REGEX_AB + REGEX_CB + REGEX_CB;
     private static final Pattern PATTERN_SED = Pattern.compile(REGEX_SED);
