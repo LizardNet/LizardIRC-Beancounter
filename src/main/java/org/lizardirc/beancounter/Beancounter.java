@@ -33,19 +33,12 @@
 package org.lizardirc.beancounter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.UtilSSLSocketFactory;
 import org.pircbotx.exception.IrcException;
-
-import org.lizardirc.beancounter.hooks.CommandListener;
-import org.lizardirc.beancounter.hooks.Fantasy;
-import org.lizardirc.beancounter.hooks.MultiCommandListener;
-import org.lizardirc.beancounter.hooks.PerChannel;
 
 public class Beancounter {
     private final PircBotX bot;
@@ -56,21 +49,14 @@ public class Beancounter {
         boolean useTls = Boolean.parseBoolean(properties.getProperty("useTls", "false"));
         int serverPort = Integer.parseInt(properties.getProperty("serverPort", useTls ? "6697" : "6667"));
         String[] autoJoinChannels = properties.getProperty("autoJoinChannels", "").split(",");
-        String fantasyString = properties.getProperty("fantasyString", "?");
-
-        List<CommandListener<PircBotX>> listeners = new ArrayList<>();
-        listeners.add(new QuitListener<>());
-        listeners.add(new DiceListener<>());
-        listeners.add(new SlapListener<>());
-        listeners.add(new RouletteListener<>());
-        MultiCommandListener<PircBotX> commands = new MultiCommandListener<>(listeners);
 
         Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<>()
             .setName(botName)
             .setServerHostname(serverHost)
-            .setServerPort(serverPort)
-            .addListener(new Fantasy<>(commands, fantasyString))
-            .addListener(new PerChannel<>(new SedListener.Provider<>(5)));
+            .setServerPort(serverPort);
+
+        Listeners<PircBotX> listeners = new Listeners<>(confBuilder.getListenerManager(), properties);
+        listeners.register();
 
         if (useTls) {
             // TODO add support for certificate pinning
