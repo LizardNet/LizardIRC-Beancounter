@@ -42,11 +42,9 @@ import java.util.regex.Pattern;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-import org.pircbotx.output.OutputChannel;
 
 import org.lizardirc.beancounter.hooks.CommandListener;
 
@@ -100,8 +98,7 @@ public class DiceListener<T extends PircBotX> extends CommandListener<T> {
                     }
                     int total = rollDice(dieSizes);
                     event.getBot().sendIRC().action(channel, String.format(action, requestor, total));
-                }
-                catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     event.respond(e.getMessage());
                 }
                 break;

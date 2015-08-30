@@ -33,18 +33,14 @@
 package org.lizardirc.beancounter;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.PircBotX;
-import org.pircbotx.User;
-import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import org.lizardirc.beancounter.AccessControl;
 import org.lizardirc.beancounter.hooks.CommandListener;
 
 public class QuitListener<T extends PircBotX> extends CommandListener<T> {

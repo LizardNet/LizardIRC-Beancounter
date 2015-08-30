@@ -49,12 +49,12 @@ public class PerChannel<T extends PircBotX> extends ListenerAdapter<T> {
 
     public PerChannel(Function<Channel, ? extends Listener<T>> childFunction) {
         childListeners = CacheBuilder.newBuilder()
-                .build(CacheLoader.from(childFunction));
+            .build(CacheLoader.from(childFunction));
     }
 
     public PerChannel(Supplier<? extends Listener<T>> childSupplier) {
         childListeners = CacheBuilder.newBuilder()
-                .build(CacheLoader.from(childSupplier));
+            .build(CacheLoader.from(childSupplier));
     }
 
     @Override

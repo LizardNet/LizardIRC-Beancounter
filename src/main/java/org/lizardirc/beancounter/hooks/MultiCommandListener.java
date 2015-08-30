@@ -47,7 +47,7 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public class MultiCommandListener<T extends PircBotX> extends CommandListener<T> {
-    private Set<CommandListener<T>> subCommandListeners;
+    private final Set<CommandListener<T>> subCommandListeners;
 
     // Mmm, generics
     private Map<GenericMessageEvent<T>, Map<List<String>, Set<CommandListener<T>>>> listenerMap = new WeakHashMap<>();
@@ -87,9 +87,9 @@ public class MultiCommandListener<T extends PircBotX> extends CommandListener<T>
             }
         }
         return map.keySet().stream()
-                .filter(l -> l.size() == commands.size() + 1)
-                .map(l -> l.get(l.size() - 1)) // last element of each
-                .collect(Collectors.toSet());
+            .filter(l -> l.size() == commands.size() + 1)
+            .map(l -> l.get(l.size() - 1)) // last element of each
+            .collect(Collectors.toSet());
     }
 
     public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {

@@ -34,7 +34,6 @@ package org.lizardirc.beancounter;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -46,39 +45,38 @@ import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import org.lizardirc.beancounter.AccessControl;
 import org.lizardirc.beancounter.hooks.CommandListener;
 
 public class SlapListener<T extends PircBotX> extends CommandListener<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of
-            ( "slap"
-            );
+        ( "slap"
+        );
     private static final List<String> ACTIONS = ImmutableList.of
-            ( "slaps "
-            , "whacks "
-            );
+        ( "slaps "
+        , "whacks "
+        );
     private static final List<String> MODIFIERS = ImmutableList.of
-            ( ""
-            , " around a bit"
-            );
+        ( ""
+        , " around a bit"
+        );
     private static final List<String> ITEMS = ImmutableList.of
-            ( "a%s trout"
-            , "a%s minnow"
-            , "a%s whale"
-            , "a%s can of sardines"
-            , "a%s leather belt"
-            , "Donald Trump's%s combover"
-            );
+        ( "a%s trout"
+        , "a%s minnow"
+        , "a%s whale"
+        , "a%s can of sardines"
+        , "a%s leather belt"
+        , "Donald Trump's%s combover"
+        );
     private static final List<String> ITEM_MODS = ImmutableList.of
-            ( ""
-            , " large"
-            , " feisty"
-            , " moderately sized"
-            , " cursed [-1]"
-            , " 4 str 4 stam"
-            , " talking"
-            , " energetic"
-            );
+        ( ""
+        , " large"
+        , " feisty"
+        , " moderately sized"
+        , " cursed [-1]"
+        , " 4 str 4 stam"
+        , " talking"
+        , " energetic"
+        );
 
     private static final Random random = new Random();
 
@@ -92,8 +90,8 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
         }
         GenericChannelEvent gce = (GenericChannelEvent) event;
         return gce.getChannel().getUsers().stream()
-                .map(User::getNick)
-                .collect(Collectors.toSet());
+            .map(User::getNick)
+            .collect(Collectors.toSet());
     }
 
     @Override

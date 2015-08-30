@@ -66,11 +66,11 @@ public class Beancounter {
         MultiCommandListener<PircBotX> commands = new MultiCommandListener<>(listeners);
 
         Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<>()
-                .setName(botName)
-                .setServerHostname(serverHost)
-                .setServerPort(serverPort)
-                .addListener(new Fantasy<>(commands, fantasyString))
-                .addListener(new PerChannel<>(new SedListener.Provider<>(5)));
+            .setName(botName)
+            .setServerHostname(serverHost)
+            .setServerPort(serverPort)
+            .addListener(new Fantasy<>(commands, fantasyString))
+            .addListener(new PerChannel<>(new SedListener.Provider<>(5)));
 
         if (useTls) {
             // TODO add support for certificate pinning

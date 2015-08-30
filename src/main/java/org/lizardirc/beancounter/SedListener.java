@@ -73,7 +73,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
 
     public SedListener(int windowSize) {
         windows = CacheBuilder.newBuilder()
-                .build(CacheLoader.from(() -> EvictingQueue.create(windowSize)));
+            .build(CacheLoader.from(() -> EvictingQueue.create(windowSize)));
     }
 
     @Override
@@ -88,9 +88,9 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
 
             User corrector = event.getUser();
             User speaker = event.getChannel().getUsers().stream()
-                    .filter(u -> u.getNick().equals(target))
-                    .findFirst()
-                    .orElse(corrector);
+                .filter(u -> u.getNick().equals(target))
+                .findFirst()
+                .orElse(corrector);
 
             if (!PATTERN_OPTIONS.matcher(options).matches()) {
                 event.respond("Invalid options '" + options + "'");
@@ -113,26 +113,26 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             Queue<String> window = windows.getUnchecked(speaker);
 
             window.stream()
-                    .map(p::matcher)
-                    .filter(Matcher::find)
-                    .reduce((x, y) -> y) // findLast()
-                    .map(matcher -> {
-                        if (options.contains("g")) {
-                            return matcher.replaceAll(replacement);
-                        } else {
-                            return matcher.replaceFirst(replacement);
-                        }
-                    })
-                    .ifPresent(s -> {
-                        window.add(s);
+                .map(p::matcher)
+                .filter(Matcher::find)
+                .reduce((x, y) -> y) // findLast()
+                .map(matcher -> {
+                    if (options.contains("g")) {
+                        return matcher.replaceAll(replacement);
+                    } else {
+                        return matcher.replaceFirst(replacement);
+                    }
+                })
+                .ifPresent(s -> {
+                    window.add(s);
 
-                        StringBuilder sb = new StringBuilder(corrector.getNick());
-                        if (!corrector.equals(speaker)) {
-                            sb.append(" thinks " + speaker.getNick());
-                        }
-                        sb.append(" meant to say: ").append(s);
-                        event.getChannel().send().message(sb.toString());
-                    });
+                    StringBuilder sb = new StringBuilder(corrector.getNick());
+                    if (!corrector.equals(speaker)) {
+                        sb.append(" thinks " + speaker.getNick());
+                    }
+                    sb.append(" meant to say: ").append(s);
+                    event.getChannel().send().message(sb.toString());
+                });
         } else {
             windows.getUnchecked(event.getUser()).add(message);
         }
