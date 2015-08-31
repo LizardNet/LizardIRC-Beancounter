@@ -24,15 +24,20 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-        <groupId>org.pircbotx</groupId>
-        <artifactId>pircbotx</artifactId>
-        <version>2.0.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-simple</artifactId>
-        <version>1.7.12</version>
-      </dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.pircbotx</groupId>
+      <artifactId>pircbotx</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.12</version>
+    </dependency>
   </dependencies>
   <description>Beancounter - a Java IRC bot to function as a game bot serving various games over IRC. Developed for use for the LizardIRC network.</description>
   <inceptionYear>2015</inceptionYear>

@@ -33,12 +33,18 @@
 package org.lizardirc.beancounter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import javax.net.ssl.SSLSocketFactory;
 
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
-import org.pircbotx.UtilSSLSocketFactory;
 import org.pircbotx.exception.IrcException;
+
+import org.lizardirc.beancounter.security.FingerprintingSslSocketFactory;
+import org.lizardirc.beancounter.security.VerifyingSslSocketFactory;
 
 public class Beancounter {
     private final PircBotX bot;
@@ -47,6 +53,8 @@ public class Beancounter {
         String botName = properties.getProperty("botName", "Beancounter");
         String serverHost = properties.getProperty("serverHost");
         boolean useTls = Boolean.parseBoolean(properties.getProperty("useTls", "false"));
+        boolean verifyHostname = Boolean.parseBoolean(properties.getProperty("verifyHostname", "true"));
+        String allowedCertificates = properties.getProperty("allowedCertificates", "");
         int serverPort = Integer.parseInt(properties.getProperty("serverPort", useTls ? "6697" : "6667"));
         String[] autoJoinChannels = properties.getProperty("autoJoinChannels", "").split(",");
 
@@ -59,8 +67,17 @@ public class Beancounter {
         listeners.register();
 
         if (useTls) {
-            // TODO add support for certificate pinning
-            confBuilder.setSocketFactory(new UtilSSLSocketFactory().trustAllCertificates());
+            SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+            if (verifyHostname) {
+                socketFactory = new VerifyingSslSocketFactory(serverHost, socketFactory);
+            }
+            List<String> fingerprints = Arrays.stream(allowedCertificates.split(","))
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+            if (fingerprints.size() > 0) {
+                socketFactory = new FingerprintingSslSocketFactory(fingerprints, socketFactory);
+            }
+            confBuilder.setSocketFactory(socketFactory);
         }
 
         for (String channel : autoJoinChannels) {
@@ -84,6 +101,7 @@ public class Beancounter {
         //testing.
         properties.setProperty("serverHost", "irc.lizardirc.org");
         properties.setProperty("useTls", "true");
+        properties.setProperty("allowedCertificates", "7E:00:C0:1A:C0:11:46:F3:99:47:EE:9C:7C:E9:CB:0F:86:26:B4:14:69:7D:D2:4F:A7:2F:F2:85:23:D1:12:B0:36:C1:2F:9C:65:41:04:25:06:B6:41:49:78:E2:D6:98:C5:F5:9F:73:CD:9F:A4:0C:4E:A5:E2:54:69:DA:51:6E");
         properties.setProperty("autoJoinChannels", "#botspam");
 
         System.out.println("Creating bot....");
