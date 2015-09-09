@@ -51,6 +51,7 @@ import org.lizardirc.beancounter.hooks.Fantasy;
 import org.lizardirc.beancounter.hooks.InviteAcceptor;
 import org.lizardirc.beancounter.hooks.MultiCommandListener;
 import org.lizardirc.beancounter.hooks.PerChannel;
+import org.lizardirc.beancounter.hooks.PerChannelCommand;
 
 public class Listeners<T extends PircBotX> extends CommandListener<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("rehash");
@@ -71,7 +72,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         listeners.add(new QuitListener<>());
         listeners.add(new DiceListener<>());
         listeners.add(new SlapListener<>());
-        listeners.add(new RouletteListener<>());
+        listeners.add(new PerChannelCommand<>(RouletteListener::new));
         listeners.add(this);
         MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);
 

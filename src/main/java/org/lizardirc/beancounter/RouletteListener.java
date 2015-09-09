@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableSet;
@@ -45,19 +46,20 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.output.OutputChannel;
+import org.pircbotx.output.OutputIRC;
 
 import org.lizardirc.beancounter.hooks.CommandListener;
 
 public class RouletteListener<T extends PircBotX> extends CommandListener<T> {
-    private static final Set<String> COMMANDS = ImmutableSet.of("reload", "roulette", "spin");
+    private static final Set<String> COMMANDS = ImmutableSet.of("poulette", "reload", "roulette", "spin");
+    private static final int MAX_CHAMBERS = 64;
+    private static final int DEFAULT_BULLETS = 1;
+    private static final int DEFAULT_CHAMBERS = 6;
 
     private static Random random = new Random();
 
     private List<Boolean> loaded = new ArrayList<>();
-
-    public RouletteListener() {
-        reload(1, 6);
-    }
+    private int lastBullets = DEFAULT_BULLETS;
 
     @Override
     public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
@@ -79,76 +81,91 @@ public class RouletteListener<T extends PircBotX> extends CommandListener<T> {
             channel = chan.getName();
             outChan = new OutputChannel(event.getBot(), chan);
         }
+
+        OutputIRC outIrc = event.getBot().sendIRC();
+        String outChannel = channel;
+        Consumer<String> action = s -> {
+            outIrc.action(outChannel, s);
+            sleep();
+        };
+        Consumer<String> message = s -> {
+            outIrc.message(outChannel, s);
+            sleep();
+        };
+
+        String target = event.getUser().getNick();
+
         switch (commands.get(0)) {
+            case "poulette":
+                message.accept(target + " picks up a chicken, points it at eir head, pulls a feather, and...");
+                message.accept("*BWACK*!");
+                break;
             case "reload":
-                long removedBullets = loaded.stream().filter(Boolean::booleanValue).count();
-                if (removedBullets > 0) {
-                    String pluralized = removedBullets == 1 ? " bullet falls out." : " bullets fall out.";
-                    event.getBot().sendIRC().action(channel, "empties the gun. " + removedBullets + pluralized);
-                    sleep();
-                }
-
-                String[] args = remainder.split(" ");
-                int bullets = 1;
-                int chambers = 6;
-                try {
-                    bullets = Integer.parseInt(args[0]);
-                    chambers = Integer.parseInt(args[1]);
-                } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-                    // ignore
-                }
-
-                if (chambers < 1 || chambers > 32) {
-                    event.getBot().sendIRC().action(channel, "looks for a gun with " + chambers + " chambers, but can't find one.");
-                    chambers = 6;
-                    sleep();
-                }
-                event.getBot().sendIRC().action(channel, "picks up a " + chambers + "-chamber gun");
-                sleep();
-
-                if (bullets < 0) {
-                    String pluralized = bullets == -1 ? " bullet" : " bullets";
-                    event.getBot().sendIRC().action(channel, "takes " + (-bullets) + pluralized + " out of the empty gun and throws them away");
-                    bullets = 0;
-                    sleep();
-                } else if (bullets > chambers) {
-                    event.getBot().sendIRC().action(channel, "puts " + bullets + " bullets into the gun. " + (bullets - chambers) + " fall out.");
-                    bullets = chambers;
-                    sleep();
-                } else if (bullets > 0) {
-                    String pluralized = bullets == 1 ? " bullet" : " bullets";
-                    event.getBot().sendIRC().action(channel, "puts " + bullets + pluralized + " into the gun");
-                    sleep();
-                }
-                reload(bullets, chambers);
-
-                event.getBot().sendIRC().action(channel, "spins the barrel");
-                sleep();
+                reload(action, remainder.split(" "));
                 break;
             case "roulette":
-                String target = event.getUser().getNick();
-                event.getBot().sendIRC().message(channel, target + " puts the gun to eir head, pulls the trigger, and...");
+                if (!loaded.contains(true)) {
+                    action.accept("notices the gun feels rather light. The chamber is empty!");
+                    reload(action);
+                }
+
+                message.accept(target + " picks up the gun, points it at eir head, pulls the trigger, and...");
                 loaded.add(false);
-                sleep();
                 if (loaded.remove(0)) {
-                    event.getBot().sendIRC().message(channel, "*BANG*! You're dead, Jim!");
                     if (outChan != null) {
                         outChan.kick(event.getUser(), "*BANG*! You're dead, Jim!");
                     }
+                    message.accept("*BANG*! You're dead, Jim!");
                 } else {
-                    event.getBot().sendIRC().message(channel, "*CLICK*");
+                    message.accept("*CLICK*");
                 }
-                sleep();
                 break;
             case "spin":
-                event.getBot().sendIRC().action(channel, "spins the barrel");
+                action.accept("spins the barrel");
                 spin();
-                sleep();
                 break;
         }
     }
 
-    private void reload(int bullets, int chambers) {
+    private void reload(Consumer<String> action, String... args) {
+        long removedBullets = loaded.stream().filter(Boolean::booleanValue).count();
+        if (removedBullets > 0) {
+            String pluralized = removedBullets == 1 ? " bullet falls out." : " bullets fall out.";
+            action.accept("empties the gun. " + removedBullets + pluralized);
+        }
+
+        int bullets = lastBullets;
+        int chambers = loaded.size();
+        if (chambers == 0) {
+            chambers = DEFAULT_CHAMBERS;
+        }
+        try {
+            bullets = Integer.parseInt(args[0]);
+            chambers = Integer.parseInt(args[1]);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            // ignore
+        }
+
+        if (chambers < 1 || chambers > MAX_CHAMBERS) {
+            action.accept("looks for a gun with " + chambers + " chambers, but can't find one.");
+            chambers = 6;
+        }
+        action.accept("picks up a " + chambers + "-chamber gun");
+
+        if (bullets < 0) {
+            String pluralized = bullets == -1 ? " bullet" : " bullets";
+            action.accept("takes " + (-bullets) + pluralized + " out of the empty gun and throws them away");
+            bullets = 0;
+        } else if (bullets > chambers) {
+            action.accept("puts " + bullets + " bullets into the gun. " + (bullets - chambers) + " fall out.");
+            bullets = chambers;
+        } else if (bullets > 0) {
+            String pluralized = bullets == 1 ? " bullet" : " bullets";
+            action.accept("puts " + bullets + pluralized + " into the gun");
+        }
+
+        lastBullets = bullets;
+
         loaded.clear();
         int i;
         for (i = 0; i < bullets; i++) {
@@ -158,6 +175,8 @@ public class RouletteListener<T extends PircBotX> extends CommandListener<T> {
             loaded.add(false);
         }
         Collections.shuffle(loaded);
+
+        action.accept("spins the barrel");
     }
 
     private void spin() {
