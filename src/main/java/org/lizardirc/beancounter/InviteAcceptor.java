@@ -30,7 +30,7 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter.hooks;
+package org.lizardirc.beancounter;
 
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;

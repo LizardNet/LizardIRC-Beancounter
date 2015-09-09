@@ -48,7 +48,6 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandListener;
 import org.lizardirc.beancounter.hooks.Fantasy;
-import org.lizardirc.beancounter.hooks.InviteAcceptor;
 import org.lizardirc.beancounter.hooks.MultiCommandListener;
 import org.lizardirc.beancounter.hooks.PerChannel;
 import org.lizardirc.beancounter.hooks.PerChannelCommand;
