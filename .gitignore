@@ -12,3 +12,6 @@
 
 #Ignore the dependency-reduced-pom.xml file created by maven-shade-plugin
 dependency-reduced-pom.xml
+
+#Ignore files that beancounter creates at runtime
+beanledger.xml
