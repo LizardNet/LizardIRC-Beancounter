@@ -40,7 +40,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
@@ -163,12 +162,5 @@ public class DiceListener<T extends PircBotX> extends CommandListener<T> {
 
         moreInfo = moreBuilder.toString();
         return total;
-    }
-
-
-    public static class Provider<T extends PircBotX> implements Supplier<DiceListener<T>> {
-        public DiceListener<T> get() {
-            return new DiceListener<>();
-        }
     }
 }

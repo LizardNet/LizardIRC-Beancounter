@@ -76,7 +76,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);
 
         ownListeners.add(new Chainable<>(new Fantasy<>(commands, fantasyString), separator));
-        ownListeners.add(new PerChannel<>(new SedListener.Provider<>(5)));
+        ownListeners.add(new PerChannel<>(() -> new SedListener<>(5)));
         ownListeners.add(new InviteAcceptor<>());
 
         ownListeners.forEach(listenerManager::addListener);

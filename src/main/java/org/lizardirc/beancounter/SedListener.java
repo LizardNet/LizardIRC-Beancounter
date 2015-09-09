@@ -37,7 +37,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import com.google.common.base.Supplier;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -135,22 +134,6 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 });
         } else {
             windows.getUnchecked(event.getUser()).add(message);
-        }
-    }
-
-    public static class Provider<T extends PircBotX> implements Supplier<SedListener<T>> {
-        private final int windowSize;
-
-        public Provider() {
-            windowSize = 10;
-        }
-
-        public Provider(int windowSize) {
-            this.windowSize = windowSize;
-        }
-
-        public SedListener<T> get() {
-            return new SedListener<>(windowSize);
         }
     }
 }
