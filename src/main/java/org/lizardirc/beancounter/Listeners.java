@@ -32,6 +32,8 @@
 
 package org.lizardirc.beancounter;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -51,6 +53,8 @@ import org.lizardirc.beancounter.hooks.Fantasy;
 import org.lizardirc.beancounter.hooks.MultiCommandListener;
 import org.lizardirc.beancounter.hooks.PerChannel;
 import org.lizardirc.beancounter.hooks.PerChannelCommand;
+import org.lizardirc.beancounter.persistence.PersistenceManager;
+import org.lizardirc.beancounter.persistence.PropertiesPersistenceManager;
 
 public class Listeners<T extends PircBotX> extends CommandListener<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("rehash");
@@ -74,8 +78,12 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         listeners.add(new PerChannelCommand<>(RouletteListener::new));
         listeners.add(this);
         MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);
-
         ownListeners.add(new Chainable<>(new Fantasy<>(commands, fantasyString), separator));
+
+        Path persistencePath = Paths.get(properties.getProperty("persistencePath", "beanledger.xml"));
+        PersistenceManager pm = new PropertiesPersistenceManager(persistencePath);
+        ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistance")));
+
         ownListeners.add(new PerChannel<>(() -> new SedListener<>(5)));
         ownListeners.add(new InviteAcceptor<>());
 
