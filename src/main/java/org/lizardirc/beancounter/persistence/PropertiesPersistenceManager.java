@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
@@ -118,6 +119,8 @@ public class PropertiesPersistenceManager implements PersistenceManager {
                         properties.setProperty(prop, loaded.getProperty(prop));
                     }
                 });
+            } catch (NoSuchFileException e) {
+                System.err.println("WARNING: Could not find state file " + path + " (NoSuchFileException). This is normal if this is the first time running the bot.");
             } catch (IOException e) {
                 e.printStackTrace();
             }
