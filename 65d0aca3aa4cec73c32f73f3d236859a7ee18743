@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_cf6471e7",
+        "filename": "src/main/java/org/lizardirc/beancounter/SlapListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-10T22:54:21Z",
+      "side": 1,
+      "message": "Aggggh, how did this sneak in here",
+      "revId": "65d0aca3aa4cec73c32f73f3d236859a7ee18743",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
