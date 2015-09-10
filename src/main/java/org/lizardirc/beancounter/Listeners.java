@@ -71,7 +71,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         String fantasyString = properties.getProperty("fantasyString", "?");
         String separator = properties.getProperty("separator", ";");
 
-        Path persistencePath = Paths.get(properties.getProperty("persistencePath", "beanledger.xml"));
+        Path persistencePath = Paths.get(properties.getProperty("persistencePath", "beanledger.props"));
         PersistenceManager pm = new PropertiesPersistenceManager(persistencePath);
 
         List<CommandListener<T>> listeners = new ArrayList<>();
@@ -83,7 +83,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);
         ownListeners.add(new Chainable<>(new Fantasy<>(commands, fantasyString), separator));
 
-        ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistance")));
+        ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistence")));
 
         ownListeners.add(new PerChannel<>(() -> new SedListener<>(5)));
         ownListeners.add(new InviteAcceptor<>());

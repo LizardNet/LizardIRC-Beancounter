@@ -112,7 +112,7 @@ public class PropertiesPersistenceManager implements PersistenceManager {
         public void loadClean() {
             Properties loaded = new Properties();
             try (InputStream is = Files.newInputStream(path)) {
-                loaded.loadFromXML(is);
+                loaded.load(is);
 
                 loaded.stringPropertyNames().forEach(prop -> {
                     if (!dirty.contains(prop)) {
@@ -129,7 +129,7 @@ public class PropertiesPersistenceManager implements PersistenceManager {
         public void save() {
             if (!dirty.isEmpty()) {
                 try (OutputStream os = Files.newOutputStream(path)) {
-                    properties.storeToXML(os, null, "UTF-8");
+                    properties.store(os, null);
                     dirty.clear();
                 } catch (IOException e) {
                     e.printStackTrace();
