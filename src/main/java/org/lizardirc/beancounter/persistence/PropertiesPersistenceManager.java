@@ -53,6 +53,7 @@ public class PropertiesPersistenceManager implements PersistenceManager {
     public PropertiesPersistenceManager(Path path) {
         this.wrapper = new PropertiesWrapper(path);
         this.namespace = ImmutableList.of();
+        sync();
     }
 
     private PropertiesPersistenceManager(PropertiesWrapper wrapper, List<String> namespace) {
