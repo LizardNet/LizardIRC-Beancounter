@@ -33,6 +33,8 @@
 package org.lizardirc.beancounter.persistence;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -53,7 +55,6 @@ public class PropertiesPersistenceManager implements PersistenceManager {
     public PropertiesPersistenceManager(Path path) {
         this.wrapper = new PropertiesWrapper(path);
         this.namespace = ImmutableList.of();
-        sync();
     }
 
     private PropertiesPersistenceManager(PropertiesWrapper wrapper, List<String> namespace) {
@@ -79,16 +80,8 @@ public class PropertiesPersistenceManager implements PersistenceManager {
 
     @Override
     public void sync() {
-        try {
-            wrapper.loadClean();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            wrapper.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        wrapper.loadClean();
+        wrapper.save();
     }
 
     private Stream<String> qualify(String name) {
@@ -102,6 +95,7 @@ public class PropertiesPersistenceManager implements PersistenceManager {
 
         public PropertiesWrapper(Path path) {
             this.path = path;
+            loadClean();
         }
 
         public String get(Stream<String> names) {
@@ -114,19 +108,30 @@ public class PropertiesPersistenceManager implements PersistenceManager {
             properties.setProperty(encoded, value);
         }
 
-        public void loadClean() throws IOException {
+        public void loadClean() {
             Properties loaded = new Properties();
-            loaded.loadFromXML(Files.newInputStream(path));
+            try (InputStream is = Files.newInputStream(path)) {
+                loaded.loadFromXML(is);
 
-            loaded.stringPropertyNames().forEach(prop -> {
-                if (!dirty.contains(prop)) {
-                    properties.setProperty(prop, loaded.getProperty(prop));
-                }
-            });
+                loaded.stringPropertyNames().forEach(prop -> {
+                    if (!dirty.contains(prop)) {
+                        properties.setProperty(prop, loaded.getProperty(prop));
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        public void save() throws IOException {
-            properties.storeToXML(Files.newOutputStream(path), null, "UTF-8");
+        public void save() {
+            if (!dirty.isEmpty()) {
+                try (OutputStream os = Files.newOutputStream(path)) {
+                    properties.storeToXML(os, null, "UTF-8");
+                    dirty.clear();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         private String encode(Stream<String> names) {
