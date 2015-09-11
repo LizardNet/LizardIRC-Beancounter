@@ -32,20 +32,85 @@
 
 package org.lizardirc.beancounter.persistence;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.google.common.collect.ImmutableMap;
+
+import org.lizardirc.beancounter.utils.Bases;
+
 public interface PersistenceManager {
     PersistenceManager getNamespace(String name);
 
-    String get(String name);
+    Optional<String> get(String name);
 
-    default String get(String name, String defaultVal) {
-        String ret = get(name);
-        if (ret == null) {
-            return defaultVal;
+    default Optional<Integer> getInt(String name) {
+        try {
+            return get(name).map(Integer::parseInt);
+        } catch (NumberFormatException | NullPointerException e) {
+            return Optional.empty();
         }
-        return ret;
+    }
+
+    default Stream<String> getStream(String name) {
+        return get(name)
+            .map(s -> Arrays.stream(s.split(","))
+                    .map(Bases::base64decode)
+            )
+            .orElse(Stream.of());
+    }
+
+    default List<String> getList(String name) {
+        return getStream(name).collect(Collectors.toList());
+    }
+
+    default Set<String> getSet(String name) {
+        return getStream(name).collect(Collectors.toSet());
+    }
+
+    default Map<String, String> getMap(String name) {
+        return get(name)
+            .map(s -> Arrays.stream(s.split(","))
+                .map(entry -> entry.split(":"))
+                .collect(Collectors.toMap(
+                        arr -> Bases.base64decode(arr[0]),
+                        arr -> Bases.base64decode(arr[1]))
+                ))
+            .orElse(ImmutableMap.of());
     }
 
     void set(String name, String value);
+
+    default void setInt(String name, int value) {
+        set(name, String.valueOf(value));
+    }
+
+    default void setStream(String name, Stream<String> value) {
+        String joined = value
+            .map(Bases::base64encode)
+            .collect(Collectors.joining(","));
+        set(name, joined);
+    }
+
+    default void setList(String name, List<String> value) {
+        setStream(name, value.stream());
+    }
+
+    default void setSet(String name, Set<String> value) {
+        setStream(name, value.stream());
+    }
+
+    default void setMap(String name, Map<String, String> value) {
+        String joined = value.entrySet().stream()
+            .map(e -> Bases.base64encode(e.getKey()) + ":" + Bases.base64encode(e.getValue()))
+            .collect(Collectors.joining(","));
+        set(name, joined);
+    }
 
     void sync();
 }
