@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_cf47d11c",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/AccessControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-11T10:56:13Z",
+      "side": 1,
+      "message": "Eating bread with dinner is an example of this.",
+      "revId": "94c15ba085f8d3edeb3b41987fc066d6cffebaa3",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_af549dca",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/AccessControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-11T10:56:13Z",
+      "side": 1,
+      "message": "I suggested hostmask-\u003eSet\u003cRole\u003e and privilege-\u003eSet\u003cRole\u003e, actually.",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 68
+      },
+      "revId": "94c15ba085f8d3edeb3b41987fc066d6cffebaa3",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
