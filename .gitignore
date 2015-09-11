@@ -14,5 +14,5 @@
 dependency-reduced-pom.xml
 
 #Ignore files that beancounter creates at runtime
-beanledger.props
+*.props
 beanledger.xml

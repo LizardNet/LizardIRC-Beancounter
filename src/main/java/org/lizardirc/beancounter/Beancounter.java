@@ -33,6 +33,11 @@
 package org.lizardirc.beancounter;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -92,17 +97,37 @@ public class Beancounter {
     }
 
     public static void main(String[] args) {
-        System.out.println("Configuring bot....");
-        Properties properties = new Properties();
+        Path configurationFile = Paths.get("config.props");
 
-        //Eventually, we will have a parsable configuration file from which we will get
-        //things like what server to connect to, etc.
-        //For now, though, it's sufficient to just default the bot to these settings for
-        //testing.
-        properties.setProperty("serverHost", "irc.lizardirc.org");
-        properties.setProperty("useTls", "true");
-        properties.setProperty("allowedCertificates", "7E:00:C0:1A:C0:11:46:F3:99:47:EE:9C:7C:E9:CB:0F:86:26:B4:14:69:7D:D2:4F:A7:2F:F2:85:23:D1:12:B0:36:C1:2F:9C:65:41:04:25:06:B6:41:49:78:E2:D6:98:C5:F5:9F:73:CD:9F:A4:0C:4E:A5:E2:54:69:DA:51:6E");
-        properties.setProperty("autoJoinChannels", "#botspam");
+        // Expect 0 or 1 arguments.  If present, argument is the location of the startup configuration file to use
+        if (args.length > 1) {
+            System.err.println("Error: Too many arguments.");
+            System.err.println("Usage: java -jar beancounter.jar [configurationFile]");
+            System.err.println("Where: configurationFile is the optional path to a startup configuration file.");
+            System.exit(2);
+        } else if (args.length == 1) {
+            configurationFile = Paths.get(args[0]);
+        }
+
+        System.out.println("Reading configuration file " + configurationFile + "....");
+        Properties properties = new Properties();
+        try (InputStream is = Files.newInputStream(configurationFile)) {
+            properties.load(is);
+        } catch (NoSuchFileException e) {
+            System.err.println("Error: Could not find configuration file " + configurationFile + " (NoSuchFileException). A default configuration file has been created for you at that location.");
+            System.err.println("The bot will now terminate to give you an opportunity to edit the configuration file.");
+            try (InputStream defaultConfig = Beancounter.class.getResourceAsStream("/default.config.props")) {
+                Files.copy(defaultConfig, configurationFile);
+            } catch (IOException e1) {
+                System.err.println("Error while writing out default configuration file.  Stack trace follows.");
+                e1.printStackTrace();
+            }
+            System.exit(3);
+        } catch (IOException e) {
+            System.err.println("Error: Could not read configuration file " + configurationFile + ".  A stack trace follows.  The bot will now terminate.");
+            e.printStackTrace();
+            System.exit(3);
+        }
 
         System.out.println("Creating bot....");
         Beancounter beancounter = new Beancounter(properties);

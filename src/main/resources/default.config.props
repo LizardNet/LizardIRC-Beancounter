@@ -1,0 +1,38 @@
+# Beancounter configuration properties file
+# Please read this file carefully and modify as appropriate, as it controls the startup parameters of your bot.
+# Unless otherwise noted, all properties expect a single string value.
+
+# REQUIRED SETTINGS
+# You must specify these values, or the bot will explode on you at startup.
+
+# serverHost: String - Hostname of the IRC server to connect to.
+serverHost=
+
+# OPTIONAL SETTINGS
+# If these values are not specified, hardcoded defaults (shown below) will be used instead.
+# Remember to uncomment the values if you wish to change them!
+
+# botName: String - Nickname the bot should attempt to use. Defaults to Beancounter.
+#botName=Beancounter
+
+# useTls: Boolean - Set this to true if the bot should attempt to use an encrypted IRC connection (default)
+#useTls=true
+
+# verifyHostname: Boolean - Only effective if useTls is true. If verifyHostname is true (default), verify that the
+# name of the server on the presented certificate matches the serverHost property above.  Bot will abort connection if
+# the verification fails. IMPORTANT: This property does NOT control Java's own built-in certificate validation routines!
+#verifyHostname=true
+
+# allowedCertificates: String - Only effective if useTls is true. Set allowedCertificates to the hexadecimal MD5, SHA1,
+# SHA256, or SHA512 fingerprint of the certificate(s) you want to allow - non-matching certs will cause the bot to
+# abort connecting. Specify multiple fingerprints by separating then with commas. Leave blank to not perform this
+# certificate pinning (default).
+#allowedCertificates=
+
+# serverPort: Integer - Set this to the port the bot should use to connect to the IRC server. The default value depends
+# on the setting of useTls. If useTls is true, serverPort defaults to 6697; otherwise it defaults to 6667.
+#serverPort=
+
+# autoJoinChannels: String - Set this to a list of comma-separated channels the bot should always join on startup. By
+# default, will not attempt to join any channels.
+#autoJoinChannels=
