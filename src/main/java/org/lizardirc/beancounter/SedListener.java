@@ -127,7 +127,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
 
                     StringBuilder sb = new StringBuilder(corrector.getNick());
                     if (!corrector.equals(speaker)) {
-                        sb.append(" thinks " + speaker.getNick());
+                        sb.append(" thinks ").append(speaker.getNick());
                     }
                     sb.append(" meant to say: ").append(s);
                     event.getChannel().send().message(sb.toString());

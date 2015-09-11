@@ -30,7 +30,7 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.security;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,7 +42,7 @@ public class AccessControl {
 
     public AccessControl(Map<String, String> accessList) {
         if (accessList.isEmpty()) {
-            System.err.println("Warning: AccessControl insantiated with empty accessList.");
+            System.err.println("Warning: AccessControl instantiated with empty accessList.");
             System.err.println("Assuming everyone is authorized to access everything!");
             accessList.put("^.*!.*@.*$", "*");
         }
@@ -66,6 +66,10 @@ public class AccessControl {
             String aclPermission = entry.getValue();
 
             if (userHostmask.matches(aclHostmask)) {
+                /* TODO: Currently, we use a single Map of hostmasks->privileges.  Support
+                   TODO: a roll-based system which would use two maps; hostmasks->roles and roles->privileges
+                   TODO: Suggested by TLUL: Use roles->Set<hostmask>
+                 */
                 if (permission.equals(aclPermission) || aclPermission.equals("*")) {
                     return true;
                 }

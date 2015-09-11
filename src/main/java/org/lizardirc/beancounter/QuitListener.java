@@ -33,7 +33,6 @@
 package org.lizardirc.beancounter;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -42,17 +41,14 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandListener;
+import org.lizardirc.beancounter.security.AccessControl;
 
 public class QuitListener<T extends PircBotX> extends CommandListener<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("quit");
     private final AccessControl acl;
 
-    public QuitListener() {
-        // For now, hard-code LizardIRC staff as being able to execute all functions.
-        // TODO - Turn this into a configurable property a la java.util.Properties
-        HashMap<String, String> accessList = new HashMap<>();
-        accessList.put("^.*!.*@lizardirc/staff/.*$", "*");
-        acl = new AccessControl(accessList);
+    public QuitListener(AccessControl acl) {
+        this.acl = acl;
     }
 
     @Override

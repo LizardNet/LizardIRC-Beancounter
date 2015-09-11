@@ -37,6 +37,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -55,6 +56,7 @@ import org.lizardirc.beancounter.hooks.PerChannel;
 import org.lizardirc.beancounter.hooks.PerChannelCommand;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.persistence.PropertiesPersistenceManager;
+import org.lizardirc.beancounter.security.AccessControl;
 
 public class Listeners<T extends PircBotX> extends CommandListener<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("rehash");
@@ -74,10 +76,14 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         Path persistencePath = Paths.get(properties.getProperty("persistencePath", "beanledger.props"));
         PersistenceManager pm = new PropertiesPersistenceManager(persistencePath);
 
+        HashMap<String, String> accessList = new HashMap<>(); //Temporary; we want this to eventually be loaded from config
+        accessList.put("^.*!.*@lizardirc/staff/.*$", "*"); //Temporary; we want this to eventually be loaded from config
+        AccessControl acl = new AccessControl(accessList);
+
         List<CommandListener<T>> listeners = new ArrayList<>();
-        listeners.add(new QuitListener<>());
+        listeners.add(new QuitListener<>(acl));
         listeners.add(new DiceListener<>());
-        listeners.add(new SlapListener<>(pm.getNamespace("customSlaps")));
+        listeners.add(new SlapListener<>(pm.getNamespace("customSlaps"), acl));
         listeners.add(new PerChannelCommand<>(RouletteListener::new));
         listeners.add(this);
         MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);

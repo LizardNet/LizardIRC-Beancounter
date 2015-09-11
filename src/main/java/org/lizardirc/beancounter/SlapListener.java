@@ -33,7 +33,6 @@
 package org.lizardirc.beancounter;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -47,6 +46,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandListener;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
+import org.lizardirc.beancounter.security.AccessControl;
 
 public class SlapListener<T extends PircBotX> extends CommandListener<T> {
     private static final String CMD_SLAP = "slap";
@@ -81,12 +81,9 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
     private final List<String> items;
     private final List<String> item_mods;
 
-    public SlapListener(PersistenceManager pm) {
+    public SlapListener(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
-
-        HashMap<String, String> accessList = new HashMap<>();
-        accessList.put("^.*!.*@lizardirc/staff/.*$", "*");
-        acl = new AccessControl(accessList);
+        this.acl = acl;
 
         actions = pm.getList(PERSIST_ACTIONS);
         if (actions.isEmpty()) {
