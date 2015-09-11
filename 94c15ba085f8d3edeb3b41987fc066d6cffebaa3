@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_4f63e1b1",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/AccessControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-11T11:02:03Z",
+      "side": 1,
+      "message": "Dammit you (and, by extension, dammit me)",
+      "parentUuid": "da6255ed_cf47d11c",
+      "revId": "94c15ba085f8d3edeb3b41987fc066d6cffebaa3",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_af549dca",
         "filename": "src/main/java/org/lizardirc/beancounter/security/AccessControl.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
         "endLine": 71,
         "endChar": 68
       },
+      "revId": "94c15ba085f8d3edeb3b41987fc066d6cffebaa3",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_2f58adf9",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/AccessControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-11T11:02:03Z",
+      "side": 1,
+      "message": "That was after I entered this TODO, I think.  But anyway, it\u0027s here now.  :P",
+      "parentUuid": "da6255ed_af549dca",
       "revId": "94c15ba085f8d3edeb3b41987fc066d6cffebaa3",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
