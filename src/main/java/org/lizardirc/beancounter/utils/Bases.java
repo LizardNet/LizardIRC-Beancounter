@@ -41,6 +41,10 @@ public final class Bases {
     private static final Charset UTF8 = Charsets.UTF_8;
     private static final Base64.Encoder B64E = Base64.getEncoder();
     private static final Base64.Decoder B64D = Base64.getDecoder();
+    private static final Base64.Encoder MB64E = Base64.getMimeEncoder();
+    private static final Base64.Decoder MB64D = Base64.getMimeDecoder();
+    private static final Base64.Encoder UB64E = Base64.getUrlEncoder();
+    private static final Base64.Decoder UB64D = Base64.getUrlDecoder();
 
     private Bases() {
         throw new IllegalStateException("Cannot instantiate this class");
@@ -52,5 +56,21 @@ public final class Bases {
 
     public static String base64decode(String source) {
         return new String(B64D.decode(source), UTF8);
+    }
+
+    public static String mimeBase64encode(String source) {
+        return MB64E.encodeToString(source.getBytes(UTF8));
+    }
+
+    public static String mimeBase64decode(String source) {
+        return new String(MB64D.decode(source), UTF8);
+    }
+
+    public static String urlBase64encode(String source) {
+        return UB64E.encodeToString(source.getBytes(UTF8));
+    }
+
+    public static String urlBase64decode(String source) {
+        return new String(UB64D.decode(source), UTF8);
     }
 }
