@@ -32,9 +32,7 @@
 
 package org.lizardirc.beancounter;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -46,18 +44,14 @@ import org.pircbotx.hooks.events.PartEvent;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 
 public class ChannelPersistor<T extends PircBotX> extends ListenerAdapter<T> {
-    private final Set<String> channels = new HashSet<>();
+    private static final String PERSIST_CHANNELS = "channels";
+    private final Set<String> channels;
     private final PersistenceManager pm;
 
     public ChannelPersistor(PersistenceManager pm) {
         this.pm = pm;
 
-        for (String channel : pm.get("channels", "").split(",")) {
-            channel = channel.trim();
-            if (!channel.isEmpty()) {
-                channels.add(channel);
-            }
-        }
+        channels = pm.getSet(PERSIST_CHANNELS);
     }
 
     public void onConnect(ConnectEvent<T> event) throws Exception {
@@ -86,9 +80,7 @@ public class ChannelPersistor<T extends PircBotX> extends ListenerAdapter<T> {
     }
 
     private void sync() {
-        String channelString = channels.stream()
-            .collect(Collectors.joining(","));
-        pm.set("channels", channelString);
+        pm.setSet(PERSIST_CHANNELS, channels);
         pm.sync();
     }
 }

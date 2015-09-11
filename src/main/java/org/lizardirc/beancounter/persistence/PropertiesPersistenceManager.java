@@ -40,6 +40,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -70,7 +71,7 @@ public class PropertiesPersistenceManager implements PersistenceManager {
     }
 
     @Override
-    public String get(String name) {
+    public Optional<String> get(String name) {
         return wrapper.get(qualify(name));
     }
 
@@ -99,8 +100,9 @@ public class PropertiesPersistenceManager implements PersistenceManager {
             loadClean();
         }
 
-        public String get(Stream<String> names) {
-            return properties.getProperty(encode(names));
+        public Optional<String> get(Stream<String> names) {
+            String ret = properties.getProperty(encode(names));
+            return ret == null ? Optional.empty() : Optional.of(ret);
         }
 
         public void set(Stream<String> names, String value) {
