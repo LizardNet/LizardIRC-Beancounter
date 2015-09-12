@@ -174,85 +174,89 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
                 event.getBot().sendIRC().action(channel, completed.replaceAll(" +", " "));
                 break;
             case CMD_CFG:
-                if (!acl.hasPriv(event, PRIV_CFG)) {
-                    event.respond("No u!  (You don't have the necessary permissions to use this command.)");
-                    return;
-                }
-
-                if (commands.size() < 3) {
-                    event.respond("Error: Too few or invalid arguments for ?cfgslap");
-                    event.respond("syntax: cfgslap <add|list|remove> <actions|modifiers|items|item_mods> [what]");
-                    return;
-                }
-
-                if (remainder == null) {
-                    remainder = "";
-                } else {
-                    remainder = remainder.trim();
-                }
-
-                List<String> list;
-                switch (commands.get(2)) {
-                    case CMD_CFG_ACTIONS:
-                        list = actions;
-                        break;
-                    case CMD_CFG_MODIFIERS:
-                        list = modifiers;
-                        break;
-                    case CMD_CFG_ITEMS:
-                        list = items;
-                        break;
-                    case CMD_CFG_ITEM_MODS:
-                        list = item_mods;
-                        break;
-                    default:
-                        event.respond("Error: Invalid argument.  What list do you want to operate on?");
-                        event.respond("Syntax: cfgslap <add|list|remove> <actions|modifiers|items|item_mods> [what]");
-                        return;
-                }
-
-                String targetName = commands.get(2);
-                targetName = targetName.substring(0, targetName.length() - 1);
-
-                switch (commands.get(1)) {
-                    case CMD_CFG_ADD:
-                        if (remainder.isEmpty()) {
-                            event.respond("Error: Too few arguments.  What do you want to add?");
-                            event.respond("syntax: cfgslap <add|list|remove> <actions|modifiers|items|item_mods> [what]");
-                            return;
-                        }
-
-                        list.add(remainder);
-                        sync();
-                        event.respond("New " + targetName + " remembered!");
-                        break;
-                    case CMD_CFG_LIST:
-                        event.respond("I know the following " + targetName + "s");
-                        list.forEach(event::respond);
-                        break;
-                    case CMD_CFG_REMOVE:
-                        if (remainder.isEmpty()) {
-                            event.respond("Error: Too few arguments.  What do you want to remove?");
-                            event.respond("syntax: cfgslap <add|list|remove> <actions|modifiers|items|item_mods> [what]");
-                            return;
-                        }
-                        if (list.remove(remainder)) {
-                            event.respond(targetName + " successfully forgotten.");
-                            sync();
-                        } else {
-                            event.respond("Unable to comply: I didn't know that " + targetName + " in the first place!");
-                        }
-                        break;
-                }
+                handleCfgCommand(event, commands, remainder);
                 break;
         }
     }
 
-    private void sync() {
+    private synchronized void sync() {
         pm.setList(PERSIST_ACTIONS, actions);
         pm.setList(PERSIST_MODIFIERS, modifiers);
         pm.setList(PERSIST_ITEMS, items);
         pm.setList(PERSIST_ITEM_MODS, item_mods);
         pm.sync();
+    }
+
+    private synchronized void handleCfgCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+        if (!acl.hasPriv(event, PRIV_CFG)) {
+            event.respond("No u!  (You don't have the necessary permissions to use this command.)");
+            return;
+        }
+
+        if (commands.size() < 3) {
+            event.respond("Error: Too few or invalid arguments for ?cfgslap");
+            event.respond("syntax: cfgslap <add|list|remove> <actions|modifiers|items|item_mods> [what]");
+            return;
+        }
+
+        if (remainder == null) {
+            remainder = "";
+        } else {
+            remainder = remainder.trim();
+        }
+
+        List<String> list;
+        switch (commands.get(2)) {
+            case CMD_CFG_ACTIONS:
+                list = actions;
+                break;
+            case CMD_CFG_MODIFIERS:
+                list = modifiers;
+                break;
+            case CMD_CFG_ITEMS:
+                list = items;
+                break;
+            case CMD_CFG_ITEM_MODS:
+                list = item_mods;
+                break;
+            default:
+                event.respond("Error: Invalid argument.  What list do you want to operate on?");
+                event.respond("Syntax: cfgslap <add|list|remove> <actions|modifiers|items|item_mods> [what]");
+                return;
+        }
+
+        String targetName = commands.get(2);
+        targetName = targetName.substring(0, targetName.length() - 1);
+
+        switch (commands.get(1)) {
+            case CMD_CFG_ADD:
+                if (remainder.isEmpty()) {
+                    event.respond("Error: Too few arguments.  What do you want to add?");
+                    event.respond("syntax: cfgslap <add|list|remove> <actions|modifiers|items|item_mods> [what]");
+                    return;
+                }
+
+                list.add(remainder);
+                sync();
+                event.respond("New " + targetName + " remembered!");
+                break;
+            case CMD_CFG_LIST:
+                event.respond("I know the following " + targetName + "s");
+                list.forEach(event::respond);
+                break;
+            case CMD_CFG_REMOVE:
+                if (remainder.isEmpty()) {
+                    event.respond("Error: Too few arguments.  What do you want to remove?");
+                    event.respond("syntax: cfgslap <add|list|remove> <actions|modifiers|items|item_mods> [what]");
+                    return;
+                }
+                if (list.remove(remainder)) {
+                    event.respond(targetName + " successfully forgotten.");
+                    sync();
+                } else {
+                    event.respond("Unable to comply: I didn't know that " + targetName + " in the first place!");
+                }
+                break;
+        }
     }
 }
