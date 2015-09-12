@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_cf9fd14f",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-12T16:23:22Z",
+      "side": 1,
+      "message": "What does this plugin do for us, exactly?",
+      "revId": "c4171b808ae6921782601b81387df6a62e6220ad",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_8fa9d97d",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-12T16:23:22Z",
+      "side": 1,
+      "message": "Microoptimization, but we could probably stand do build this with a StringBuilder.",
+      "revId": "c4171b808ae6921782601b81387df6a62e6220ad",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_afac9d8d",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-12T16:23:22Z",
+      "side": 1,
+      "message": "We\u0027re returning this in a CTCP reply; maybe the more compact \"(development version)\" or similar?",
+      "revId": "c4171b808ae6921782601b81387df6a62e6220ad",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
