@@ -58,28 +58,28 @@ public class ChannelPersistor<T extends PircBotX> extends ListenerAdapter<T> {
         channels.forEach(event.getBot().sendIRC()::joinChannel);
     }
 
-    public void onJoin(JoinEvent<T> event) throws Exception {
+    public synchronized void onJoin(JoinEvent<T> event) throws Exception {
         if (event.getBot().getUserBot().equals(event.getUser())) {
             channels.add(event.getChannel().getName());
             sync();
         }
     }
 
-    public void onKick(KickEvent<T> event) throws Exception {
+    public synchronized void onKick(KickEvent<T> event) throws Exception {
         if (event.getBot().getUserBot().equals(event.getRecipient())) {
             channels.remove(event.getChannel().getName());
             sync();
         }
     }
 
-    public void onPart(PartEvent<T> event) throws Exception {
+    public synchronized void onPart(PartEvent<T> event) throws Exception {
         if (event.getBot().getUserBot().equals(event.getUser())) {
             channels.remove(event.getChannel().getName());
             sync();
         }
     }
 
-    private void sync() {
+    private synchronized void sync() {
         pm.setSet(PERSIST_CHANNELS, channels);
         pm.sync();
     }
