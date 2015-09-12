@@ -54,6 +54,8 @@ import org.lizardirc.beancounter.security.FingerprintingSslSocketFactory;
 import org.lizardirc.beancounter.security.VerifyingSslSocketFactory;
 
 public class Beancounter {
+    private static final String PROJECT_NAME = "LizardIRC/Beancounter";
+    private static final String PROJECT_URL = "https://github.com/LizardNet/LizardIRC-Beancounter";
     private final PircBotX bot;
 
     public Beancounter(Properties properties) {
@@ -99,6 +101,8 @@ public class Beancounter {
         if (!saslUsername.isEmpty() && !saslPassword.isEmpty()) {
             confBuilder.addCapHandler(new SASLCapHandler(saslUsername, saslPassword));
         }
+
+        setVersionString(confBuilder);
 
         bot = new PircBotX(confBuilder.buildConfiguration());
     }
@@ -151,5 +155,30 @@ public class Beancounter {
             System.err.println("Stack trace follows:");
             e.printStackTrace();
         }
+    }
+
+    private void setVersionString(Configuration.Builder confBuilder) {
+        String artifactVersion = getClass().getPackage().getImplementationVersion();
+
+        StringBuilder beancounterVersion = new StringBuilder(PROJECT_NAME).append(" ");
+        if (artifactVersion == null) {
+            // We're probably running in an IDE instead of as a jarfile; don't try to get the artifact version
+            beancounterVersion.append("(development/unknown version)");
+        } else {
+            beancounterVersion.append("version ").append(artifactVersion);
+        }
+        beancounterVersion.append(" <").append(PROJECT_URL).append("> using ");
+        beancounterVersion.append(confBuilder.getVersion());
+
+        StringBuilder beancounterGecos = new StringBuilder(PROJECT_NAME).append(" version ");
+        if (artifactVersion == null) {
+            beancounterGecos.append("(unknown)");
+        } else {
+            beancounterGecos.append(artifactVersion);
+        }
+        beancounterGecos.append(", ").append(PROJECT_URL);
+
+        confBuilder.setVersion(beancounterVersion.toString());
+        confBuilder.setRealName(beancounterGecos.toString());
     }
 }
