@@ -54,6 +54,8 @@ import org.lizardirc.beancounter.security.FingerprintingSslSocketFactory;
 import org.lizardirc.beancounter.security.VerifyingSslSocketFactory;
 
 public class Beancounter {
+    private static final String PROJECT_NAME = "LizardIRC/Beancounter";
+    private static final String PROJECT_URL = "https://github.com/LizardNet/LizardIRC-Beancounter";
     private final PircBotX bot;
 
     public Beancounter(Properties properties) {
@@ -99,6 +101,8 @@ public class Beancounter {
         if (!saslUsername.isEmpty() && !saslPassword.isEmpty()) {
             confBuilder.addCapHandler(new SASLCapHandler(saslUsername, saslPassword));
         }
+
+        setVersionString(confBuilder);
 
         bot = new PircBotX(confBuilder.buildConfiguration());
     }
@@ -151,5 +155,30 @@ public class Beancounter {
             System.err.println("Stack trace follows:");
             e.printStackTrace();
         }
+    }
+
+    private void setVersionString(Configuration.Builder confBuilder) {
+        String artifactVersion = getClass().getPackage().getImplementationVersion();
+
+        String beancounterVersion = PROJECT_NAME + " ";
+        if (artifactVersion == null) {
+            // We're probably running in an IDE instead of as a jarfile; don't try to get the artifact version
+            beancounterVersion += "(version unknown; I'm probably being run in an IDE instead of from a jarfile)";
+        } else {
+            beancounterVersion += "version " + artifactVersion;
+        }
+        beancounterVersion += " <" + PROJECT_URL + "> using ";
+        beancounterVersion += confBuilder.getVersion();
+
+        String beancounterGecos = PROJECT_NAME + " version ";
+        if (artifactVersion == null) {
+            beancounterGecos += "(unknown)";
+        } else {
+            beancounterGecos += artifactVersion;
+        }
+        beancounterGecos += ", " + PROJECT_URL;
+
+        confBuilder.setVersion(beancounterVersion);
+        confBuilder.setRealName(beancounterGecos);
     }
 }
