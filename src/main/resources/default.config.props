@@ -15,6 +15,9 @@ serverHost=
 # botName: String - Nickname the bot should attempt to use. Defaults to Beancounter.
 #botName=Beancounter
 
+# botUsername: String - The username (nick!username@host) the bot should use. Defaults to beancounter.
+#botUsername=beancounter
+
 # useTls: Boolean - Set this to true if the bot should attempt to use an encrypted IRC connection (default)
 #useTls=true
 
@@ -33,6 +36,38 @@ serverHost=
 # on the setting of useTls. If useTls is true, serverPort defaults to 6697; otherwise it defaults to 6667.
 #serverPort=
 
+# autoModes: String - The single-character mode flags the bot should attempt to set on itself after connecting. You can
+# mix additions and removals by using the standard format (e.g., "-ix+wB"). If blank (default), the bot will not
+# attempt to change its usermodes on connect.
+#autoModes=
+
 # autoJoinChannels: String - Set this to a list of comma-separated channels the bot should always join on startup. By
 # default, will not attempt to join any channels.
 #autoJoinChannels=
+
+# OPTIONAL SASL AUTHENTICATION CONFIGURATION
+# These values control whether the bot should attempt SASL authentication to an IRC network's services (usually either
+# NickServ or AuthServ). Both values are optional; however, both must be provided for the bot to attempt authentication.
+# Consult your IRC network's documentation if you aren't sure what to put here.
+
+# sasl.username: String - Usually the username of the NickServ/AuthServ account to attempt authentication as
+#sasl.username=
+
+# sasl.password: String - Usually the password of the NickServ/AuthServ account to attempt authentication as
+#sasl.password=
+
+# OPTIONAL BEANLEDGER CONFIGURATION
+# The Beanledger is used to contain the bot's state information; for example, custom items for the slap command and
+# channels the bot has been invited to join and which it should attempt to join again on connect. If any of these values
+# aren't specified, the defaults (indicated below) will be used instead. You may wish to use this Beanledger
+# configuration if you run multiple Beancounters (for instance, so you can have a separate Beanledger for each network
+# you have a Beancounter for).
+
+# beanledger.backend: String - The storage backend to use for your Beanledger. Currently, only the value "flatfile"
+# is supported. Defaults to "flatfile". Selecting an unsupported backend will cause the bot to explode violently.
+#beanledger.backend=flatfile
+
+# beanledger.flatfile.path: String - If using the "flatfile" Beanledger backend, what file should it use? Relative paths
+# are interpreted as relative to the Beancounter jarfile. Using the ".props" file extension is recommended. Defaults to
+# the value "beanledger.props".
+#beanledger.flatfile.path=beanledger.props

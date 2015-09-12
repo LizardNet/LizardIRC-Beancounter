@@ -46,6 +46,8 @@ import javax.net.ssl.SSLSocketFactory;
 
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
+import org.pircbotx.cap.SASLCapHandler;
+import org.pircbotx.exception.CAPException;
 import org.pircbotx.exception.IrcException;
 
 import org.lizardirc.beancounter.security.FingerprintingSslSocketFactory;
@@ -56,17 +58,22 @@ public class Beancounter {
 
     public Beancounter(Properties properties) {
         String botName = properties.getProperty("botName", "Beancounter");
+        String botUsername = properties.getProperty("botUsername", "beancounter");
         String serverHost = properties.getProperty("serverHost");
         boolean useTls = Boolean.parseBoolean(properties.getProperty("useTls", "false"));
         boolean verifyHostname = Boolean.parseBoolean(properties.getProperty("verifyHostname", "true"));
         String allowedCertificates = properties.getProperty("allowedCertificates", "");
         int serverPort = Integer.parseInt(properties.getProperty("serverPort", useTls ? "6697" : "6667"));
         String[] autoJoinChannels = properties.getProperty("autoJoinChannels", "").split(",");
+        String saslUsername = properties.getProperty("sasl.username", "");
+        String saslPassword = properties.getProperty("sasl.password", "");
 
         Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<>()
             .setName(botName)
+            .setLogin(botUsername)
             .setServerHostname(serverHost)
-            .setServerPort(serverPort);
+            .setServerPort(serverPort)
+            .setCapEnabled(true); // Of course, the PircBotX documentation doesn't indicate this is necessary....
 
         Listeners<PircBotX> listeners = new Listeners<>(confBuilder.getListenerManager(), properties);
         listeners.register();
@@ -89,10 +96,14 @@ public class Beancounter {
             confBuilder.addAutoJoinChannel(channel);
         }
 
+        if (!saslUsername.isEmpty() && !saslPassword.isEmpty()) {
+            confBuilder.addCapHandler(new SASLCapHandler(saslUsername, saslPassword));
+        }
+
         bot = new PircBotX(confBuilder.buildConfiguration());
     }
 
-    public void run() throws IOException, IrcException {
+    public void run() throws IOException, IrcException, CAPException {
         bot.startBot();
     }
 

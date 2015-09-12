@@ -72,9 +72,18 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
     public void register() {
         String fantasyString = properties.getProperty("fantasyString", "?");
         String separator = properties.getProperty("separator", ";");
+        String modesOnConnect = properties.getProperty("autoModes", "");
+        String beanledgerBackend = properties.getProperty("beanledger.backend", "flatfile");
+        PersistenceManager pm;
 
-        Path persistencePath = Paths.get(properties.getProperty("persistencePath", "beanledger.props"));
-        PersistenceManager pm = new PropertiesPersistenceManager(persistencePath);
+        switch(beanledgerBackend) {
+            case "flatfile":
+                Path persistencePath = Paths.get(properties.getProperty("beanledger.flatfile.path", "beanledger.props"));
+                pm = new PropertiesPersistenceManager(persistencePath);
+                break;
+            default:
+                throw new IllegalStateException("Unknown or unsupported Beanledger backend \"" + beanledgerBackend + "\" specified in configuration.");
+        }
 
         HashMap<String, String> accessList = new HashMap<>(); //Temporary; we want this to eventually be loaded from config
         accessList.put("^.*!.*@lizardirc/staff/.*$", "*"); //Temporary; we want this to eventually be loaded from config
@@ -90,6 +99,10 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         ownListeners.add(new Chainable<>(new Fantasy<>(commands, fantasyString), separator));
 
         ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistence")));
+
+        if(!modesOnConnect.isEmpty()) {
+            ownListeners.add(new SetModesOnConnectListener<>(modesOnConnect));
+        }
 
         ownListeners.add(new PerChannel<>(() -> new SedListener<>(5)));
         ownListeners.add(new InviteAcceptor<>());
