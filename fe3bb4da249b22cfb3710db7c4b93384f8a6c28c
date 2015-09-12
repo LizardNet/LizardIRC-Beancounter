@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_0fb969e9",
+        "filename": "src/main/java/org/lizardirc/beancounter/Listeners.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-12T09:56:05Z",
+      "side": 1,
+      "message": "fix this too",
+      "revId": "fe3bb4da249b22cfb3710db7c4b93384f8a6c28c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_2fb42df1",
+        "filename": "src/main/java/org/lizardirc/beancounter/Listeners.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-12T09:56:05Z",
+      "side": 1,
+      "message": "agh, will fix",
+      "revId": "fe3bb4da249b22cfb3710db7c4b93384f8a6c28c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
