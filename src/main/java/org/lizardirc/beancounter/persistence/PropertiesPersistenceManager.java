@@ -105,13 +105,13 @@ public class PropertiesPersistenceManager implements PersistenceManager {
             return ret == null ? Optional.empty() : Optional.of(ret);
         }
 
-        public void set(Stream<String> names, String value) {
+        public synchronized void set(Stream<String> names, String value) {
             String encoded = encode(names);
             dirty.add(encoded);
             properties.setProperty(encoded, value);
         }
 
-        public void loadClean() {
+        public synchronized void loadClean() {
             Properties loaded = new Properties();
             try (InputStream is = Files.newInputStream(path)) {
                 loaded.load(is);
@@ -128,7 +128,7 @@ public class PropertiesPersistenceManager implements PersistenceManager {
             }
         }
 
-        public void save() {
+        public synchronized void save() {
             if (!dirty.isEmpty()) {
                 try (OutputStream os = Files.newOutputStream(path)) {
                     properties.store(os, null);

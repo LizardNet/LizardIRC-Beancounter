@@ -57,7 +57,7 @@ public class AccessControl {
         this.accessList = accessList;
     }
 
-    public boolean hasPriv(GenericUserEvent<?> event, String permission) {
+    public synchronized boolean hasPriv(GenericUserEvent<?> event, String permission) {
         // Apparently, PircBotX has a different definition of "hostmask" than the rest of the IRC world....
         String userHostmask = event.getUser().getNick() + "!" + event.getUser().getLogin() + "@" + event.getUser().getHostmask();
 
