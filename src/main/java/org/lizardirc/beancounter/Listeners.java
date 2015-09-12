@@ -74,6 +74,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         String separator = properties.getProperty("separator", ";");
         String modesOnConnect = properties.getProperty("autoModes", "");
         String beanledgerBackend = properties.getProperty("beanledger.backend", "flatfile");
+        String ownerHostmask = properties.getProperty("ownerHostmask", "");
         PersistenceManager pm;
 
         switch (beanledgerBackend) {
@@ -85,8 +86,10 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
                 throw new IllegalStateException("Unknown or unsupported Beanledger backend \"" + beanledgerBackend + "\" specified in configuration.");
         }
 
-        HashMap<String, String> accessList = new HashMap<>(); //Temporary; we want this to eventually be loaded from config
-        accessList.put("^.*!.*@lizardirc/staff/.*$", "*"); //Temporary; we want this to eventually be loaded from config
+        HashMap<String, String> accessList = new HashMap<>();
+        if (!ownerHostmask.isEmpty()) {
+            accessList.put(ownerHostmask, "*");
+        }
         AccessControl acl = new AccessControl(accessList);
 
         List<CommandListener<T>> listeners = new ArrayList<>();
