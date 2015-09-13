@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_aff13d97",
+        "filename": "src/main/java/org/lizardirc/beancounter/ChannelPersistor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-13T04:16:37Z",
+      "side": 1,
+      "message": "Thinking about this, sync() can remain unsynchronized and still be threadsafe, but only because it\u0027s only called from synchronized methods so it\u0027s guaranteed to not be used concurrently. If any other methods called it, we\u0027d need to synchronize it.",
+      "parentUuid": "da6255ed_cfc6b149",
+      "revId": "0e70afac7c21cdde70625b7be2d3a08d1c8365aa",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_af75bd33",
         "filename": "src/main/java/org/lizardirc/beancounter/SlapListener.java",
         "patchSetId": 3
@@ -65,6 +83,24 @@
       "writtenOn": "2015-09-12T16:05:41Z",
       "side": 1,
       "message": "Ditto here. If we make pm threadsafe, this shouldn\u0027t need to be synchronized.",
+      "revId": "0e70afac7c21cdde70625b7be2d3a08d1c8365aa",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_8fee79b3",
+        "filename": "src/main/java/org/lizardirc/beancounter/SlapListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-13T04:16:37Z",
+      "side": 1,
+      "message": "This one actually can\u0027t be synchronized while the unsynchronized constructor calls it.",
+      "parentUuid": "da6255ed_af75bd33",
       "revId": "0e70afac7c21cdde70625b7be2d3a08d1c8365aa",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
