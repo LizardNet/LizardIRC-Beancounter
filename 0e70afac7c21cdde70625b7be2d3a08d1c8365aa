@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_cfc6b149",
+        "filename": "src/main/java/org/lizardirc/beancounter/ChannelPersistor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-13T02:44:15Z",
+      "side": 1,
+      "message": "Yeah, that seems a better approach. If I\u0027m not mistaken, if we do this, onConnect should remain synchronized (to prevent concurrent modification as you mentioned), but everything else here and in SlapListener can be made threaded again. I\u0027ll submit another patchset shortly.",
+      "parentUuid": "da6255ed_ef7bb527",
+      "revId": "0e70afac7c21cdde70625b7be2d3a08d1c8365aa",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_af75bd33",
         "filename": "src/main/java/org/lizardirc/beancounter/SlapListener.java",
         "patchSetId": 3
