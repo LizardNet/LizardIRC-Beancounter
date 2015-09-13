@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_eff7358b",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-13T04:14:25Z",
+      "side": 1,
+      "message": "Fien",
+      "parentUuid": "da6255ed_2ffe6d6c",
+      "revId": "1bd89497f6c5e195929729514fb1c42f18052460",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_2fe78de6",
         "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
         "patchSetId": 4
