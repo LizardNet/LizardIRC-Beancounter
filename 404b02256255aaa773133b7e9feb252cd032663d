@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_6f1225b6",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-13T04:19:29Z",
+      "side": 1,
+      "message": "Interesting note: gerrit\u0027s change highlighting breaks here. I wonder why that is.",
+      "revId": "404b02256255aaa773133b7e9feb252cd032663d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
