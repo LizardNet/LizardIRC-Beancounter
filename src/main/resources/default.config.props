@@ -53,6 +53,20 @@ serverHost=
 # assigned from IRC using the to-be-implemented ACL control command).
 #ownerHostmask=
 
+# fantasyString: String - Set this to the character (or string of characters) that will be expected to prefix commands
+# sent to an IRC channel. Commands sent to your Beancounter in a private message don't need to be prefixed. If left
+# blank, defaults to "?". There is no restriction on the length of the fantasyString, but a single character is
+# recommended. Example: If fantasyString is set to "?" and you want to call the "slap" command in a channel, you would
+# say "?slap" in the channel. Note: If you want to use "=" as your fantasyString, escape it with a single backslash.
+#fantasyString=?
+
+# separator: String - Set this to the character (or string of characters) that can be used to separate chainable
+# bot commands. Chainable bot commands are bot commands that can be called on a single line instead of being sent on
+# their own lines; for example, if separator is set to ";" (the default), one could say this in an IRC channel to call
+# the "slap", "roulette", and "poulette" commands in order: "?slap; ?roulette; ?poulette". There is no restriction on
+# the length of the separator, but a single character is strongly recommended.
+#separator=;
+
 # OPTIONAL SASL AUTHENTICATION CONFIGURATION
 # These values control whether the bot should attempt SASL authentication to an IRC network's services (usually either
 # NickServ or AuthServ). Both values are optional; however, both must be provided for the bot to attempt authentication.
