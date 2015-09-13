@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_4fbbe1c4",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-13T02:40:41Z",
+      "side": 1,
+      "message": "It adds the artifact version information to the jarfile manifest, allowing us to access it using getClass().getPackage().getImplementationVersion().\n\nI *believe* the plugin is called automatically anyway by Maven, but regardless, without it (and the related configuration), getImplementationVersion() always returns null even from within a jarfile.",
+      "parentUuid": "da6255ed_cf9fd14f",
+      "revId": "c4171b808ae6921782601b81387df6a62e6220ad",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_8fa9d97d",
         "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_2fb0addc",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-13T02:40:41Z",
+      "side": 1,
+      "message": "Good point; I actually thought about doing that when I was writing this, but never actually did it for some reason.  I\u0027ll do a new patchset for it.",
+      "parentUuid": "da6255ed_8fa9d97d",
+      "revId": "c4171b808ae6921782601b81387df6a62e6220ad",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_afac9d8d",
         "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2015-09-12T16:23:22Z",
       "side": 1,
       "message": "We\u0027re returning this in a CTCP reply; maybe the more compact \"(development version)\" or similar?",
+      "revId": "c4171b808ae6921782601b81387df6a62e6220ad",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_0fb5e9cc",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-13T02:40:41Z",
+      "side": 1,
+      "message": "\"Development version\" isn\u0027t quite right, though, because this error will arise any time the bot is being run outside of a Maven-produced jarfile (or even if the maven-jar-plugin is missing).  I\u0027ll try to think of something more accurate/compact for the next patchset (to use StringBuilder).",
+      "parentUuid": "da6255ed_afac9d8d",
       "revId": "c4171b808ae6921782601b81387df6a62e6220ad",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
