@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_4f7e41e6",
+        "filename": "src/main/java/org/lizardirc/beancounter/SlapListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-13T04:36:58Z",
+      "side": 1,
+      "message": "Unsynchronized call to sync. Probably not needed, since a user who has configured nothing might as well stick with the defaults.",
+      "revId": "ff1c607bc0aa7ea81728514141a35f5fe98ec117",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
