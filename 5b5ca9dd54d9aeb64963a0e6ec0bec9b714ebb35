@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_2fb66d8b",
+        "filename": "src/main/java/org/lizardirc/beancounter/SlapListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-14T20:22:07Z",
+      "side": 1,
+      "message": "Oh look, this highlighting bug again",
+      "revId": "5b5ca9dd54d9aeb64963a0e6ec0bec9b714ebb35",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
