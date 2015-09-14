@@ -32,11 +32,12 @@
 
 package org.lizardirc.beancounter.persistence;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,7 +60,7 @@ public interface PersistenceManager {
 
     default Stream<String> getStream(String name) {
         return get(name)
-            .map(s -> Arrays.stream(s.split(","))
+            .map(s -> DEF.WIDE_LIST_PATTERN.splitAsStream(s)
                     .map(Bases::base64decode)
             )
             .orElse(Stream.of());
@@ -75,12 +76,25 @@ public interface PersistenceManager {
 
     default Map<String, String> getMap(String name) {
         return get(name)
-            .map(s -> Arrays.stream(s.split(","))
-                .map(entry -> entry.split(":"))
+            .map(s -> DEF.WIDE_LIST_PATTERN.splitAsStream(s)
+                .map(DEF.KEY_VALUE_PATTERN::split)
                 .collect(Collectors.toMap(
-                        arr -> Bases.base64decode(arr[0]),
-                        arr -> Bases.base64decode(arr[1]))
-                ))
+                    arr -> Bases.base64decode(arr[0]),
+                    arr -> Bases.base64decode(arr[1])
+                )))
+            .orElse(ImmutableMap.of());
+    }
+
+    default Map<String, Set<String>> getMultimap(String name) {
+        return get(name)
+            .map(s -> DEF.WIDE_LIST_PATTERN.splitAsStream(s)
+                .map(DEF.KEY_VALUE_PATTERN::split)
+                .collect(Collectors.toMap(
+                    arr -> Bases.base64decode(arr[0]),
+                    arr -> DEF.NARROW_LIST_PATTERN.splitAsStream(arr[1])
+                        .map(Bases::base64decode)
+                        .collect(Collectors.toSet())
+                )))
             .orElse(ImmutableMap.of());
     }
 
@@ -93,7 +107,7 @@ public interface PersistenceManager {
     default void setStream(String name, Stream<String> value) {
         String joined = value
             .map(Bases::base64encode)
-            .collect(Collectors.joining(","));
+            .collect(DEF.WIDE_LIST_COLLECTOR);
         set(name, joined);
     }
 
@@ -107,10 +121,32 @@ public interface PersistenceManager {
 
     default void setMap(String name, Map<String, String> value) {
         String joined = value.entrySet().stream()
-            .map(e -> Bases.base64encode(e.getKey()) + ":" + Bases.base64encode(e.getValue()))
-            .collect(Collectors.joining(","));
+            .map(e -> Bases.base64encode(e.getKey()) + DEF.KEY_VALUE_SEP + Bases.base64encode(e.getValue()))
+            .collect(DEF.WIDE_LIST_COLLECTOR);
+        set(name, joined);
+    }
+
+    default void setMultimap(String name, Map<String, Set<String>> value) {
+        String joined = value.entrySet().stream()
+            .map(e -> Bases.base64encode(e.getKey()) + DEF.KEY_VALUE_SEP + e.getValue().stream()
+                .map(Bases::base64encode)
+                .collect(DEF.NARROW_LIST_COLLECTOR))
+            .collect(DEF.WIDE_LIST_COLLECTOR);
         set(name, joined);
     }
 
     void sync();
+}
+
+class DEF {
+    static String KEY_VALUE_SEP = ":";
+    static String WIDE_LIST_SEP = ",";
+    static String NARROW_LIST_SEP = ";";
+
+    static Pattern KEY_VALUE_PATTERN = Pattern.compile(KEY_VALUE_SEP);
+    static Pattern WIDE_LIST_PATTERN = Pattern.compile(WIDE_LIST_SEP);
+    static Pattern NARROW_LIST_PATTERN = Pattern.compile(NARROW_LIST_SEP);
+
+    static Collector<CharSequence, ?, String> WIDE_LIST_COLLECTOR = Collectors.joining(WIDE_LIST_SEP);
+    static Collector<CharSequence, ?, String> NARROW_LIST_COLLECTOR = Collectors.joining(NARROW_LIST_SEP);
 }
