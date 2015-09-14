@@ -32,6 +32,9 @@
 
 package org.lizardirc.beancounter.hooks;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.Listener;
@@ -42,6 +45,7 @@ import org.lizardirc.beancounter.events.MessageEventView;
 import org.lizardirc.beancounter.events.PrivateMessageEventView;
 
 public class Fantasy<T extends PircBotX> extends Decorator<T> {
+    private static final Pattern ADDRESSED_PATTERN = Pattern.compile("^ *[,:] *(.*)$");
     private final String fantasyPrefix;
     private final int fantasyLength;
 
@@ -55,21 +59,30 @@ public class Fantasy<T extends PircBotX> extends Decorator<T> {
     public void onEvent(Event<T> event) throws Exception {
         if (event instanceof MessageEvent) {
             MessageEvent<T> me = (MessageEvent<T>) event;
-            String message = me.getMessage().trim();
-            if (!message.startsWith(fantasyPrefix)) {
-                return;
+            String newMessage = processMessage(me.getMessage().trim(), event.getBot().getNick());
+            if (newMessage != null) {
+                super.onEvent(new MessageEventView<>(me, newMessage));
             }
-            String newMessage = message.substring(fantasyLength);
-            super.onEvent(new MessageEventView<>(me, newMessage));
         } else if (event instanceof PrivateMessageEvent) {
             PrivateMessageEvent<T> me = (PrivateMessageEvent<T>) event;
-            String message = me.getMessage().trim();
-            if (message.startsWith(fantasyPrefix)) {
-                String newMessage = message.substring(fantasyLength);
+            String newMessage = processMessage(me.getMessage().trim(), event.getBot().getNick());
+            if (newMessage != null) {
                 super.onEvent(new PrivateMessageEventView<>(me, newMessage));
             } else {
                 super.onEvent(me);
             }
         }
+    }
+
+    private String processMessage(String message, String botNick) {
+        if (message.startsWith(fantasyPrefix)) {
+            return message.substring(fantasyLength);
+        } else if (message.startsWith(botNick)) {
+            Matcher m = ADDRESSED_PATTERN.matcher(message.substring(botNick.length()));
+            if (m.matches()) {
+                return m.group(1);
+            }
+        }
+        return null;
     }
 }
