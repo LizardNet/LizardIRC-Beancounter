@@ -55,21 +55,29 @@ public class Fantasy<T extends PircBotX> extends Decorator<T> {
     public void onEvent(Event<T> event) throws Exception {
         if (event instanceof MessageEvent) {
             MessageEvent<T> me = (MessageEvent<T>) event;
-            String message = me.getMessage().trim();
-            if (!message.startsWith(fantasyPrefix)) {
-                return;
+            String newMessage = processMessage(me.getMessage().trim(), event.getBot().getNick());
+            if (newMessage != null) {
+                super.onEvent(new MessageEventView<>(me, newMessage));
             }
-            String newMessage = message.substring(fantasyLength);
-            super.onEvent(new MessageEventView<>(me, newMessage));
         } else if (event instanceof PrivateMessageEvent) {
             PrivateMessageEvent<T> me = (PrivateMessageEvent<T>) event;
-            String message = me.getMessage().trim();
-            if (message.startsWith(fantasyPrefix)) {
-                String newMessage = message.substring(fantasyLength);
+            String newMessage = processMessage(me.getMessage().trim(), event.getBot().getNick());
+            if (newMessage != null) {
                 super.onEvent(new PrivateMessageEventView<>(me, newMessage));
             } else {
                 super.onEvent(me);
             }
+        }
+    }
+
+    private String processMessage(String message, String botNick) {
+        botNick += ":";
+        if (message.startsWith(fantasyPrefix)) {
+            return message.substring(fantasyLength);
+        } else if (message.startsWith(botNick)) {
+            return message.substring(botNick.length());
+        } else {
+            return null;
         }
     }
 }
