@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_efaf352a",
+        "filename": "src/main/java/org/lizardirc/beancounter/persistence/PersistenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-14T20:23:43Z",
+      "side": 1,
+      "message": "\"\\ No newline at end of file\"\n\nFor shame.  :P",
+      "revId": "e2913e43d6289308a600f4ea2fba8ab45e8f3f44",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
