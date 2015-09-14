@@ -99,12 +99,12 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
 
         items = pm.getList(PERSIST_ITEMS);
         if (items.isEmpty()) {
-            items.add("a%s trout");
-            items.add("a%s minnow");
-            items.add("a%s whale");
-            items.add("a%s can of sardines");
-            items.add("a%s leather belt");
-            items.add("Donald Trump's%s combover");
+            items.add("a%2$s %s trout");
+            items.add("a%2$s %s minnow");
+            items.add("a%2$s %s whale");
+            items.add("a%2$s %s can of sardines");
+            items.add("a%2$s %s leather belt");
+            items.add("Donald Trump's %s combover");
         }
 
         item_mods = pm.getList(PERSIST_ITEM_MODS);
@@ -167,8 +167,8 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
                 String modifier = modifiers.get(random.nextInt(modifiers.size()));
                 String item = items.get(random.nextInt(items.size()));
                 String itemMod = item_mods.get(random.nextInt(item_mods.size()));
-                // TODO support "a feisty minnow", "an energetic minnow", "Donald Trump's energetic minnow"
-                String completed = action + " " + target + " " + modifier + " with " + String.format(item, " " + itemMod);
+                String n = itemMod.matches("[aeiou].*") ? "n" : "";
+                String completed = action + " " + target + " " + modifier + " with " + String.format(item, itemMod, n);
                 event.getBot().sendIRC().action(channel, completed.replaceAll(" +", " "));
                 break;
             case CMD_CFG:
