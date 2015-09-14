@@ -16,6 +16,24 @@
       "revId": "e2913e43d6289308a600f4ea2fba8ab45e8f3f44",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_afa93d26",
+        "filename": "src/main/java/org/lizardirc/beancounter/persistence/PersistenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-14T22:12:39Z",
+      "side": 1,
+      "message": "...eh? All of my editors are configured to add those on save.",
+      "parentUuid": "da6255ed_efaf352a",
+      "revId": "e2913e43d6289308a600f4ea2fba8ab45e8f3f44",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
