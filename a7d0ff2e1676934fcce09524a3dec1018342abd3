@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_6fbc656d",
+        "filename": "src/main/java/org/lizardirc/beancounter/hooks/Fantasy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-14T20:19:45Z",
+      "side": 1,
+      "message": "It\u0027s common to see people use \",\" instead of \":\" as their completion character with tab-complete, so we might want to support that too.",
+      "revId": "a7d0ff2e1676934fcce09524a3dec1018342abd3",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
