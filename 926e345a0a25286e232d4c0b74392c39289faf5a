@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_72ffae02",
+        "filename": "src/main/resources/default.config.props",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-15T09:31:59Z",
+      "side": 0,
+      "message": "Might want to update this line to indicate that \"redis\" is now supported too",
+      "revId": "926e345a0a25286e232d4c0b74392c39289faf5a",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}

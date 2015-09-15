@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_8f02f909",
+        "filename": "src/main/java/org/lizardirc/beancounter/persistence/RedisPersistenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-15T09:31:59Z",
+      "side": 1,
+      "message": "lol",
+      "revId": "46df1b93fa202bb55e4932cbdd5300e3589c9316",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
