@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_3209362d",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/AccessControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-15T09:35:58Z",
+      "side": 1,
+      "message": "Not sure if this is \"correct\" code, feedback here would be appreciated.",
+      "revId": "6e4a6ef6f6f2626e8fa5e0157d64aadc5a4886f4",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
