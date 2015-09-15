@@ -36,8 +36,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -47,6 +47,7 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.managers.ListenerManager;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+import redis.clients.jedis.Jedis;
 
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandListener;
@@ -56,6 +57,7 @@ import org.lizardirc.beancounter.hooks.PerChannel;
 import org.lizardirc.beancounter.hooks.PerChannelCommand;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.persistence.PropertiesPersistenceManager;
+import org.lizardirc.beancounter.persistence.RedisPersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 
 public class Listeners<T extends PircBotX> extends CommandListener<T> {
@@ -81,6 +83,21 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
             case "flatfile":
                 Path persistencePath = Paths.get(properties.getProperty("beanledger.flatfile.path", "beanledger.props"));
                 pm = new PropertiesPersistenceManager(persistencePath);
+                break;
+            case "redis":
+                String redisHost = properties.getProperty("beanledger.redis.host", "localhost");
+                String redisPort = properties.getProperty("beanledger.redis.port");
+                String redisNamespace = properties.getProperty("beanledger.redis.namespace");
+                Jedis jedis;
+                if (redisPort != null) {
+                    jedis = new Jedis(redisHost, Integer.parseInt(redisPort));
+                } else {
+                    jedis = new Jedis(redisHost);
+                }
+                pm = new RedisPersistenceManager(jedis);
+                if (redisNamespace != null) {
+                    pm = pm.getNamespace(redisNamespace);
+                }
                 break;
             default:
                 throw new IllegalStateException("Unknown or unsupported Beanledger backend \"" + beanledgerBackend + "\" specified in configuration.");

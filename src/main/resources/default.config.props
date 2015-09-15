@@ -93,3 +93,13 @@ serverHost=
 # are interpreted as relative to the Beancounter jarfile. Using the ".props" file extension is recommended. Defaults to
 # the value "beanledger.props".
 #beanledger.flatfile.path=beanledger.props
+
+# beanledger.redis.host: String - The host to contact if using the "redis" Beanledger backend. Defaults to "localhost".
+#beanledger.redis.host=localhost
+
+# beanledger.redis.port: int - The port on which to contact the redis server. Defaults to 6379.
+#beanledger.redis.port=6379
+
+# beanledger.redis.namespace: String - The namespace under which to place all redis configuration. This is used to
+# prevent collisions in shared redis instances. No namespace is used if this field is not provided.
+#beanledger.redis.namespace=
