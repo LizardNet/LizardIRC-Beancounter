@@ -32,50 +32,28 @@
 
 package org.lizardirc.beancounter.security;
 
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericUserEvent;
 
-public class AccessControl {
-    private Map<String, String> accessList;
+import org.lizardirc.beancounter.hooks.CommandListener;
 
-    public AccessControl(Map<String, String> accessList) {
-        if (accessList.isEmpty()) {
-            System.err.println("Warning: AccessControl instantiated with empty accessList.");
-            System.err.println("Assuming everyone is authorized to access everything!");
-            accessList.put("^.*!.*@.*$", "*");
-        }
-        this.accessList = accessList;
+public interface AccessControl<T extends PircBotX> {
+    Set<String> registeredPermissions = new HashSet<>();
+
+    boolean hasPermission(GenericUserEvent<?> event, String permission);
+
+    Set<String> getPermissions(GenericUserEvent<?> event);
+
+    default void registerPermission(String permission) {
+        registeredPermissions.add(permission);
     }
 
-    public Map<String, String> getAccessList() {
-        return accessList;
+    default Set<String> getRegisteredPermissions() {
+        return registeredPermissions;
     }
 
-    public void setAccessList(Map<String, String> accessList) {
-        this.accessList = accessList;
-    }
-
-    public synchronized boolean hasPriv(GenericUserEvent<?> event, String permission) {
-        // Apparently, PircBotX has a different definition of "hostmask" than the rest of the IRC world....
-        String userHostmask = event.getUser().getNick() + "!" + event.getUser().getLogin() + "@" + event.getUser().getHostmask();
-
-        for (Entry<String, String> entry : accessList.entrySet()) {
-            String aclHostmask = entry.getKey();
-            String aclPermission = entry.getValue();
-
-            if (userHostmask.matches(aclHostmask)) {
-                /* TODO: Currently, we use a single Map of hostmasks->privileges.  Support
-                   TODO: a roll-based system which would use two maps; hostmasks->roles and roles->privileges
-                   TODO: Suggested by TLUL: Use roles->Set<hostmask>
-                 */
-                if (permission.equals(aclPermission) || aclPermission.equals("*")) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
+    CommandListener<T> getListener();
 }
