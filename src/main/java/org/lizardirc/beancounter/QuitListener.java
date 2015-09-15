@@ -45,10 +45,11 @@ import org.lizardirc.beancounter.security.AccessControl;
 
 public class QuitListener<T extends PircBotX> extends CommandListener<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("quit");
-    private final AccessControl acl;
+    private final AccessControl<T> acl;
 
-    public QuitListener(AccessControl acl) {
+    public QuitListener(AccessControl<T> acl) {
         this.acl = acl;
+        this.acl.registerPermission("quit");
     }
 
     @Override
@@ -68,7 +69,7 @@ public class QuitListener<T extends PircBotX> extends CommandListener<T> {
         if (remainder != null && !remainder.trim().isEmpty()) {
             quitMessage = remainder.trim();
         }
-        if (acl.hasPriv(event, "quit")) {
+        if (acl.hasPermission(event, "quit")) {
             event.getBot().sendIRC().quitServer(quitMessage);
         } else {
             event.respond("no u!  (You don't have the necessary permissions to do this.)");
