@@ -48,9 +48,10 @@ serverHost=
 # ownerHostmask: String - Set this to the hostmask of the bot's owner (i.e., a user identifier in nick!user@host form).
 # Note that this hostmask will be interpreted as a regular expression.  Anyone who has a hostmask matching this one will
 # always be granted all permissions in the bot, so choose wisely. If left blank (which is the default), the bot will
-# fall back to a permissive mode that allows *everyone* to do *everything* - this is almost certainly NOT what you want!
-# (Note that permissive mode will only be entered if this ownerHostmask value is blank *and* no permissions have been
-# assigned from IRC using the to-be-implemented ACL control command).
+# fall back to a restrictive mode that allows *no one* to do *anything* - this is almost certainly NOT what you want!
+# (Note that restrictive mode will only be entered if this ownerHostmask value is blank *and* no permissions have been
+# assigned from IRC using the "acl" command - but remember, in restrictive mode, you won't be able to use the "acl"
+# command to add any access list entries!).
 #ownerHostmask=
 
 # fantasyString: String - Set this to the character (or string of characters) that will be expected to prefix commands
