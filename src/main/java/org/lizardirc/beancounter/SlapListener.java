@@ -74,14 +74,14 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
     private static final Random random = new Random();
 
     private final PersistenceManager pm;
-    private final AccessControl acl;
+    private final AccessControl<T> acl;
 
     private final List<String> actions;
     private final List<String> modifiers;
     private final List<String> items;
     private final List<String> item_mods;
 
-    public SlapListener(PersistenceManager pm, AccessControl acl) {
+    public SlapListener(PersistenceManager pm, AccessControl<T> acl) {
         this.pm = pm;
         this.acl = acl;
 
@@ -186,7 +186,7 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
     }
 
     private synchronized void handleCfgCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
-        if (!acl.hasPriv(event, PRIV_CFG)) {
+        if (!acl.hasPermission(event, PRIV_CFG)) {
             event.respond("No u!  (You don't have the necessary permissions to use this command.)");
             return;
         }
