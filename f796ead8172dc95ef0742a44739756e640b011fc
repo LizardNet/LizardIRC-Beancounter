@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_12cf52b2",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T06:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_92e34233",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_72d0ce53",
         "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-16T06:36:47Z",
       "side": 1,
       "message": "try new HashSet\u003c\u003e(rolesToPermissions.keySet()) here and above?",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_f2c39e88",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T06:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_72d0ce53",
       "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_b2bd2605",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T06:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_12f872e4",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_f2dcbe76",
         "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_92ba2209",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T06:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_f2dcbe76",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_52d5ca41",
         "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2015-09-16T06:36:47Z",
       "side": 1,
       "message": "HAAAAAAANDS",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_7237aeb1",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T06:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_52d5ca41",
       "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
