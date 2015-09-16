@@ -73,7 +73,7 @@ public class ChannelPersistor<T extends PircBotX> extends ListenerAdapter<T> {
     }
 
     public synchronized void onPart(PartEvent<T> event) throws Exception {
-        if (event.getBot().getUserBot().equals(event.getUser())) {
+        if (event.getBot().getUserBot().getNick().equals(event.getUser().getNick())) {
             channels.remove(event.getChannel().getName());
             sync();
         }

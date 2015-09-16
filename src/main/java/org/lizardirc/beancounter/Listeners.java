@@ -106,7 +106,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         AccessControl<T> acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
 
         List<CommandListener<T>> listeners = new ArrayList<>();
-        listeners.add(new QuitListener<>(acl));
+        listeners.add(new AdminListener<>(acl));
         listeners.add(new DiceListener<>());
         listeners.add(new SlapListener<>(pm.getNamespace("customSlaps"), acl));
         listeners.add(new PerChannelCommand<>(RouletteListener::new));
