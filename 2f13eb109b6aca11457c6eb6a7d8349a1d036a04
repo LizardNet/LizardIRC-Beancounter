@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_12e2b203",
+        "filename": "src/main/java/org/lizardirc/beancounter/ChannelPersistor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T09:50:26Z",
+      "side": 1,
+      "message": "There appears to be some bug here that, for a PartEvent, event.getBot().getUserBot() will never equal event.getUser().  Tested with the ?part command and with SAPARTs.  As far as I can tell, this is the next best option.",
+      "revId": "2f13eb109b6aca11457c6eb6a7d8349a1d036a04",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
