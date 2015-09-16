@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_92e34233",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-16T06:36:47Z",
+      "side": 1,
+      "message": "getOrDefault(role, (Set\u003cString\u003e) Collections.EMPTY_SET) or similar is probably needed to avoid NPEs.",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_72d0ce53",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-16T06:36:47Z",
+      "side": 1,
+      "message": "try new HashSet\u003c\u003e(rolesToPermissions.keySet()) here and above?",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_12f872e4",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-16T06:36:47Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/javaguide.html#s5.2.8-type-variable-names",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_f2dcbe76",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-16T06:36:47Z",
+      "side": 1,
+      "message": "Inconsistent naming: ACL_COMMAND vs OPERATION_REVOKE",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_52d5ca41",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-16T06:36:47Z",
+      "side": 1,
+      "message": "HAAAAAAANDS",
+      "revId": "f796ead8172dc95ef0742a44739756e640b011fc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
