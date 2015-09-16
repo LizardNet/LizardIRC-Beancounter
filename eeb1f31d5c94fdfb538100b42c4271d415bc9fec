@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_325816fa",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-16T07:02:41Z",
+      "side": 1,
+      "message": "I might be tempted to reduce the indenting here. Did IntelliJ format it like this?",
+      "revId": "eeb1f31d5c94fdfb538100b42c4271d415bc9fec",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_f2715e78",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-16T07:02:41Z",
+      "side": 1,
+      "message": "Still inconsistent naming: OPERAND_ROLES vs LIST_OPTIONS.",
+      "revId": "eeb1f31d5c94fdfb538100b42c4271d415bc9fec",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
