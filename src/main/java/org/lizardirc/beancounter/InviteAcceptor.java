@@ -39,5 +39,6 @@ import org.pircbotx.hooks.events.InviteEvent;
 public class InviteAcceptor<T extends PircBotX> extends ListenerAdapter<T> {
     public void onInvite(InviteEvent<T> event) {
         event.getBot().sendIRC().joinChannel(event.getChannel());
+        event.getBot().sendIRC().message(event.getChannel(), "I was invited to join this channel by " + event.getUser() + ".");
     }
 }
