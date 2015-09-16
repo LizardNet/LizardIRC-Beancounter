@@ -66,6 +66,8 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
     private final Properties properties;
     private final Set<Listener<T>> ownListeners = new HashSet<>();
 
+    private AccessControl<T> acl;
+
     public Listeners(ListenerManager<T> listenerManager, Properties properties) {
         this.listenerManager = listenerManager;
         this.properties = properties;
@@ -103,7 +105,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
                 throw new IllegalStateException("Unknown or unsupported Beanledger backend \"" + beanledgerBackend + "\" specified in configuration.");
         }
 
-        AccessControl<T> acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
+        acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
 
         List<CommandListener<T>> listeners = new ArrayList<>();
         listeners.add(new QuitListener<>(acl));
@@ -140,6 +142,12 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         if (commands.size() == 0) {
             return;
         }
+
+        if (!acl.hasPermission(event, "rehash")) {
+            event.respond("No u! (You don't have permission to do this.)");
+            return;
+        }
+
         ownListeners.forEach(listenerManager::removeListener);
         ownListeners.clear();
         register();
