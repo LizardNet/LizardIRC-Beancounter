@@ -33,6 +33,24 @@
       "revId": "eeb1f31d5c94fdfb538100b42c4271d415bc9fec",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_9268e288",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-16T07:04:15Z",
+      "side": 1,
+      "message": "?sl TLUL",
+      "parentUuid": "da6255ed_f2715e78",
+      "revId": "eeb1f31d5c94fdfb538100b42c4271d415bc9fec",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
