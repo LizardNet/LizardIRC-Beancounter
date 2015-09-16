@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_52a02af4",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T05:41:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_f2395ed9",
+      "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_3220169b",
         "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2015-09-16T02:54:28Z",
       "side": 1,
       "message": "I\u0027m thinking this could be done a lot more concisely using the streams API.\n\nboolean hasPerm \u003d hostmasksToRoles.entrySet().stream()\n    .filter(e -\u003e userHostmask.matches(e.getKey()))\n    .map(Map.Entry::getValue)\n    .distinct()\n    .anyMatch(role -\u003e \"*\".equals(role) || rolesToPermissions.get(role).stream()\n        .anyMatch(perm -\u003e \"*\".equals(perm) || checkPermission.equals(perm)));\n\nYou could probably clean it up even further by adding \"*\" -\u003e \"*\" in the rolesToPermissions on load, so you only need to special case once.",
+      "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_925ea211",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T05:41:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_3220169b",
       "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_729b2eca",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T05:41:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_122512ab",
+      "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_d2365ae7",
         "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
         "patchSetId": 2
@@ -99,6 +153,24 @@
       "writtenOn": "2015-09-16T02:54:28Z",
       "side": 1,
       "message": "You could extract a method addToMultimap(Map\u003cString, Set\u003cString\u003e\u003e multimap, String key, String value) here.",
+      "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_d2641ae7",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T05:41:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_d2365ae7",
       "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_b261a6d5",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T05:41:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_b233e6f5",
+      "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_9230e2e9",
         "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
         "patchSetId": 2
@@ -133,6 +223,24 @@
       "writtenOn": "2015-09-16T02:54:28Z",
       "side": 1,
       "message": "noSync is confusingly named on the principle of \"introduce as few negations as possible\". Maybe just call it \"sync\" and invert the semantics?",
+      "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_f2671ee9",
+        "filename": "src/main/java/org/lizardirc/beancounter/security/BreadBasedAccessControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-16T05:41:06Z",
+      "side": 1,
+      "message": "Changed to be called in the listener per teamspeak",
+      "parentUuid": "da6255ed_9230e2e9",
       "revId": "d66a8a2d551d6336a9845bb3205621811bb0b570",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
