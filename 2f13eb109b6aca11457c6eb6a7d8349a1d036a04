@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_d2789a2d",
+        "filename": "src/main/java/org/lizardirc/beancounter/AdminListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-17T06:57:45Z",
+      "side": 1,
+      "message": "Derp",
+      "parentUuid": "da6255ed_929b4272",
+      "revId": "2f13eb109b6aca11457c6eb6a7d8349a1d036a04",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_7288ce22",
         "filename": "src/main/java/org/lizardirc/beancounter/AdminListener.java",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_b2752634",
+        "filename": "src/main/java/org/lizardirc/beancounter/AdminListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-17T06:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_528dca30",
+      "revId": "2f13eb109b6aca11457c6eb6a7d8349a1d036a04",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_32825601",
         "filename": "src/main/java/org/lizardirc/beancounter/AdminListener.java",
         "patchSetId": 6
@@ -64,6 +100,24 @@
       "writtenOn": "2015-09-17T05:40:36Z",
       "side": 1,
       "message": "You could extract Integer firstChar \u003d arg.codePointAt(0); and use .anyMatch(firstChar::equals) for a very slight readability boost.",
+      "revId": "2f13eb109b6aca11457c6eb6a7d8349a1d036a04",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_92722248",
+        "filename": "src/main/java/org/lizardirc/beancounter/AdminListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-17T06:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_32825601",
       "revId": "2f13eb109b6aca11457c6eb6a7d8349a1d036a04",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
