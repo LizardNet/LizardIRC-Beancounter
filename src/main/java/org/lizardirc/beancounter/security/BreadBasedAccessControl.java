@@ -332,6 +332,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
             if (!commands.get(1).equals(OPERATION_LIST) && !hasPermission(event, "acl")) {
                 message.accept("No u! (You only have permission to run the \"?acl list\" commands.)");
                 showUsage(message);
+                return;
             }
 
             String[] args = remainder.split(" ");
