@@ -67,6 +67,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
     private final Set<Listener<T>> ownListeners = new HashSet<>();
 
     private AccessControl<T> acl;
+    private UserLastSeenListener<T> userLastSeenListener;
 
     public Listeners(ListenerManager<T> listenerManager, Properties properties) {
         this.listenerManager = listenerManager;
@@ -106,6 +107,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         }
 
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
+        userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
 
         List<CommandListener<T>> listeners = new ArrayList<>();
         listeners.add(new AdminListener<>(acl));
@@ -113,6 +115,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         listeners.add(new SlapListener<>(pm.getNamespace("customSlaps"), acl));
         listeners.add(new PerChannelCommand<>(RouletteListener::new));
         listeners.add(acl.getListener());
+        listeners.add(userLastSeenListener.getCommandListener());
         listeners.add(this);
         MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);
         ownListeners.add(new Chainable<>(new Fantasy<>(commands, fantasyString), separator));
@@ -125,6 +128,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
 
         ownListeners.add(new PerChannel<>(() -> new SedListener<>(5)));
         ownListeners.add(new InviteAcceptor<>());
+        ownListeners.add(userLastSeenListener);
 
         ownListeners.forEach(listenerManager::addListener);
     }
