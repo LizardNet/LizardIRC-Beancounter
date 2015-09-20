@@ -52,6 +52,7 @@ import org.pircbotx.output.OutputIRC;
 
 import org.lizardirc.beancounter.hooks.CommandListener;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
+import org.lizardirc.beancounter.utils.Miscellaneous;
 
 // This pun is entirely TLUL's fault.
 public class BreadBasedAccessControl<T extends PircBotX> implements AccessControl<T> {
@@ -311,7 +312,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
             }
 
             if (commands.get(0).equals(COMMAND_MYPERMS)) {
-                event.respond("Your permissions are: " + getSetAsString(getPermissions(event)));
+                event.respond("Your permissions are: " + Miscellaneous.getSetAsString(getPermissions(event)));
                 return;
             }
 
@@ -340,11 +341,11 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
                     if (commands.get(3).equals("available")) {
                         switch (commands.get(2)) {
                             case OPERAND_ROLES:
-                                message.accept("The following roles are available: " + getSetAsString(getAllRoles()));
+                                message.accept("The following roles are available: " + Miscellaneous.getSetAsString(getAllRoles()));
                                 message.accept("Remember that the \"*\" pseudo-role that grants ALL permissions unconditionally is always available.");
                                 break;
                             case OPERAND_PERMISSIONS:
-                                message.accept("I've seen the following permissions used, but note that this list may not include all available permissions: " + getSetAsString(seenPermissions));
+                                message.accept("I've seen the following permissions used, but note that this list may not include all available permissions: " + Miscellaneous.getSetAsString(seenPermissions));
                                 message.accept("Remember that the \"*\" pseudo-permission that grants ALL permissions unconditionally is always available.");
                                 break;
                         }
@@ -501,18 +502,10 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
             message.accept(" Note: For \"acl list\", specifying the \"available\" flag will show all available roles or permissions; otherwise, it will show the mapping of hostmasks to roles or roles to permissions.");
         }
 
-        private synchronized String getSetAsString(Set<String> set) {
-            if (set.isEmpty()) {
-                return "(none)";
-            } else {
-                return set.stream().collect(Collectors.joining(", "));
-            }
-        }
-
         private synchronized void outputMultimap(Map<String, Set<String>> multimap, Consumer<String> message) {
             for (Entry<String, Set<String>> entry : multimap.entrySet()) {
                 String key = entry.getKey();
-                String values = getSetAsString(entry.getValue());
+                String values = Miscellaneous.getSetAsString(entry.getValue());
 
                 message.accept(key + " => " + values);
             }

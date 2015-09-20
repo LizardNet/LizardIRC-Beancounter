@@ -44,6 +44,7 @@ import org.pircbotx.output.OutputIRC;
 
 import org.lizardirc.beancounter.hooks.CommandListener;
 import org.lizardirc.beancounter.security.AccessControl;
+import org.lizardirc.beancounter.utils.Miscellaneous;
 
 public class AdminListener<T extends PircBotX> extends CommandListener<T> {
     private static final String CMD_QUIT = "quit";
@@ -126,7 +127,7 @@ public class AdminListener<T extends PircBotX> extends CommandListener<T> {
                         if (args.length > 1) {
                             event.respond("Error: Too many arguments for join.");
                         } else {
-                            if (!isChannelLike(event, args[0])) {
+                            if (!Miscellaneous.isChannelLike(event, args[0])) {
                                 event.respond("Error: \"" + args[0] + "\" doesn't seem to be a valid channel name.");
                             } else {
                                 outputIRC.joinChannel(args[0]);
@@ -152,7 +153,7 @@ public class AdminListener<T extends PircBotX> extends CommandListener<T> {
                         args = remainder.split(" ");
                         remainder = remainder.substring(args[0].length()).trim();
 
-                        if (!isChannelLike(event, args[0])) {
+                        if (!Miscellaneous.isChannelLike(event, args[0])) {
                             event.respond("Error: \"" + args[0] + "\" doesn't seem to be a valid channel name.");
                         } else {
                             if (args.length > 1) {
@@ -195,15 +196,6 @@ public class AdminListener<T extends PircBotX> extends CommandListener<T> {
         }
     }
 
-    private boolean isChannelLike(GenericMessageEvent<?> event, String arg) {
-        // Determine if the argument string appears to be a channel - i.e., does it start with a character the network
-        // recognizes as a channel name (usually # and &)?
-        Integer firstChar = arg.codePointAt(0);
-
-        return event.getBot().getServerInfo().getChannelTypes().chars()
-            .anyMatch(firstChar::equals);
-    }
-
     private void sendToChannel(GenericMessageEvent<?> event, String what, String remainder) {
         String[] args;
         OutputIRC outputIRC = event.getBot().sendIRC();
@@ -218,7 +210,7 @@ public class AdminListener<T extends PircBotX> extends CommandListener<T> {
             args = remainder.split(" ");
 
             if (event instanceof GenericChannelEvent) {
-                if (!isChannelLike(event, args[0])) {
+                if (!Miscellaneous.isChannelLike(event, args[0])) {
                     // say/act command was given in channel without a channel argument (message only)
                     // consider the channel the command was given in to be the target
 
