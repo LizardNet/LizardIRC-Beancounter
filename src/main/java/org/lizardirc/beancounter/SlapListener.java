@@ -155,7 +155,7 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
         switch (commands.get(0)) {
             case CMD_SLAP:
                 String target = event.getUser().getNick();
-                if (commands.size() >= 2) {
+                if (commands.size() >= 2 && !commands.get(1).equalsIgnoreCase(event.getBot().getNick())) {
                     target = commands.get(1);
                 }
                 String channel = event.getUser().getNick();
