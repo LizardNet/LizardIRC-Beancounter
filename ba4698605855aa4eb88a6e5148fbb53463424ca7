@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_128872e6",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/Miscellaneous.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-20T16:11:34Z",
+      "side": 1,
+      "message": "Maybe getStringRepresentation?",
+      "revId": "ba4698605855aa4eb88a6e5148fbb53463424ca7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
