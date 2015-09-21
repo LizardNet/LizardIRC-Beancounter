@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_125f5274",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-21T00:49:22Z",
+      "side": 1,
+      "message": "Oops, right, will fix this in next patchset",
+      "parentUuid": "da6255ed_d269ba26",
+      "revId": "1b7de817bfe6e847c7bd4ef1182189c3ebfb8228",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_b2764605",
         "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-20T16:33:40Z",
       "side": 1,
       "message": "Do we need this to be mutable? If so, no problem, but we could also consider making it immutable and making withChannel and withDateTime methods that return new copies. Benefit: safely stick them in other objects without deep cloning worries because semantics are equivalent to copy-by-value for immutable objects.",
+      "revId": "1b7de817bfe6e847c7bd4ef1182189c3ebfb8228",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_f2539e6a",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-21T00:49:22Z",
+      "side": 1,
+      "message": "I personally think mutable makes it a bit easier to work with, and I also can\u0027t personally think of any situation in which we would be sticking a ChannelAndTime in another object, especially since it\u0027s local to this class.\n\nBut, if you think the benefits outweigh, then I guess we can go ahead and make it immutable; let me know.",
+      "parentUuid": "da6255ed_b2764605",
       "revId": "1b7de817bfe6e847c7bd4ef1182189c3ebfb8228",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
