@@ -16,6 +16,24 @@
       "revId": "ba4698605855aa4eb88a6e5148fbb53463424ca7",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_5265ca43",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/Miscellaneous.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-21T00:43:49Z",
+      "side": 1,
+      "message": "You suggesting to change away from the punny name?  :O\n\nThis function really only works for sets though (and perhaps other single-dimensional collections), so how about getSetStringRepresentation?",
+      "parentUuid": "da6255ed_128872e6",
+      "revId": "ba4698605855aa4eb88a6e5148fbb53463424ca7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
