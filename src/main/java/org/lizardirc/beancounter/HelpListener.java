@@ -78,7 +78,7 @@ public class HelpListener<T extends PircBotX> extends CommandListener<T> {
                 case COMMAND_COMMANDS:
                     String knownCommands;
 
-                    knownCommands = Miscellaneous.getSetAsString(multiCommandListener.getSubCommands(event, ImmutableList.of()));
+                    knownCommands = Miscellaneous.getStringRepresentation(Miscellaneous.asSortedList(multiCommandListener.getSubCommands(event, ImmutableList.of())));
                     event.respond("I am aware of the following commands (NB: may not be a complete list): " + knownCommands);
                     break;
             }
