@@ -118,6 +118,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         listeners.add(userLastSeenListener.getCommandListener());
         listeners.add(this);
         MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);
+        commands.add(new HelpListener<>(commands));
         ownListeners.add(new Chainable<>(new Fantasy<>(commands, fantasyString), separator));
 
         ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistence")));
