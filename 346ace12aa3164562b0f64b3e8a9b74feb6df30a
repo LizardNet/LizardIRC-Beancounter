@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_d2d77abe",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-22T01:55:37Z",
+      "side": 1,
+      "message": "Oops, accidental over-engineering.  :P",
+      "parentUuid": "da6255ed_12d632c6",
+      "revId": "346ace12aa3164562b0f64b3e8a9b74feb6df30a",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_32d136ce",
         "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-21T19:54:22Z",
       "side": 1,
       "message": "Unnecessary cast",
+      "revId": "346ace12aa3164562b0f64b3e8a9b74feb6df30a",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_b2e406ad",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-22T01:55:37Z",
+      "side": 1,
+      "message": "Removed; leftover from an earlier version of my code",
+      "parentUuid": "da6255ed_32d136ce",
       "revId": "346ace12aa3164562b0f64b3e8a9b74feb6df30a",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
