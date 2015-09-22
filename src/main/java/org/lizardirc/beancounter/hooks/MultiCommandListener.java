@@ -60,15 +60,15 @@ public class MultiCommandListener<T extends PircBotX> extends CommandListener<T>
         subCommandListeners = new HashSet<>(c);
     }
 
-    public void add(CommandListener<T> listener) {
+    public synchronized void add(CommandListener<T> listener) {
         subCommandListeners.add(listener);
     }
 
-    public void remove(CommandListener<T> listener) {
+    public synchronized void remove(CommandListener<T> listener) {
         subCommandListeners.remove(listener);
     }
 
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public synchronized Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
         Set<CommandListener<T>> listeners = subCommandListeners;
         if (listenerMap.containsKey(event)) {
             listeners = listenerMap.get(event).get(clone(commands));
@@ -92,7 +92,7 @@ public class MultiCommandListener<T extends PircBotX> extends CommandListener<T>
             .collect(Collectors.toSet());
     }
 
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public synchronized void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
         if (!listenerMap.containsKey(event)) {
             throw new IllegalStateException("Listener map not populated");
         }
@@ -103,6 +103,9 @@ public class MultiCommandListener<T extends PircBotX> extends CommandListener<T>
         } else if (listeners.size() != 1) {
             throw new IllegalStateException(listeners.size() + " possible handlers for command");
         }
+
+        listenerMap.remove(event);
+
         for (CommandListener<T> listener : listeners) {
             listener.handleCommand(event, commands, remainder);
         }
