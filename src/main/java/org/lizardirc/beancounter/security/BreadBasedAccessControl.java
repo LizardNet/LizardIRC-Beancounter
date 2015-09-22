@@ -312,7 +312,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
             }
 
             if (commands.get(0).equals(COMMAND_MYPERMS)) {
-                event.respond("Your permissions are: " + Miscellaneous.getSetAsString(getPermissions(event)));
+                event.respond("Your permissions are: " + Miscellaneous.getStringRepresentation(getPermissions(event)));
                 return;
             }
 
@@ -342,11 +342,11 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
                     if (commands.get(3).equals("available")) {
                         switch (commands.get(2)) {
                             case OPERAND_ROLES:
-                                message.accept("The following roles are available: " + Miscellaneous.getSetAsString(getAllRoles()));
+                                message.accept("The following roles are available: " + Miscellaneous.getStringRepresentation(getAllRoles()));
                                 message.accept("Remember that the \"*\" pseudo-role that grants ALL permissions unconditionally is always available.");
                                 break;
                             case OPERAND_PERMISSIONS:
-                                message.accept("I've seen the following permissions used, but note that this list may not include all available permissions: " + Miscellaneous.getSetAsString(seenPermissions));
+                                message.accept("I've seen the following permissions used, but note that this list may not include all available permissions: " + Miscellaneous.getStringRepresentation(seenPermissions));
                                 message.accept("Remember that the \"*\" pseudo-permission that grants ALL permissions unconditionally is always available.");
                                 break;
                         }
@@ -506,7 +506,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
         private synchronized void outputMultimap(Map<String, Set<String>> multimap, Consumer<String> message) {
             for (Entry<String, Set<String>> entry : multimap.entrySet()) {
                 String key = entry.getKey();
-                String values = Miscellaneous.getSetAsString(entry.getValue());
+                String values = Miscellaneous.getStringRepresentation(entry.getValue());
 
                 message.accept(key + " => " + values);
             }

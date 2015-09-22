@@ -32,7 +32,10 @@
 
 package org.lizardirc.beancounter.utils;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -47,11 +50,17 @@ public final class Miscellaneous {
             .anyMatch(firstChar::equals);
     }
 
-    public static String getSetAsString(Set<String> set) {
+    public static String getStringRepresentation(Collection<String> set) {
         if (set.isEmpty()) {
             return "(none)";
         } else {
             return set.stream().collect(Collectors.joining(", "));
         }
+    }
+
+    public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+        List<T> list = new ArrayList<>(c);
+        Collections.sort(list);
+        return list;
     }
 }
