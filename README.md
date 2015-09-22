@@ -44,3 +44,4 @@ authors information, please see the AUTHORS.txt file.
 [github-issues]: https://github.com/LizardNet/LizardIRC-Beancounter/issues
 [lizardnet-code-review]: https://gerrit.fastlizard4.org
 [lizardnet-repository]: https://git.fastlizard4.org/gitblit/summary/?r=LizardIRC/Beancounter.git
+[lizardnet-code-review-login]: https://fastlizard4.org/wiki/LizardNet_Code_Review
