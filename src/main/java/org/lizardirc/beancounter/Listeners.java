@@ -116,6 +116,7 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         listeners.add(new PerChannelCommand<>(RouletteListener::new));
         listeners.add(acl.getListener());
         listeners.add(userLastSeenListener.getCommandListener());
+        listeners.add(new HelpListener<T>());
         listeners.add(this);
         MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);
         ownListeners.add(new Chainable<>(new Fantasy<>(commands, fantasyString), separator));
