@@ -315,7 +315,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
                         case SEEN_CONFIG_OPERATION_LIST_DO_NOT_TRACKS:
                             if (acl.hasPermission(event, PERM_SEEN_CONFIG)) {
                                 event.respond("The following channels are on the \"Do Not Track\" list for the " + COMMAND_SEEN + " command: " +
-                                    Miscellaneous.getSetAsString(doNotTrackChannels));
+                                    Miscellaneous.getStringRepresentation(doNotTrackChannels));
                             } else {
                                 event.respond("No u!  (You don't have the necessary permissions to do this.)");
                             }
