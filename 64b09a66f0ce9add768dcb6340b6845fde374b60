@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_3d20e79a",
+        "filename": "src/main/java/org/lizardirc/beancounter/hooks/MultiCommandListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-22T21:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_fd124f57",
+      "revId": "64b09a66f0ce9add768dcb6340b6845fde374b60",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_dd0f8b2d",
         "filename": "src/main/java/org/lizardirc/beancounter/hooks/MultiCommandListener.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-22T21:24:51Z",
       "side": 1,
       "message": "as should this. Otherwise there\u0027s a ConcurrentModificationException potential if one thread adds/removes a listener while another is iterating it for getSubCommands.",
+      "revId": "64b09a66f0ce9add768dcb6340b6845fde374b60",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_5d2b9b82",
+        "filename": "src/main/java/org/lizardirc/beancounter/hooks/MultiCommandListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-22T21:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_dd0f8b2d",
       "revId": "64b09a66f0ce9add768dcb6340b6845fde374b60",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
