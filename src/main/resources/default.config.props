@@ -45,6 +45,11 @@ serverHost=
 # default, will not attempt to join any channels.
 #autoJoinChannels=
 
+# autoReconnect: Boolean - If this is set to true (the default), the bot will automatically attempt to reconnect to
+# the server if it is disconnected by any other means than a "quit" command from an authorized user on IRC. Set this to
+# false to disable this behavior.
+#autoReconnect=true
+
 # ownerHostmask: String - Set this to the hostmask of the bot's owner (i.e., a user identifier in nick!user@host form).
 # Note that this hostmask will be interpreted as a regular expression.  Anyone who has a hostmask matching this one will
 # always be granted all permissions in the bot, so choose wisely. If left blank (which is the default), the bot will

@@ -101,6 +101,8 @@ public class AdminListener<T extends PircBotX> extends CommandListener<T> {
                     quitMessage = remainder;
                 }
                 if (acl.hasPermission(event, PERM_QUIT)) {
+                    // Forcibly disable auto-reconnect, since we now want the bot to terminate cleanly
+                    event.getBot().stopBotReconnect();
                     outputIRC.quitServer(quitMessage);
                 } else {
                     event.respond(E_PERMFAIL);

@@ -69,8 +69,10 @@ public class Beancounter {
         String[] autoJoinChannels = properties.getProperty("autoJoinChannels", "").split(",");
         String saslUsername = properties.getProperty("sasl.username", "");
         String saslPassword = properties.getProperty("sasl.password", "");
+        boolean autoReconnect = Boolean.parseBoolean(properties.getProperty("autoReconnect", "true"));
 
         Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<>()
+            .setAutoReconnect(autoReconnect)
             .setName(botName)
             .setLogin(botUsername)
             .setServerHostname(serverHost)
