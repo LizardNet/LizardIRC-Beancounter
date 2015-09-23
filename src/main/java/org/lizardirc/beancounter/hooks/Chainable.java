@@ -53,15 +53,15 @@ public class Chainable<T extends PircBotX> extends Decorator<T> {
     public void onEvent(Event<T> event) throws Exception {
         if (event instanceof MessageEvent) {
             MessageEvent<T> me = (MessageEvent<T>) event;
-            String[] messages = me.getMessage().split(separator);
+            String[] messages = me.getMessage().replace("\\" + separator, "\0").split(separator);
             for (String newMessage : messages) {
-                super.onEvent(new MessageEventView<>(me, newMessage));
+                super.onEvent(new MessageEventView<>(me, newMessage.replace("\0", separator)));
             }
         } else if (event instanceof PrivateMessageEvent) {
             PrivateMessageEvent<T> me = (PrivateMessageEvent<T>) event;
-            String[] messages = me.getMessage().split(separator);
+            String[] messages = me.getMessage().replace("\\" + separator, "\0").split(separator);
             for (String newMessage : messages) {
-                super.onEvent(new PrivateMessageEventView<>(me, newMessage));
+                super.onEvent(new PrivateMessageEventView<>(me, newMessage.replace("\0", separator)));
             }
         }
     }
