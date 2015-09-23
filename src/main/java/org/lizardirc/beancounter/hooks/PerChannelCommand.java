@@ -48,15 +48,15 @@ import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class PerChannelCommand<T extends PircBotX> extends CommandListener<T> {
-    private final LoadingCache<Channel, ? extends CommandListener<T>> childListeners;
+public class PerChannelCommand<T extends PircBotX> implements CommandHandler<T> {
+    private final LoadingCache<Channel, ? extends CommandHandler<T>> childListeners;
 
-    public PerChannelCommand(Function<Channel, ? extends CommandListener<T>> childFunction) {
+    public PerChannelCommand(Function<Channel, ? extends CommandHandler<T>> childFunction) {
         childListeners = CacheBuilder.newBuilder()
             .build(CacheLoader.from(childFunction));
     }
 
-    public PerChannelCommand(Supplier<? extends CommandListener<T>> childSupplier) {
+    public PerChannelCommand(Supplier<? extends CommandHandler<T>> childSupplier) {
         childListeners = CacheBuilder.newBuilder()
             .build(CacheLoader.from(childSupplier));
     }

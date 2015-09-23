@@ -53,7 +53,7 @@ import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import org.lizardirc.beancounter.hooks.CommandListener;
+import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Miscellaneous;
@@ -72,7 +72,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
     // command.  The bot will also automatically not track channels that are set as secret (mode +s usually).
     private final Set<String> doNotTrackChannels;
 
-    private final CommandListener<T> commandListener = new UserLastSeenCommandListener<>();
+    private final CommandHandler<T> commandHandler = new UserLastSeenCommandHandler<>();
 
     public UserLastSeenListener(PersistenceManager pm, AccessControl<T> acl) {
         this.pm = pm;
@@ -104,8 +104,8 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
         pm.sync();
     }
 
-    public CommandListener<T> getCommandListener() {
-        return commandListener;
+    public CommandHandler<T> getCommandHandler() {
+        return commandHandler;
     }
 
     private static final class ChannelAndTime {
@@ -135,7 +135,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
     }
 
     // ˢᵉʳᶦᵒᵘˢ ᵗʳᵒᵘᵇᶫᵉ
-    private class UserLastSeenCommandListener<SeriouslyIHaveToDoThisT extends PircBotX> extends CommandListener<SeriouslyIHaveToDoThisT> {
+    private class UserLastSeenCommandHandler<SeriouslyIHaveToDoThisT extends PircBotX> implements CommandHandler<SeriouslyIHaveToDoThisT> {
         private static final String COMMAND_SEEN = "seen";
         private static final String COMMAND_SEEN_CONFIG = "cfgseen";
         private final Set<String> COMMANDS = ImmutableSet.of(COMMAND_SEEN, COMMAND_SEEN_CONFIG);

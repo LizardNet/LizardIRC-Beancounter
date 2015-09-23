@@ -30,19 +30,21 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter.security;
+package org.lizardirc.beancounter.hooks;
 
+import java.util.List;
 import java.util.Set;
 
 import org.pircbotx.PircBotX;
-import org.pircbotx.hooks.types.GenericUserEvent;
+import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import org.lizardirc.beancounter.hooks.CommandHandler;
+public interface CommandHandler<T extends PircBotX> {
+    /**
+     * Returns a list of subcommands that are accepted for the given command.
+     *
+     * Returns the empty set if no commands are accepted, or the remaining input is freeform.
+     */
+    Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands);
 
-public interface AccessControl<T extends PircBotX> {
-    boolean hasPermission(GenericUserEvent<?> event, String permission);
-
-    Set<String> getPermissions(GenericUserEvent<?> event);
-
-    CommandHandler<T> getHandler();
+    void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder);
 }

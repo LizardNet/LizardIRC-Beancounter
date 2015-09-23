@@ -50,7 +50,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.hooks.types.GenericUserEvent;
 import org.pircbotx.output.OutputIRC;
 
-import org.lizardirc.beancounter.hooks.CommandListener;
+import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
@@ -62,7 +62,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
         E_NOSUCHVALUE
     }
 
-    private final BreadBasedAccessControlListener<T> listener = new BreadBasedAccessControlListener<>();
+    private final BreadBasedAccessControlHandler<T> listener = new BreadBasedAccessControlHandler<>();
     private Map<String, Set<String>> hostmasksToRoles;
     private Map<String, Set<String>> rolesToPermissions;
     private PersistenceManager pm;
@@ -243,7 +243,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
     }
 
     @Override
-    public CommandListener<T> getListener() {
+    public CommandHandler<T> getHandler() {
         return listener;
     }
 
@@ -257,7 +257,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
     Into the mouth of Hell
     Rode the six hundred. */
 
-    private class BreadBasedAccessControlListener<PlsStopT extends PircBotX> extends CommandListener<PlsStopT> {
+    private class BreadBasedAccessControlHandler<PlsStopT extends PircBotX> implements CommandHandler<PlsStopT> {
         private static final String COMMAND_ACL = "acl";
         private static final String COMMAND_MYPERMS = "myperms";
         private final Set<String> COMMANDS = ImmutableSet.of(COMMAND_ACL, COMMAND_MYPERMS);

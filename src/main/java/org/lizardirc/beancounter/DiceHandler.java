@@ -45,9 +45,9 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import org.lizardirc.beancounter.hooks.CommandListener;
+import org.lizardirc.beancounter.hooks.CommandHandler;
 
-public class DiceListener<T extends PircBotX> extends CommandListener<T> {
+public class DiceHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("coin", "dice", "more", "roll");
     private static final Pattern DESCRIPTOR = Pattern.compile("(?:([0-9]+)?d)?([0-9]+)");
 

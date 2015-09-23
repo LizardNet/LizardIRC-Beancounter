@@ -49,9 +49,10 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import redis.clients.jedis.Jedis;
 
 import org.lizardirc.beancounter.hooks.Chainable;
+import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
 import org.lizardirc.beancounter.hooks.Fantasy;
-import org.lizardirc.beancounter.hooks.MultiCommandListener;
+import org.lizardirc.beancounter.hooks.MultiCommandHandler;
 import org.lizardirc.beancounter.hooks.PerChannel;
 import org.lizardirc.beancounter.hooks.PerChannelCommand;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
@@ -60,7 +61,7 @@ import org.lizardirc.beancounter.persistence.RedisPersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.security.BreadBasedAccessControl;
 
-public class Listeners<T extends PircBotX> extends CommandListener<T> {
+public class Listeners<T extends PircBotX> implements CommandHandler<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("rehash");
     private final ListenerManager<T> listenerManager;
     private final Properties properties;
@@ -109,17 +110,17 @@ public class Listeners<T extends PircBotX> extends CommandListener<T> {
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
         userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
 
-        List<CommandListener<T>> listeners = new ArrayList<>();
-        listeners.add(new AdminListener<>(acl));
-        listeners.add(new DiceListener<>());
-        listeners.add(new SlapListener<>(pm.getNamespace("customSlaps"), acl));
-        listeners.add(new PerChannelCommand<>(RouletteListener::new));
-        listeners.add(acl.getListener());
-        listeners.add(userLastSeenListener.getCommandListener());
-        listeners.add(this);
-        MultiCommandListener<T> commands = new MultiCommandListener<>(listeners);
-        commands.add(new HelpListener<>(commands));
-        ownListeners.add(new Chainable<>(new Fantasy<>(commands, fantasyString), separator));
+        List<CommandHandler<T>> handlers = new ArrayList<>();
+        handlers.add(new AdminHandler<>(acl));
+        handlers.add(new DiceHandler<>());
+        handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
+        handlers.add(new PerChannelCommand<>(RouletteHandler::new));
+        handlers.add(acl.getHandler());
+        handlers.add(userLastSeenListener.getCommandHandler());
+        handlers.add(this);
+        MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
+        commands.add(new HelpHandler<>(commands));
+        ownListeners.add(new Chainable<>(new Fantasy<>(new CommandListener<>(commands), fantasyString), separator));
 
         ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistence")));
 

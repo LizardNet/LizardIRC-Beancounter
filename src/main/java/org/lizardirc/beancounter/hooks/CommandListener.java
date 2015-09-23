@@ -43,13 +43,19 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public abstract class CommandListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class CommandListener<T extends PircBotX> extends ListenerAdapter<T> {
+    private final CommandHandler<T> handler;
+
+    public CommandListener(CommandHandler<T> handler) {
+        this.handler = handler;
+    }
+
     @Override
     public void onGenericMessage(GenericMessageEvent<T> event) {
         List<String> commands = new ArrayList<>();
         Set<String> options;
         String message = event.getMessage().trim();
-        while (!isNullOrEmpty(options = getSubCommands(event, commands))) {
+        while (!isNullOrEmpty(options = handler.getSubCommands(event, commands))) {
             String firstWord = message.split(" ")[0];
             String selected = null;
             try {
@@ -65,18 +71,9 @@ public abstract class CommandListener<T extends PircBotX> extends ListenerAdapte
             message = message.trim();
         }
         if (commands.size() > 0) {
-            handleCommand(event, commands, message);
+            handler.handleCommand(event, commands, message);
         }
     }
-
-    /**
-     * Returns a list of subcommands that are accepted for the given command.
-     *
-     * Returns the empty set if no commands are accepted, or the remaining input is freeform.
-     */
-    public abstract Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands);
-
-    public abstract void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder);
 
     // This function tries to determine which of a set of options a user was
     // aiming for when typing a shorthand. For example, of a list of menu items,

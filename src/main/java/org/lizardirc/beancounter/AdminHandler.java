@@ -42,11 +42,11 @@ import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.output.OutputIRC;
 
-import org.lizardirc.beancounter.hooks.CommandListener;
+import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
-public class AdminListener<T extends PircBotX> extends CommandListener<T> {
+public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String CMD_QUIT = "quit";
     private static final String CMD_NICK = "nick";
     private static final String CMD_JOIN = "join";
@@ -68,7 +68,7 @@ public class AdminListener<T extends PircBotX> extends CommandListener<T> {
 
     private final AccessControl<T> acl;
 
-    public AdminListener(AccessControl<T> acl) {
+    public AdminHandler(AccessControl<T> acl) {
         this.acl = acl;
     }
 

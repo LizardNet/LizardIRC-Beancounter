@@ -47,9 +47,9 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.output.OutputChannel;
 import org.pircbotx.output.OutputIRC;
 
-import org.lizardirc.beancounter.hooks.CommandListener;
+import org.lizardirc.beancounter.hooks.CommandHandler;
 
-public class RouletteListener<T extends PircBotX> extends CommandListener<T> {
+public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("poulette", "reload", "roulette", "spin");
     private static final int MAX_CHAMBERS = 64;
     private static final int DEFAULT_BULLETS = 1;

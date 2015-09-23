@@ -43,41 +43,42 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.ImmutableList;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class MultiCommandListener<T extends PircBotX> extends CommandListener<T> {
-    private final Set<CommandListener<T>> subCommandListeners;
+public class MultiCommandHandler<T extends PircBotX> implements CommandHandler<T> {
+    private final Set<CommandHandler<T>> subCommandHandlers;
 
     // Mmm, generics
-    private Map<GenericMessageEvent<T>, Map<List<String>, Set<CommandListener<T>>>> listenerMap = new WeakHashMap<>();
+    private Map<GenericMessageEvent<T>, Map<List<String>, Set<CommandHandler<T>>>> listenerMap = new WeakHashMap<>();
 
-    public MultiCommandListener() {
-        subCommandListeners = new HashSet<>();
+    public MultiCommandHandler() {
+        subCommandHandlers = new HashSet<>();
     }
 
-    public MultiCommandListener(Collection<CommandListener<T>> c) {
-        subCommandListeners = new HashSet<>(c);
+    public MultiCommandHandler(Collection<CommandHandler<T>> c) {
+        subCommandHandlers = new HashSet<>(c);
     }
 
-    public synchronized void add(CommandListener<T> listener) {
-        subCommandListeners.add(listener);
+    public synchronized void add(CommandHandler<T> listener) {
+        subCommandHandlers.add(listener);
     }
 
-    public synchronized void remove(CommandListener<T> listener) {
-        subCommandListeners.remove(listener);
+    public synchronized void remove(CommandHandler<T> listener) {
+        subCommandHandlers.remove(listener);
     }
 
     public synchronized Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
-        Set<CommandListener<T>> listeners = subCommandListeners;
+        Set<CommandHandler<T>> listeners = subCommandHandlers;
         if (listenerMap.containsKey(event)) {
-            listeners = listenerMap.get(event).get(clone(commands));
+            listeners = listenerMap.get(event).get(ImmutableList.copyOf(commands));
         } else {
             listenerMap.put(event, new HashMap<>());
         }
 
-        Map<List<String>, Set<CommandListener<T>>> map = listenerMap.get(event);
-        for (CommandListener<T> listener : listeners) {
+        Map<List<String>, Set<CommandHandler<T>>> map = listenerMap.get(event);
+        for (CommandHandler<T> listener : listeners) {
             for (String str : listener.getSubCommands(event, commands)) {
                 List<String> newCommands = append(commands, str);
                 if (!map.containsKey(newCommands)) {
@@ -97,7 +98,7 @@ public class MultiCommandListener<T extends PircBotX> extends CommandListener<T>
             throw new IllegalStateException("Listener map not populated");
         }
 
-        Set<CommandListener<T>> listeners = listenerMap.get(event).get(commands);
+        Set<CommandHandler<T>> listeners = listenerMap.get(event).get(commands);
         if (listeners == null) {
             throw new IllegalStateException("No possible handlers for command");
         } else if (listeners.size() != 1) {
@@ -106,14 +107,9 @@ public class MultiCommandListener<T extends PircBotX> extends CommandListener<T>
 
         listenerMap.remove(event);
 
-        for (CommandListener<T> listener : listeners) {
+        for (CommandHandler<T> listener : listeners) {
             listener.handleCommand(event, commands, remainder);
         }
-    }
-
-    private List<String> clone(List<String> commands) {
-        List<String> ret = new ArrayList<>(commands);
-        return Collections.unmodifiableList(ret);
     }
 
     private List<String> append(List<String> commands, String tail) {

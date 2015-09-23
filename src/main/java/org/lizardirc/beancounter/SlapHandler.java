@@ -44,11 +44,11 @@ import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import org.lizardirc.beancounter.hooks.CommandListener;
+import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 
-public class SlapListener<T extends PircBotX> extends CommandListener<T> {
+public class SlapHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String CMD_SLAP = "slap";
     private static final String CMD_CFG = "cfgslap";
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_SLAP, CMD_CFG);
@@ -81,7 +81,7 @@ public class SlapListener<T extends PircBotX> extends CommandListener<T> {
     private final List<String> items;
     private final List<String> item_mods;
 
-    public SlapListener(PersistenceManager pm, AccessControl<T> acl) {
+    public SlapHandler(PersistenceManager pm, AccessControl<T> acl) {
         this.pm = pm;
         this.acl = acl;
 
