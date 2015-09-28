@@ -33,6 +33,8 @@
 package org.lizardirc.beancounter;
 
 import java.util.Queue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -41,10 +43,15 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.EvictingQueue;
+import com.google.common.util.concurrent.SimpleTimeLimiter;
+import com.google.common.util.concurrent.TimeLimiter;
+import com.google.common.util.concurrent.UncheckedTimeoutException;
 import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
+
+import org.lizardirc.beancounter.utils.InterruptibleCharSequence;
 
 public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // There are several substring types that we match.
@@ -68,7 +75,11 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
 
     private static final Pattern PATTERN_OPTIONS = Pattern.compile("[gi]*");
 
-    private final LoadingCache<User, Queue<String>> windows;
+    private final LoadingCache<User, Queue<InterruptibleCharSequence>> windows;
+    private final TimeLimiter timeLimiter = new SimpleTimeLimiter();
+
+    private MessageEvent<T> event;
+    private Matcher m;
 
     public SedListener(int windowSize) {
         windows = CacheBuilder.newBuilder()
@@ -76,10 +87,31 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     }
 
     @Override
-    public void onMessage(MessageEvent<T> event) {
+    public void onMessage(MessageEvent<T> event) throws Exception {
+        this.event = event;
+
         String message = event.getMessage();
-        Matcher m = PATTERN_SED.matcher(message);
+        m = PATTERN_SED.matcher(new InterruptibleCharSequence(message));
         if (m.matches()) {
+            try {
+                timeLimiter.callWithTimeout(new SedListenerCallable(), 5, TimeUnit.SECONDS, false);
+            } catch (UncheckedTimeoutException e) {
+                event.respond("Timeout while processing replacement.");
+                System.err.println("WARNING: " + event.getUser().getNick() + " caused regex timeout with regex " + event.getMessage() + ".");
+            }
+        } else {
+            windows.getUnchecked(event.getUser()).add(new InterruptibleCharSequence(message));
+        }
+    }
+
+    private class SedListenerCallable implements Callable<Void> {
+        @Override
+        public Void call() throws Exception {
+            doReplacement();
+            return null;
+        }
+
+        private void doReplacement() {
             String target = m.group(1);
             String regex = m.group(3);
             String replacement = m.group(4);
@@ -109,7 +141,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 return;
             }
 
-            Queue<String> window = windows.getUnchecked(speaker);
+            Queue<InterruptibleCharSequence> window = windows.getUnchecked(speaker);
 
             window.stream()
                 .map(p::matcher)
@@ -123,7 +155,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                     }
                 })
                 .ifPresent(s -> {
-                    window.add(s);
+                    window.add(new InterruptibleCharSequence(s));
 
                     StringBuilder sb = new StringBuilder(corrector.getNick());
                     if (!corrector.equals(speaker)) {
@@ -132,8 +164,6 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                     sb.append(" meant to say: ").append(s);
                     event.getChannel().send().message(sb.toString());
                 });
-        } else {
-            windows.getUnchecked(event.getUser()).add(message);
         }
     }
 }
