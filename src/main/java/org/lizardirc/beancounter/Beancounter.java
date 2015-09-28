@@ -41,14 +41,21 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.net.ssl.SSLSocketFactory;
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.cap.SASLCapHandler;
 import org.pircbotx.exception.CAPException;
 import org.pircbotx.exception.IrcException;
+import org.pircbotx.hooks.managers.ListenerManager;
+import org.pircbotx.hooks.managers.ThreadedListenerManager;
 
 import org.lizardirc.beancounter.security.FingerprintingSslSocketFactory;
 import org.lizardirc.beancounter.security.VerifyingSslSocketFactory;
@@ -71,15 +78,19 @@ public class Beancounter {
         String saslPassword = properties.getProperty("sasl.password", "");
         boolean autoReconnect = Boolean.parseBoolean(properties.getProperty("autoReconnect", "true"));
 
+        ExecutorService executorService = constructExecutorService();
+        ListenerManager<PircBotX> listenerManager = new ThreadedListenerManager<>(executorService);
+
         Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<>()
             .setAutoReconnect(autoReconnect)
             .setName(botName)
             .setLogin(botUsername)
             .setServerHostname(serverHost)
             .setServerPort(serverPort)
+            .setListenerManager(listenerManager)
             .setCapEnabled(true); // Of course, the PircBotX documentation doesn't indicate this is necessary....
 
-        Listeners<PircBotX> listeners = new Listeners<>(confBuilder.getListenerManager(), properties);
+        Listeners<PircBotX> listeners = new Listeners<>(executorService, confBuilder.getListenerManager(), properties);
         listeners.register();
 
         if (useTls) {
@@ -182,5 +193,15 @@ public class Beancounter {
 
         confBuilder.setVersion(beancounterVersion.toString());
         confBuilder.setRealName(beancounterGecos.toString());
+    }
+
+    private ExecutorService constructExecutorService() {
+        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+            .namingPattern("primaryListenerPool-thread%d")
+            .daemon(true)
+            .build();
+        ThreadPoolExecutor ret = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<>(), factory);
+        ret.allowCoreThreadTimeOut(true);
+        return ret;
     }
 }

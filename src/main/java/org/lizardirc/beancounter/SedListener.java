@@ -32,10 +32,17 @@
 
 package org.lizardirc.beancounter;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -45,6 +52,8 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
+
+import org.lizardirc.beancounter.utils.InterruptibleCharSequence;
 
 public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // There are several substring types that we match.
@@ -69,14 +78,16 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     private static final Pattern PATTERN_OPTIONS = Pattern.compile("[gi]*");
 
     private final LoadingCache<User, Queue<String>> windows;
+    private final ExecutorService executorService;
 
-    public SedListener(int windowSize) {
+    public SedListener(ExecutorService executorService, int windowSize) {
         windows = CacheBuilder.newBuilder()
             .build(CacheLoader.from(() -> EvictingQueue.create(windowSize)));
+        this.executorService = executorService;
     }
 
     @Override
-    public void onMessage(MessageEvent<T> event) {
+    public void onMessage(MessageEvent<T> event) throws Exception {
         String message = event.getMessage();
         Matcher m = PATTERN_SED.matcher(message);
         if (m.matches()) {
@@ -110,19 +121,11 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             }
 
             Queue<String> window = windows.getUnchecked(speaker);
+            try {
+                Callable<Optional<String>> callable = new SedListenerCallable(p, replacement, options.contains("g"), window);
+                Optional<String> response = executorService.submit(callable).get(5, TimeUnit.SECONDS);
 
-            window.stream()
-                .map(p::matcher)
-                .filter(Matcher::find)
-                .reduce((x, y) -> y) // findLast()
-                .map(matcher -> {
-                    if (options.contains("g")) {
-                        return matcher.replaceAll(replacement);
-                    } else {
-                        return matcher.replaceFirst(replacement);
-                    }
-                })
-                .ifPresent(s -> {
+                response.ifPresent(s -> {
                     window.add(s);
 
                     StringBuilder sb = new StringBuilder(corrector.getNick());
@@ -132,8 +135,43 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                     sb.append(" meant to say: ").append(s);
                     event.getChannel().send().message(sb.toString());
                 });
+            } catch (TimeoutException e) {
+                event.respond("Timeout while processing replacement.");
+                System.err.println("WARNING: " + corrector.getNick() + " caused regex timeout with regex " + message + '.');
+            }
         } else {
             windows.getUnchecked(event.getUser()).add(message);
+        }
+    }
+
+    private static class SedListenerCallable implements Callable<Optional<String>> {
+        private final Pattern p;
+        private final String replacement;
+        private final boolean global;
+        private final List<CharSequence> window;
+
+        public SedListenerCallable(Pattern p, String replacement, boolean global, Queue<String> window) {
+            this.p = p;
+            this.replacement = replacement;
+            this.global = global;
+            this.window = window.stream()
+                .map(InterruptibleCharSequence::new)
+                .collect(Collectors.toList());
+        }
+
+        @Override
+        public Optional<String> call() throws Exception {
+            return window.stream()
+                .map(p::matcher)
+                .filter(Matcher::find)
+                .reduce((x, y) -> y) // findLast()
+                .map(matcher -> {
+                    if (global) {
+                        return matcher.replaceAll(replacement);
+                    } else {
+                        return matcher.replaceFirst(replacement);
+                    }
+                });
         }
     }
 }
