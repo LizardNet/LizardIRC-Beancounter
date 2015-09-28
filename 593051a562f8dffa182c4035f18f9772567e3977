@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_fdc36f88",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-28T09:05:41Z",
+      "side": 1,
+      "message": "Do we want to use Integer.MAX_VALUE instead?",
+      "revId": "593051a562f8dffa182c4035f18f9772567e3977",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_ddc0ab7e",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-28T09:05:41Z",
+      "side": 1,
+      "message": "\u0027.\u0027 vs \".\"?",
+      "revId": "593051a562f8dffa182c4035f18f9772567e3977",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
