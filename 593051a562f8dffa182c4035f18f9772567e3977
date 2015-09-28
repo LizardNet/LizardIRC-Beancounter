@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_9dba3309",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-28T09:09:08Z",
+      "side": 1,
+      "message": "This was a copy-and-paste from decompiled code, so probably yes.",
+      "parentUuid": "da6255ed_fdc36f88",
+      "revId": "593051a562f8dffa182c4035f18f9772567e3977",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_ddc0ab7e",
         "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-28T09:05:41Z",
       "side": 1,
       "message": "\u0027.\u0027 vs \".\"?",
+      "revId": "593051a562f8dffa182c4035f18f9772567e3977",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_7d377fb1",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-28T09:09:08Z",
+      "side": 1,
+      "message": "Former is more performant. Pursuant to a change that I\u0027m working on to clean up everything that FindBugs whines about, it\u0027d get changed to that anyway.",
+      "parentUuid": "da6255ed_ddc0ab7e",
       "revId": "593051a562f8dffa182c4035f18f9772567e3977",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
