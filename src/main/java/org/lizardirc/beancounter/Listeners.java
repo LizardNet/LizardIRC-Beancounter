@@ -40,6 +40,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.PircBotX;
@@ -63,14 +64,18 @@ import org.lizardirc.beancounter.security.BreadBasedAccessControl;
 
 public class Listeners<T extends PircBotX> implements CommandHandler<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("rehash");
+
+    private final Set<Listener<T>> ownListeners = new HashSet<>();
+
+    private final ExecutorService executorService;
     private final ListenerManager<T> listenerManager;
     private final Properties properties;
-    private final Set<Listener<T>> ownListeners = new HashSet<>();
 
     private AccessControl<T> acl;
     private UserLastSeenListener<T> userLastSeenListener;
 
-    public Listeners(ListenerManager<T> listenerManager, Properties properties) {
+    public Listeners(ExecutorService executorService, ListenerManager<T> listenerManager, Properties properties) {
+        this.executorService = executorService;
         this.listenerManager = listenerManager;
         this.properties = properties;
     }
@@ -128,7 +133,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
             ownListeners.add(new SetModesOnConnectListener<>(modesOnConnect));
         }
 
-        ownListeners.add(new PerChannel<>(() -> new SedListener<>(5)));
+        ownListeners.add(new PerChannel<>(() -> new SedListener<>(executorService, 5)));
         ownListeners.add(new InviteAcceptor<>());
         ownListeners.add(userLastSeenListener);
 
