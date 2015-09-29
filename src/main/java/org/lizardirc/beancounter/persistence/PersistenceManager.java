@@ -98,6 +98,22 @@ public interface PersistenceManager {
             .orElse(ImmutableMap.of());
     }
 
+    default Optional<Boolean> getBoolean(String name) {
+        try {
+            return get(name).map(Boolean::parseBoolean);
+        } catch (NullPointerException e) {
+            return Optional.empty();
+        }
+    }
+
+    default Optional<Long> getLong(String name) {
+        try {
+            return get(name).map(Long::parseLong);
+        } catch (NumberFormatException | NullPointerException e) {
+            return Optional.empty();
+        }
+    }
+
     void set(String name, String value);
 
     default void setInt(String name, int value) {
@@ -133,6 +149,14 @@ public interface PersistenceManager {
                 .collect(DEF.NARROW_LIST_COLLECTOR))
             .collect(DEF.WIDE_LIST_COLLECTOR);
         set(name, joined);
+    }
+
+    default void setBoolean(String name, boolean value) {
+        set(name, (value) ? "true" : "false");
+    }
+
+    default void setLong(String name, long value) {
+        set(name, String.valueOf(value));
     }
 
     void sync();
