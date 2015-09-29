@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_1d5d23ea",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-29T20:05:42Z",
+      "side": 1,
+      "message": "wot",
+      "revId": "6821d511c9e378bc0883cbbbe06ce55c9c88d70d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
