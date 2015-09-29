@@ -50,6 +50,11 @@
       <artifactId>guava</artifactId>
       <version>18.0</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.3.1</version>
+    </dependency>
   </dependencies>
   <description>Beancounter - a Java IRC bot to function as a game bot serving various games over IRC. Developed for use for the LizardIRC network.</description>
   <inceptionYear>2015</inceptionYear>

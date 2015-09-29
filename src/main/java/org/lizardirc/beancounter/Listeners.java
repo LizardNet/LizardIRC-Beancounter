@@ -112,6 +112,8 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
                 throw new IllegalStateException("Unknown or unsupported Beanledger backend \"" + beanledgerBackend + "\" specified in configuration.");
         }
 
+        boolean enableWeatherHandler = Boolean.parseBoolean(properties.getProperty("weather.enable", "false"));
+
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
         userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
 
@@ -122,6 +124,9 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(acl.getHandler());
         handlers.add(userLastSeenListener.getCommandHandler());
+        if (enableWeatherHandler) {
+            handlers.add(new WeatherHandler<>(pm.getNamespace("weatherHandler"), acl));
+        }
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
