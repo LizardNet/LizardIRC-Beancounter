@@ -109,3 +109,16 @@ serverHost=
 # beanledger.redis.namespace: String - The namespace under which to place all redis configuration. This is used to
 # prevent collisions in shared redis instances. No namespace is used if this field is not provided.
 #beanledger.redis.namespace=
+
+# OPTIONAL WEATHER CONFIGURATION
+# Beancounter is capable of providing weather information sourced from Weather Underground
+# <https://www.weatherunderground.com>.  To enable this, you will need to purchase an API key from WeatherUnderground
+# and configure it into your bot using the ?cfgweather command after enabling the WeatherHandler here (a free API
+# service tier is available from WeatherUnderground).
+
+# weather.enable: Boolean - Whether to enable the weather handler.  Disabled by default (set to false).  Set this to
+# true to enable.  Note that after enabling the weather handler, you will need to use the ?cfgweather command to provide
+# your WeatherUnderground API key as well as configure ratelimiting.  Note that the weather command can also be disabled
+# from IRC if necessary.  See the Beancounter documentation at <https://www.lizardirc.org/?page=beancounter> for more
+# information.
+#weather.enable=false

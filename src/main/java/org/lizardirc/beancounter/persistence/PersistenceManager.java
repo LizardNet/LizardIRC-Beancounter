@@ -50,9 +50,21 @@ public interface PersistenceManager {
 
     Optional<String> get(String name);
 
+    default Optional<Boolean> getBoolean(String name) {
+        return get(name).map(Boolean::parseBoolean);
+    }
+
     default Optional<Integer> getInt(String name) {
         try {
             return get(name).map(Integer::parseInt);
+        } catch (NumberFormatException | NullPointerException e) {
+            return Optional.empty();
+        }
+    }
+
+    default Optional<Long> getLong(String name) {
+        try {
+            return get(name).map(Long::parseLong);
         } catch (NumberFormatException | NullPointerException e) {
             return Optional.empty();
         }
@@ -100,7 +112,15 @@ public interface PersistenceManager {
 
     void set(String name, String value);
 
+    default void setBoolean(String name, boolean value) {
+        set(name, (value) ? "true" : "false");
+    }
+
     default void setInt(String name, int value) {
+        set(name, String.valueOf(value));
+    }
+
+    default void setLong(String name, long value) {
         set(name, String.valueOf(value));
     }
 
