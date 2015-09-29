@@ -51,10 +51,14 @@ public final class Miscellaneous {
     }
 
     public static String getStringRepresentation(Collection<String> set) {
+        return getStringRepresentation(set, ", ");
+    }
+
+    public static String getStringRepresentation(Collection<String> set, String separator) {
         if (set.isEmpty()) {
             return "(none)";
         } else {
-            return set.stream().collect(Collectors.joining(", "));
+            return set.stream().collect(Collectors.joining(separator));
         }
     }
 
