@@ -32,6 +32,8 @@
 
 package org.lizardirc.beancounter;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -40,6 +42,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -56,6 +59,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
+import org.lizardirc.beancounter.utils.Bases;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
 public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T> {
@@ -65,9 +69,9 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
     private final AccessControl<T> acl;
 
     // This is a mapping of user@hosts to an object that contains the channel they last spoke in, and the time
-    private final Map<String, ChannelAndTime> lastSeen = new HashMap<>();
+    private final Map<String, ChannelAndTime> lastSeen;
     // This will be a mapping of nicknames to the user@host they were last seen using
-    private final Map<String, String> lastUsedUserHosts = new HashMap<>();
+    private final Map<String, String> lastUsedUserHosts;
     // This will be a set of channels that are forced as "do not track" by an authorized user using the COMMAND_SEEN_CONFIG
     // command.  The bot will also automatically not track channels that are set as secret (mode +s usually).
     private final Set<String> doNotTrackChannels;
@@ -79,6 +83,8 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
         this.acl = acl;
 
         doNotTrackChannels = new HashSet<>(pm.getSet("doNotTrackChannels"));
+        lastUsedUserHosts = new HashMap<>(pm.getMap("lastUsedUserHosts"));
+        lastSeen = getLastSeenMap();
     }
 
     public synchronized void onMessage(MessageEvent<T> event) {
@@ -97,11 +103,41 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
         }
 
         lastUsedUserHosts.put(event.getUser().getNick(), userHost);
+        sync();
     }
 
     private synchronized void sync() {
         pm.setSet("doNotTrackChannels", doNotTrackChannels);
+        pm.setMap("lastUsedUserHosts", lastUsedUserHosts);
+        putLastSeenMap();
         pm.sync();
+    }
+
+    private synchronized void putLastSeenMap() {
+        Map<String, String> intermediateRepresentation = new HashMap<>();
+
+        for (Entry<String, ChannelAndTime> entry : lastSeen.entrySet()) {
+            intermediateRepresentation.put(entry.getKey(), Bases.base64encode(entry.getValue().getChannel()) + ':' + entry.getValue().getDateTime().toEpochSecond());
+        }
+
+        pm.setMap("lastSeen", intermediateRepresentation);
+    }
+
+    private synchronized Map<String, ChannelAndTime> getLastSeenMap() {
+        Map<String, String> intermediateRepresentation = new HashMap<>(pm.getMap("lastSeen"));
+        Map<String, ChannelAndTime> finalRepresentation = new HashMap<>();
+
+        for (Entry<String, String> entry : intermediateRepresentation.entrySet()) {
+            String channel;
+            ZonedDateTime time;
+            String[] value = entry.getValue().split(":");
+            channel = Bases.base64decode(value[0]);
+            time = ZonedDateTime.ofInstant(Instant.ofEpochSecond(Long.parseLong(value[1])), ZoneId.systemDefault());
+
+            finalRepresentation.put(entry.getKey(), new ChannelAndTime(channel, time));
+        }
+
+        return finalRepresentation;
     }
 
     public CommandHandler<T> getCommandHandler() {
