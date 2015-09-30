@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_fdf80fc6",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-30T05:44:11Z",
+      "side": 1,
+      "message": "I couldn\u0027t figure out how to do this with streams.  :( Help me sensei!",
+      "revId": "08dc890b20a1307a43d5fe712a97a6269062f283",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_ddf54bcc",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-09-30T05:44:11Z",
+      "side": 1,
+      "message": "Same here.  :(  I can\u0027t stream :(",
+      "revId": "08dc890b20a1307a43d5fe712a97a6269062f283",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
