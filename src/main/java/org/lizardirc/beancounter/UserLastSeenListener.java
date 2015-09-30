@@ -32,6 +32,8 @@
 
 package org.lizardirc.beancounter;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -40,9 +42,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.Channel;
@@ -56,18 +60,17 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
+import org.lizardirc.beancounter.utils.Bases;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
 public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T> {
-    // TODO: Perhaps make the last seen database persistable, not just the configuration?
-
     private final PersistenceManager pm;
     private final AccessControl<T> acl;
 
     // This is a mapping of user@hosts to an object that contains the channel they last spoke in, and the time
-    private final Map<String, ChannelAndTime> lastSeen = new HashMap<>();
+    private final Map<String, ChannelAndTime> lastSeen;
     // This will be a mapping of nicknames to the user@host they were last seen using
-    private final Map<String, String> lastUsedUserHosts = new HashMap<>();
+    private final Map<String, String> lastUsedUserHosts;
     // This will be a set of channels that are forced as "do not track" by an authorized user using the COMMAND_SEEN_CONFIG
     // command.  The bot will also automatically not track channels that are set as secret (mode +s usually).
     private final Set<String> doNotTrackChannels;
@@ -79,6 +82,8 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
         this.acl = acl;
 
         doNotTrackChannels = new HashSet<>(pm.getSet("doNotTrackChannels"));
+        lastUsedUserHosts = new HashMap<>(pm.getMap("lastUsedUserHosts"));
+        lastSeen = getLastSeenMap();
     }
 
     public synchronized void onMessage(MessageEvent<T> event) {
@@ -97,11 +102,25 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
         }
 
         lastUsedUserHosts.put(event.getUser().getNick(), userHost);
+        sync();
     }
 
     private synchronized void sync() {
         pm.setSet("doNotTrackChannels", doNotTrackChannels);
+        pm.setMap("lastUsedUserHosts", lastUsedUserHosts);
+        putLastSeenMap();
         pm.sync();
+    }
+
+    private synchronized void putLastSeenMap() {
+        pm.setMap("lastSeen", lastSeen.entrySet().stream()
+            .collect(Collectors.toMap(Entry::getKey, e -> e.getValue().toString()))
+        );
+    }
+
+    private synchronized Map<String, ChannelAndTime> getLastSeenMap() {
+        return pm.getMap("lastSeen").entrySet().stream()
+            .collect(Collectors.toMap(Entry::getKey, e -> ChannelAndTime.fromString(e.getValue())));
     }
 
     public CommandHandler<T> getCommandHandler() {
@@ -125,12 +144,23 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
             return dateTime;
         }
 
-        void setChannel(String channel) {
+        public void setChannel(String channel) {
             this.channel = channel;
         }
 
-        void setDateTime(ZonedDateTime dateTime) {
+        public void setDateTime(ZonedDateTime dateTime) {
             this.dateTime = dateTime;
+        }
+
+        @Override
+        public String toString() {
+            return Bases.base64encode(channel) + ':' + dateTime.toEpochSecond();
+        }
+
+        public static ChannelAndTime fromString(String stringRepresentation) {
+            String[] s = stringRepresentation.split(":");
+            return new ChannelAndTime(Bases.base64decode(s[0]),
+                ZonedDateTime.ofInstant(Instant.ofEpochSecond(Long.parseLong(s[1])), ZoneId.systemDefault()));
         }
     }
 
