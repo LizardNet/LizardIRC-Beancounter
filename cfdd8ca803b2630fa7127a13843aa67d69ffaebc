@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_5dd83b53",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:44:32Z",
+      "side": 1,
+      "message": "I didn\u0027t notice this last time, but do we want to try to keep these in sort order?",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_3ddd8743",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:44:32Z",
+      "side": 1,
+      "message": "These names are a bit much; CFG_OP_SHOW_CFG is probably sufficient in a lot fewer characters, which is easier on the human.",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_1de2c303",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:44:32Z",
+      "side": 1,
+      "message": "This case is a monolith; consider refactoring into several helper methods, or to a class responsible for making the request and parsing the response.",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_9ded93f2",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:44:32Z",
+      "side": 1,
+      "message": "This is looking familiar. I smell an opportunity to DRY off a bit.",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_bdf057ca",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:44:32Z",
+      "side": 1,
+      "message": "JsonArray is probably not what we want to be using here. Better to, when refactoring this to a new class, have a data class with any fields we\u0027re interested in. Much cleaner code all around; see gson documentation.",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_fde6cf15",
+        "filename": "src/main/java/org/lizardirc/beancounter/persistence/PersistenceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:44:32Z",
+      "side": 1,
+      "message": "No NPE can be thrown here.",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_dde30b04",
+        "filename": "src/main/java/org/lizardirc/beancounter/persistence/PersistenceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:44:32Z",
+      "side": 1,
+      "message": "Maybe put these near getInt to keep them in order? get, getBoolean, getInt, getLong.",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
