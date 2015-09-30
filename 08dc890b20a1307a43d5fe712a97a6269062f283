@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "da6255ed_fd1fef07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:26:41Z",
+      "side": 1,
+      "message": "Apostrophe",
+      "revId": "08dc890b20a1307a43d5fe712a97a6269062f283",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_fdf80fc6",
         "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
         "patchSetId": 1
@@ -19,6 +36,41 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_dd1c2b16",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:26:41Z",
+      "side": 1,
+      "message": "Implement toString and fromString in ChannelAndTime as serializer/deserializer for encapsulation purposes, then the following?\n\nlastSean.entrySet().stream()\n    .collect(Collectors.toMap(Map.Entry::getKey, e -\u003e e.getValue().toString()));",
+      "parentUuid": "da6255ed_fdf80fc6",
+      "revId": "08dc890b20a1307a43d5fe712a97a6269062f283",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_9d16b3f0",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:26:41Z",
+      "side": 1,
+      "message": "No need to copy for the intermediate representation; we won\u0027t be saving or mutating it.",
+      "revId": "08dc890b20a1307a43d5fe712a97a6269062f283",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_ddf54bcc",
         "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
         "patchSetId": 1
@@ -30,6 +82,24 @@
       "writtenOn": "2015-09-30T05:44:11Z",
       "side": 1,
       "message": "Same here.  :(  I can\u0027t stream :(",
+      "revId": "08dc890b20a1307a43d5fe712a97a6269062f283",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_bd197724",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-09-30T06:26:41Z",
+      "side": 1,
+      "message": "Again, deserializer method fromString, then something very similar to the above.",
+      "parentUuid": "da6255ed_ddf54bcc",
       "revId": "08dc890b20a1307a43d5fe712a97a6269062f283",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
