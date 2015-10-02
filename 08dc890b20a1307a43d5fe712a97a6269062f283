@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_ddcaeb6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-02T01:37:25Z",
+      "side": 1,
+      "message": "Go away, clippy.  :P\n\n(Though, in seriousness, now I\u0027m not sure if you can contract \"it has\", so I\u0027ll probably just write it out.)",
+      "parentUuid": "da6255ed_fd1fef07",
+      "revId": "08dc890b20a1307a43d5fe712a97a6269062f283",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_fdf80fc6",
         "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
         "patchSetId": 1
