@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_1db083f3",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-02T02:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_5dd83b53",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_3ddd8743",
         "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-30T06:44:32Z",
       "side": 1,
       "message": "These names are a bit much; CFG_OP_SHOW_CFG is probably sufficient in a lot fewer characters, which is easier on the human.",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_bd9e1762",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-02T02:41:54Z",
+      "side": 1,
+      "message": "You\u0027re no fun at all.  :(\n\n(Done)",
+      "parentUuid": "da6255ed_3ddd8743",
       "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_fd948f45",
+        "filename": "src/main/java/org/lizardirc/beancounter/persistence/PersistenceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-02T02:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_fde6cf15",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_dde30b04",
         "filename": "src/main/java/org/lizardirc/beancounter/persistence/PersistenceManager.java",
         "patchSetId": 3
@@ -115,6 +169,24 @@
       "writtenOn": "2015-09-30T06:44:32Z",
       "side": 1,
       "message": "Maybe put these near getInt to keep them in order? get, getBoolean, getInt, getLong.",
+      "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_dd91cb53",
+        "filename": "src/main/java/org/lizardirc/beancounter/persistence/PersistenceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-02T02:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_dde30b04",
       "revId": "cfdd8ca803b2630fa7127a13843aa67d69ffaebc",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
