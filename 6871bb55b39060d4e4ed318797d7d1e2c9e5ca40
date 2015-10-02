@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_7d8f7f24",
+        "filename": "pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-10-02T15:28:51Z",
+      "side": 1,
+      "message": "Ah, you\u0027ve done sort order by artifactId. Was confused for a second because I was looking at groupId. Carry on.",
+      "revId": "6871bb55b39060d4e4ed318797d7d1e2c9e5ca40",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_5d94bb36",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-10-02T15:28:51Z",
+      "side": 1,
+      "message": "Oh, and FindBugs keeps nagging me about superfluous locations.size() \u003d\u003d 0 where we could be using locations.isEmpty()",
+      "revId": "6871bb55b39060d4e4ed318797d7d1e2c9e5ca40",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
