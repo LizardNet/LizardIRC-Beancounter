@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_7d041f7e",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-04T05:45:07Z",
+      "side": 1,
+      "message": "Thanks :D",
+      "parentUuid": "da6255ed_5de27bd6",
+      "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_3de7c7e6",
         "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2015-10-04T01:57:58Z",
       "side": 1,
       "message": "event.respond(locations.RESULTS.stream()\n    .map(r -\u003e r.name)\n    .collect(Collectors.joining(\"; \")));",
+      "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_5d095b94",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-04T05:45:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to work since locations.results is an array of LocationApiResults.  I guess we could try just doing that as a collection of some kind.",
+      "parentUuid": "da6255ed_3de7c7e6",
       "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_fdd00ff9",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-04T05:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_ddc66b49",
+      "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_bdc3b737",
         "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2015-10-04T01:57:58Z",
       "side": 1,
       "message": "Style question: for names like this, prefer LocationAPIResult or LocationApiResult? Java standard library is split, and there\u0027s no community consensus (but personally, I prefer the latter in case two initialisms are adjacent or a name starts with one). Google Java Style also favours the latter.",
+      "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_ddcd4b5f",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-04T05:45:07Z",
+      "side": 1,
+      "message": "I guess latter makes more sense all things considered, so we\u0027ll go with that.",
+      "parentUuid": "da6255ed_bdc3b737",
       "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_bdda9715",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-04T05:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_9dc0f32b",
+      "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_7ddd3f14",
         "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2015-10-04T01:57:58Z",
       "side": 1,
       "message": "and here.",
+      "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_9dd7d3ed",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-04T05:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6255ed_7ddd3f14",
       "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
