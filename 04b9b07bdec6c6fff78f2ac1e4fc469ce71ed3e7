@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_1d03e374",
+        "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-04T05:51:00Z",
+      "side": 1,
+      "message": "Okay, changed the type of results from LocationApiResult[] to List\u003cLocationApiResult\u003e.",
+      "parentUuid": "da6255ed_5d095b94",
+      "revId": "04b9b07bdec6c6fff78f2ac1e4fc469ce71ed3e7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_ddc66b49",
         "filename": "src/main/java/org/lizardirc/beancounter/WeatherHandler.java",
         "patchSetId": 7
