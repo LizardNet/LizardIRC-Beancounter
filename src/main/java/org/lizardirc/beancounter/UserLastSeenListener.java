@@ -81,17 +81,22 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
         this.pm = pm;
         this.acl = acl;
 
-        doNotTrackChannels = new HashSet<>(pm.getSet("doNotTrackChannels"));
-        lastUsedUserHosts = new HashMap<>(pm.getMap("lastUsedUserHosts"));
+        doNotTrackChannels = new HashSet<>(pm.getSet("doNotTrackChannels").stream()
+            .map(String::toLowerCase)
+            .collect(Collectors.toSet())
+        );
+        lastUsedUserHosts = new HashMap<>(pm.getMap("lastUsedUserHosts").entrySet().stream()
+            .collect(Collectors.toMap(e -> e.getKey().toLowerCase(), e->e.getValue().toLowerCase(), (o, n) -> n)) // In case of collision, arbitrarily discard old value
+        );
         lastSeen = getLastSeenMap();
     }
 
     public synchronized void onMessage(MessageEvent<T> event) {
-        if (doNotTrackChannels.contains(event.getChannel().getName()) || event.getChannel().isSecret()) {
+        if (doNotTrackChannels.contains(event.getChannel().getName().toLowerCase()) || event.getChannel().isSecret()) {
             return;
         }
 
-        String userHost = event.getUser().getLogin() + "@" + event.getUser().getHostmask();
+        String userHost = (event.getUser().getLogin() + "@" + event.getUser().getHostmask()).toLowerCase();
 
         if (lastSeen.containsKey(userHost)) {
             ChannelAndTime cat = lastSeen.get(userHost); // cat just stands for ChannelAndTime
@@ -101,7 +106,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
             lastSeen.put(userHost, new ChannelAndTime(event.getChannel().getName(), ZonedDateTime.now()));
         }
 
-        lastUsedUserHosts.put(event.getUser().getNick(), userHost);
+        lastUsedUserHosts.put(event.getUser().getNick().toLowerCase(), userHost);
         sync();
     }
 
@@ -119,8 +124,9 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
     }
 
     private synchronized Map<String, ChannelAndTime> getLastSeenMap() {
-        return pm.getMap("lastSeen").entrySet().stream()
-            .collect(Collectors.toMap(Entry::getKey, e -> ChannelAndTime.fromString(e.getValue())));
+        return new HashMap<>(pm.getMap("lastSeen").entrySet().stream()
+            .collect(Collectors.toMap(e -> e.getKey().toLowerCase(), e -> ChannelAndTime.fromString(e.getValue()), (o, n) -> n)) // In case of collision, arbitrarily discard old value
+        );
     }
 
     public CommandHandler<T> getCommandHandler() {
@@ -261,15 +267,15 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
                     // and use that for the lastSeen map lookup.
                     if (event.getBot().getUserChannelDao().userExists(args[0])) {
                         User user = event.getBot().getUserChannelDao().getUser(args[0]);
-                        userHost = user.getLogin() + "@" + user.getHostmask();
+                        userHost = (user.getLogin() + "@" + user.getHostmask()).toLowerCase();
 
                         response = new StringBuilder("User ").append(args[0]).append(" is currently \0033online\003; ");
                     } else {
-                        if (lastUsedUserHosts.containsKey(args[0])) {
+                        if (lastUsedUserHosts.containsKey(args[0].toLowerCase())) {
                             response = new StringBuilder("User ").append(args[0]).append(" is currently \0034offline\003; ");
-                            userHost = lastUsedUserHosts.get(args[0]);
+                            userHost = lastUsedUserHosts.get(args[0].toLowerCase()).toLowerCase();
                         } else {
-                            event.respond("Sorry, I haven't seen the nickname " + args[0] + " talk in a tracked channel since I was last started up.");
+                            event.respond("Sorry, I haven't seen the nickname " + args[0] + " talk in a tracked channel.");
                             return;
                         }
                     }
@@ -314,7 +320,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
                                     event.respond("Error: Channel argument required for this command.");
                                 } else {
                                     if (Miscellaneous.isChannelLike(event, args[0])) {
-                                        doNotTrackChannels.remove(args[0]);
+                                        doNotTrackChannels.remove(args[0].toLowerCase());
                                         sync();
                                         event.respond("Now tracking channel " + args[0] + " for the " + COMMAND_SEEN + " command.");
                                     } else {
@@ -331,7 +337,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
                                     event.respond("Error: Channel argument required for this command.");
                                 } else {
                                     if (Miscellaneous.isChannelLike(event, args[0])) {
-                                        doNotTrackChannels.add(args[0]);
+                                        doNotTrackChannels.add(args[0].toLowerCase());
                                         sync();
                                         event.respond("Adding channel " + args[0] + " to the \"Do Not Track\" list for the " + COMMAND_SEEN + " command.");
                                     } else {
@@ -354,7 +360,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
                             if (event instanceof GenericChannelEvent) {
                                 Channel thisChannel = ((GenericChannelEvent) event).getChannel();
 
-                                if (doNotTrackChannels.contains(thisChannel.getName())) {
+                                if (doNotTrackChannels.contains(thisChannel.getName().toLowerCase())) {
                                     event.respond("This channel, " + thisChannel.getName() + ", is *NOT* tracked by the " + COMMAND_SEEN + " command.");
                                 } else {
                                     if (thisChannel.isSecret()) {

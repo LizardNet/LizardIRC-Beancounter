@@ -51,6 +51,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -110,7 +111,9 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
         this.pm = pm;
         this.acl = acl;
 
-        defaultLocations = new HashMap<>(pm.getMap("defaultLocations"));
+        defaultLocations = new HashMap<>(pm.getMap("defaultLocations").entrySet().stream()
+            .collect(Collectors.toMap(e -> e.getKey().toLowerCase(), Entry::getValue, (o, n) -> n)) // In case of collision, arbitrarily discard old value
+        );
 
         apiKey = pm.get("apiKey").orElse(null);
         enableAlerts = pm.getBoolean("enableAlerts").orElse(false);
@@ -162,7 +165,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
             case COMMAND_WEATHER:
                 if (isEnabled) {
                     if (remainder.isEmpty()) {
-                        String userHost = event.getUser().getLogin() + '@' + event.getUser().getHostmask();
+                        String userHost = (event.getUser().getLogin() + '@' + event.getUser().getHostmask()).toLowerCase();
 
                         if (defaultLocations.containsKey(userHost)) {
                             remainder = defaultLocations.get(userHost);
@@ -402,7 +405,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
                 }
                 break;
             case COMMAND_SET_LOCATION:
-                String userHost = event.getUser().getLogin() + '@' + event.getUser().getHostmask();
+                String userHost = (event.getUser().getLogin() + '@' + event.getUser().getHostmask()).toLowerCase();
 
                 if (!remainder.isEmpty()) {
                     if (resolveLocation(event, remainder) != null) {
