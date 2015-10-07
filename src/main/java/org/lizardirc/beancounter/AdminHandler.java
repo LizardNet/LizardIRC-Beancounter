@@ -35,8 +35,10 @@ package org.lizardirc.beancounter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableSet;
+import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -54,7 +56,8 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String CMD_SAY = "say";
     private static final String CMD_ACT = "act";
     private static final String CMD_RAW = "raw";
-    private static final Set<String> COMMANDS = ImmutableSet.of(CMD_QUIT, CMD_NICK, CMD_JOIN, CMD_PART, CMD_SAY, CMD_ACT, CMD_RAW);
+    private static final String CMD_LIST = "listchans";
+    private static final Set<String> COMMANDS = ImmutableSet.of(CMD_QUIT, CMD_NICK, CMD_JOIN, CMD_PART, CMD_SAY, CMD_ACT, CMD_RAW, CMD_LIST);
 
     private static final String PERM_QUIT = CMD_QUIT;
     private static final String PERM_NICK = CMD_NICK;
@@ -63,6 +66,7 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String PERM_SAY = CMD_SAY;
     private static final String PERM_ACT = CMD_SAY; // Important! Take note!
     private static final String PERM_RAW = CMD_RAW;
+    private static final String PERM_LIST = CMD_LIST;
 
     private static final String E_PERMFAIL = "No u! (You don't have the necessary permissions to do this.)";
 
@@ -191,6 +195,18 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
                     } else {
                         event.getBot().sendRaw().rawLine(remainder);
                     }
+                } else {
+                    event.respond(E_PERMFAIL);
+                }
+                break;
+            case CMD_LIST:
+                if (acl.hasPermission(event, PERM_LIST)) {
+                    Set<Channel> channels = event.getBot().getUserChannelDao().getAllChannels();
+                    event.respond("I am in the following channels: " + Miscellaneous.getStringRepresentation(Miscellaneous.asSortedList(
+                        channels.stream()
+                            .map(Channel::getName)
+                            .collect(Collectors.toSet())
+                    )));
                 } else {
                     event.respond(E_PERMFAIL);
                 }
