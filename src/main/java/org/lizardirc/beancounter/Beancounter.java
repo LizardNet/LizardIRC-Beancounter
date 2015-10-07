@@ -88,7 +88,8 @@ public class Beancounter {
             .setServerHostname(serverHost)
             .setServerPort(serverPort)
             .setListenerManager(listenerManager)
-            .setCapEnabled(true); // Of course, the PircBotX documentation doesn't indicate this is necessary....
+            .setCapEnabled(true) // Of course, the PircBotX documentation doesn't indicate this is necessary....
+            .setAutoNickChange(true);
 
         Listeners<PircBotX> listeners = new Listeners<>(executorService, confBuilder.getListenerManager(), properties);
         listeners.register();
