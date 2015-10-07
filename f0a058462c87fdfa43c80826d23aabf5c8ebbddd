@@ -16,6 +16,24 @@
       "revId": "f0a058462c87fdfa43c80826d23aabf5c8ebbddd",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_1dd643c6",
+        "filename": "src/main/java/org/lizardirc/beancounter/AdminHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-10-07T04:52:20Z",
+      "side": 1,
+      "message": "That works, and the bot will auto-shorten it to ?list anyway.  Will do in a moment.",
+      "parentUuid": "da6255ed_dd50ab60",
+      "revId": "f0a058462c87fdfa43c80826d23aabf5c8ebbddd",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
