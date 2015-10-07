@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_fd6c8f38",
+        "filename": "src/main/java/org/lizardirc/beancounter/UserLastSeenListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-10-07T03:28:55Z",
+      "side": 1,
+      "message": "distinct() is redundant when we\u0027re collecting to a set.",
+      "revId": "f190665d8f282b1d2a691a8be016bac22fc378e7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
