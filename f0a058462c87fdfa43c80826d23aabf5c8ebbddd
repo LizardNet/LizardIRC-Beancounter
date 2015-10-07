@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_dd50ab60",
+        "filename": "src/main/java/org/lizardirc/beancounter/AdminHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-10-07T04:49:36Z",
+      "side": 1,
+      "message": "?list seems pretty vague to me. How about ?listchans ?",
+      "revId": "f0a058462c87fdfa43c80826d23aabf5c8ebbddd",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
