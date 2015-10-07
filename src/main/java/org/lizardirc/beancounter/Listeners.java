@@ -72,7 +72,6 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
     private final Properties properties;
 
     private AccessControl<T> acl;
-    private UserLastSeenListener<T> userLastSeenListener;
 
     public Listeners(ExecutorService executorService, ListenerManager<T> listenerManager, Properties properties) {
         this.executorService = executorService;
@@ -115,7 +114,8 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         boolean enableWeatherHandler = Boolean.parseBoolean(properties.getProperty("weather.enable", "false"));
 
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
-        userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
+        UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
+        InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -127,6 +127,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         if (enableWeatherHandler) {
             handlers.add(new WeatherHandler<>(pm.getNamespace("weatherHandler"), acl));
         }
+        handlers.add(inviteAcceptor.getCommandHandler());
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -139,7 +140,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         }
 
         ownListeners.add(new PerChannel<>(() -> new SedListener<>(executorService, 5)));
-        ownListeners.add(new InviteAcceptor<>());
+        ownListeners.add(inviteAcceptor);
         ownListeners.add(userLastSeenListener);
 
         ownListeners.forEach(listenerManager::addListener);
