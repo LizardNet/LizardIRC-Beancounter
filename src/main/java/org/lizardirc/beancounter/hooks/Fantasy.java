@@ -41,8 +41,8 @@ import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 
-import org.lizardirc.beancounter.events.MessageEventView;
-import org.lizardirc.beancounter.events.PrivateMessageEventView;
+import org.lizardirc.beancounter.views.MessageEventView;
+import org.lizardirc.beancounter.views.PrivateMessageEventView;
 
 public class Fantasy<T extends PircBotX> extends Decorator<T> {
     private static final Pattern ADDRESSED_PATTERN = Pattern.compile("^ *[,:] *(.*)$");

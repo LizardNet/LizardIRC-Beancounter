@@ -30,38 +30,43 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter.events;
+package org.lizardirc.beancounter.views;
 
 import java.util.Objects;
 
 import org.pircbotx.PircBotX;
-import org.pircbotx.hooks.events.PrivateMessageEvent;
+import org.pircbotx.User;
+import org.pircbotx.hooks.events.MessageEvent;
 
-public class PrivateMessageEventView<T extends PircBotX> extends PrivateMessageEvent<T> {
-    private final PrivateMessageEvent<T> childEvent;
+public class MessageEventView<T extends PircBotX> extends MessageEvent<T> {
+    private final MessageEvent<T> childEvent;
     private final String newMessage;
+    private final User newUser;
 
-    public PrivateMessageEventView(PrivateMessageEvent<T> childEvent, String newMessage) {
-        super(childEvent.getBot(), childEvent.getUser(), newMessage);
+    public MessageEventView(MessageEvent<T> childEvent, String newMessage) {
+        this(childEvent, newMessage, childEvent.getUser());
+    }
+
+    public MessageEventView(MessageEvent<T> childEvent, String newMessage, User newUser) {
+        super(childEvent.getBot(), childEvent.getChannel(), newUser, newMessage);
         this.childEvent = childEvent;
         this.newMessage = newMessage;
-        if (newMessage == null) {
-            throw new IllegalArgumentException("newMessage cannot be null");
-        }
+        this.newUser = newUser;
     }
 
     @Override
     public boolean canEqual(Object other) {
-        return other instanceof PrivateMessageEventView;
+        return other instanceof MessageEventView;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof PrivateMessageEventView) {
-            PrivateMessageEventView<?> that = (PrivateMessageEventView<?>) o;
+        if (o instanceof MessageEventView) {
+            MessageEventView<?> that = (MessageEventView<?>) o;
             return that.canEqual(this)
                 && newMessage.equals(that.newMessage)
-                && super.equals(that);
+                && newUser.equals(that.newUser)
+                && childEvent.equals(that.childEvent);
         }
         return false;
     }
@@ -83,11 +88,11 @@ public class PrivateMessageEventView<T extends PircBotX> extends PrivateMessageE
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), newMessage);
+        return Objects.hash(childEvent.hashCode(), newMessage, newUser);
     }
 
     @Override
     public String toString() {
-        return super.toString() + " -> '" + newMessage + "'";
+        return childEvent.toString() + " -> " + newUser + ": '" + newMessage + "'";
     }
 }

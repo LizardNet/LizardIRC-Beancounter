@@ -56,6 +56,7 @@ import org.lizardirc.beancounter.hooks.Fantasy;
 import org.lizardirc.beancounter.hooks.MultiCommandHandler;
 import org.lizardirc.beancounter.hooks.PerChannel;
 import org.lizardirc.beancounter.hooks.PerChannelCommand;
+import org.lizardirc.beancounter.hooks.RelayCapable;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.persistence.PropertiesPersistenceManager;
 import org.lizardirc.beancounter.persistence.RedisPersistenceManager;
@@ -114,8 +115,8 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         boolean enableWeatherHandler = Boolean.parseBoolean(properties.getProperty("weather.enable", "false"));
 
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
-        UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
         InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
+        UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -123,15 +124,19 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(acl.getHandler());
+        handlers.add(inviteAcceptor.getCommandHandler());
         handlers.add(userLastSeenListener.getCommandHandler());
         if (enableWeatherHandler) {
             handlers.add(new WeatherHandler<>(pm.getNamespace("weatherHandler"), acl));
         }
-        handlers.add(inviteAcceptor.getCommandHandler());
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
+
+        Listener<T> fantasy = new Fantasy<>(new CommandListener<>(commands), fantasyString);
+        RelayCapable<T> relayCapable = new RelayCapable<>(new Chainable<>(fantasy, separator), pm, acl);
+        ownListeners.add(relayCapable);
+        commands.add(relayCapable.getCommandHandler());
         commands.add(new HelpHandler<>(commands));
-        ownListeners.add(new Chainable<>(new Fantasy<>(new CommandListener<>(commands), fantasyString), separator));
 
         ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistence")));
 

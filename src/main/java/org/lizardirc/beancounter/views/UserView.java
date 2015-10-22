@@ -30,39 +30,14 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter.hooks;
+package org.lizardirc.beancounter.views;
 
-import org.pircbotx.PircBotX;
-import org.pircbotx.hooks.Event;
-import org.pircbotx.hooks.Listener;
-import org.pircbotx.hooks.events.MessageEvent;
-import org.pircbotx.hooks.events.PrivateMessageEvent;
+import org.pircbotx.User;
 
-import org.lizardirc.beancounter.views.MessageEventView;
-import org.lizardirc.beancounter.views.PrivateMessageEventView;
-
-public class Chainable<T extends PircBotX> extends Decorator<T> {
-    private final String separator;
-
-    public Chainable(Listener<T> childListener, String separator) {
-        super(childListener);
-        this.separator = separator;
-    }
-
-    @Override
-    public void onEvent(Event<T> event) throws Exception {
-        if (event instanceof MessageEvent) {
-            MessageEvent<T> me = (MessageEvent<T>) event;
-            String[] messages = me.getMessage().split(separator);
-            for (String newMessage : messages) {
-                super.onEvent(new MessageEventView<>(me, newMessage));
-            }
-        } else if (event instanceof PrivateMessageEvent) {
-            PrivateMessageEvent<T> me = (PrivateMessageEvent<T>) event;
-            String[] messages = me.getMessage().split(separator);
-            for (String newMessage : messages) {
-                super.onEvent(new PrivateMessageEventView<>(me, newMessage));
-            }
-        }
+public class UserView extends User {
+    public UserView(User childUser, String newNick, String newUser, String newHost) {
+        super(childUser.getBot(), childUser.getBot().getUserChannelDao(), newNick);
+        setLogin(newUser);
+        setHostmask(newHost);
     }
 }

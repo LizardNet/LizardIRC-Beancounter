@@ -30,19 +30,19 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter.events;
+package org.lizardirc.beancounter.views;
 
 import java.util.Objects;
 
 import org.pircbotx.PircBotX;
-import org.pircbotx.hooks.events.MessageEvent;
+import org.pircbotx.hooks.events.PrivateMessageEvent;
 
-public class MessageEventView<T extends PircBotX> extends MessageEvent<T> {
-    private final MessageEvent<T> childEvent;
+public class PrivateMessageEventView<T extends PircBotX> extends PrivateMessageEvent<T> {
+    private final PrivateMessageEvent<T> childEvent;
     private final String newMessage;
 
-    public MessageEventView(MessageEvent<T> childEvent, String newMessage) {
-        super(childEvent.getBot(), childEvent.getChannel(), childEvent.getUser(), newMessage);
+    public PrivateMessageEventView(PrivateMessageEvent<T> childEvent, String newMessage) {
+        super(childEvent.getBot(), childEvent.getUser(), newMessage);
         this.childEvent = childEvent;
         this.newMessage = newMessage;
         if (newMessage == null) {
@@ -52,13 +52,13 @@ public class MessageEventView<T extends PircBotX> extends MessageEvent<T> {
 
     @Override
     public boolean canEqual(Object other) {
-        return other instanceof MessageEventView;
+        return other instanceof PrivateMessageEventView;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof MessageEventView) {
-            MessageEventView<?> that = (MessageEventView<?>) o;
+        if (o instanceof PrivateMessageEventView) {
+            PrivateMessageEventView<?> that = (PrivateMessageEventView<?>) o;
             return that.canEqual(this)
                 && newMessage.equals(that.newMessage)
                 && super.equals(that);
