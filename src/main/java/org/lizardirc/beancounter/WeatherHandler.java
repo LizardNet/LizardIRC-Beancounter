@@ -60,6 +60,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import org.pircbotx.PircBotX;
+import org.pircbotx.User;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -72,9 +73,10 @@ import org.lizardirc.beancounter.utils.Miscellaneous;
 
 public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String COMMAND_WEATHER = "weather";
+    private static final String COMMAND_USER_WEATHER = "userweather";
     private static final String COMMAND_WEATHER_CONFIG = "cfgweather";
     private static final String COMMAND_SET_LOCATION = "setlocation";
-    private static final Set<String> COMMANDS = ImmutableSet.of(COMMAND_WEATHER, COMMAND_WEATHER_CONFIG, COMMAND_SET_LOCATION);
+    private static final Set<String> COMMANDS = ImmutableSet.of(COMMAND_WEATHER, COMMAND_USER_WEATHER, COMMAND_WEATHER_CONFIG, COMMAND_SET_LOCATION);
 
     private static final String CFG_OP_SHOW_CFG = "show";
     private static final String CFG_OP_SET_API_KEY = "apisetkey";
@@ -149,6 +151,17 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
             return CFG_OPERATIONS;
         }
 
+        if (commands.size() == 1 && commands.get(0).equals(COMMAND_USER_WEATHER)) {
+            if (!(event instanceof GenericChannelEvent)) {
+                return Collections.emptySet();
+            }
+
+            GenericChannelEvent gce = (GenericChannelEvent) event;
+            return gce.getChannel().getUsers().stream()
+                .map(User::getNick)
+                .collect(Collectors.toSet());
+        }
+
         return Collections.emptySet();
     }
 
@@ -177,67 +190,35 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
                         }
                     }
 
-                    String queryLocation;
-                    queryLocation = resolveLocation(event, remainder);
-                    if (queryLocation != null) {
-                        if (!queryLocation.startsWith("/q/")) {
-                            event.respond("Error: The Weather Underground location API returned a location result for your query, but it isn't usable for the Weather API itself.  Perhaps try a more specific location?");
-                            return;
-                        }
-
-                        WeatherApiResponse weatherData;
-                        try {
-                            Gson gson = new Gson();
-                            weatherData = gson.fromJson(getWeatherData(queryLocation), WeatherApiResponse.class);
-                        } catch (ApiRateLimitException e) {
-                            event.respond("Error: Rate limited.  " + e.getMessage() + '.');
-                            return;
-                        } catch (ApiGeneralException e) {
-                            event.respond("Error: Weather API returned an error: " + e.getMessage());
-                            return;
-                        } catch (IOException e) {
-                            event.respond("Error: IOException while trying to get weather data: " + e.getMessage());
-                            return;
-                        }
-
-                        List<WeatherApiAlert> alerts = weatherData.alerts;
-                        WeatherApiObservation obs = weatherData.currentObservation;
-
-                        String line1 = "Conditions at %s (%s) at %s: %s, temperature %s, humidity %s (feels like %s), dewpoint %s. Winds out of the %s (bearing %s) at %s MPH (%s KPH) with gusts to %s MPH (%s KPH).";
-                        line1 = String.format(line1, obs.observationLocation.fullName, obs.stationId, obs.observationTime, obs.conditions, obs.temperatureString, obs.relativeHumidity, obs.feelsLikeString, obs.dewpointString, obs.windDirection, obs.windBearing, obs.windSpeedMph, obs.windSpeedKph, obs.windGustsMph, obs.windGustsKph);
-                        String line2 = "Pressure was %s inHg (%s mb)%s. Visiblity was %s miles (%s km). Solar radiation was %s W/m^2 and the UV index was %s. Today's precipitation was %s; current last hour precipitation is %s.";
-                        line2 = String.format(line2, obs.pressureInHg, obs.pressureMillibars, obs.getPressureTrendText(), obs.visibilityMi, obs.visibilityKm, obs.getSolarRadiationText(), obs.uvIndex, obs.precipTodayString, obs.precipHourString);
-                        String line3 = "Active severe weather alerts: %s";
-
-                        if (enableAlerts && alerts != null) {
-                            if (alerts.isEmpty()) {
-                                line3 = String.format(line3, "NONE");
-                            } else {
-                                String alert = "%s from %s to %s";
-                                String output = alerts.stream()
-                                    .map(s -> String.format(alert, s.description, s.issued, s.expires))
-                                    .collect(Collectors.joining(", "));
-                                line3 = String.format(line3, "\0034" + output + "\0034");
-                            }
-                        }
-                        // WARNING: Attribution is REQUIRED by the Terms of Service for the Weather Underground API
-                        String line4 = "Data provided by Weather Underground: <http://www.wunderground.com>. Forecast for this location: <%s>; conditions for this location: <%s>.";
-                        line4 = String.format(line4, obs.forecastUrl, obs.historyUrl);
-
-                        String target = event.getUser().getNick();
-                        if (event instanceof GenericChannelEvent) {
-                            target = ((GenericChannelEvent) event).getChannel().getName();
-                        }
-
-                        event.getBot().sendIRC().message(target, line1);
-                        event.getBot().sendIRC().message(target, line2);
-                        if (enableAlerts) {
-                            event.getBot().sendIRC().message(target, line3);
-                        }
-                        event.getBot().sendIRC().message(target, line4);
-                    }
+                    getWeather(event, remainder);
                 } else {
                     event.respond("Error: The " + COMMAND_WEATHER + " command is disabled.  An authorized user should try using the \"" +
+                        COMMAND_WEATHER_CONFIG + ' ' + CFG_OP_ENABLE + "\" command.");
+                }
+                break;
+            case COMMAND_USER_WEATHER:
+                if (isEnabled) {
+                    if (event instanceof GenericChannelEvent) {
+                        if (commands.size() >= 2) {
+                            User user = event.getBot().getUserChannelDao().getUser(commands.get(1));
+                            String userHost = (user.getLogin() + '@' + user.getHostmask()).toLowerCase();
+
+                            if (defaultLocations.containsKey(userHost)) {
+                                getWeather(event, defaultLocations.get(userHost));
+                            } else {
+                                event.respond("Unable to comply: User " + commands.get(1) + " hasn't used the \"" + COMMAND_SET_LOCATION +
+                                    "\" command to set their default location.");
+                            }
+                        } else {
+                            event.respond("Error: Invalid arguments. Usage: " + COMMAND_USER_WEATHER + " [nickname]");
+                            event.respond("Note: The \"" + COMMAND_USER_WEATHER + "\" command looks up weather by using the saved locations of *other* IRC users (set using the \"" +
+                                COMMAND_SET_LOCATION + "\" command). To look up weather by location, or using your own saved location, use the \"" + COMMAND_WEATHER + "\" command.");
+                        }
+                    } else {
+                        event.respond("Error: This command must be run in a channel.");
+                    }
+                } else {
+                    event.respond("Error: The " + COMMAND_USER_WEATHER + " command is disabled.  An authorized user should try using the \"" +
                         COMMAND_WEATHER_CONFIG + ' ' + CFG_OP_ENABLE + "\" command.");
                 }
                 break;
@@ -463,6 +444,68 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
             }
 
             return queryLocation;
+        }
+    }
+
+    private void getWeather(GenericMessageEvent<T> event, String arg) {
+        String queryLocation;
+        queryLocation = resolveLocation(event, arg);
+        if (queryLocation != null) {
+            if (!queryLocation.startsWith("/q/")) {
+                event.respond("Error: The Weather Underground location API returned a location result for your query, but it isn't usable for the Weather API itself.  Perhaps try a more specific location?");
+                return;
+            }
+
+            WeatherApiResponse weatherData;
+            try {
+                Gson gson = new Gson();
+                weatherData = gson.fromJson(getWeatherData(queryLocation), WeatherApiResponse.class);
+            } catch (ApiRateLimitException e) {
+                event.respond("Error: Rate limited.  " + e.getMessage() + '.');
+                return;
+            } catch (ApiGeneralException e) {
+                event.respond("Error: Weather API returned an error: " + e.getMessage());
+                return;
+            } catch (IOException e) {
+                event.respond("Error: IOException while trying to get weather data: " + e.getMessage());
+                return;
+            }
+
+            List<WeatherApiAlert> alerts = weatherData.alerts;
+            WeatherApiObservation obs = weatherData.currentObservation;
+
+            String line1 = "Conditions at %s (%s) at %s: %s, temperature %s, humidity %s (feels like %s), dewpoint %s. Winds out of the %s (bearing %s) at %s MPH (%s KPH) with gusts to %s MPH (%s KPH).";
+            line1 = String.format(line1, obs.observationLocation.fullName, obs.stationId, obs.observationTime, obs.conditions, obs.temperatureString, obs.relativeHumidity, obs.feelsLikeString, obs.dewpointString, obs.windDirection, obs.windBearing, obs.windSpeedMph, obs.windSpeedKph, obs.windGustsMph, obs.windGustsKph);
+            String line2 = "Pressure was %s inHg (%s mb)%s. Visiblity was %s miles (%s km). Solar radiation was %s W/m^2 and the UV index was %s. Today's precipitation was %s; current last hour precipitation is %s.";
+            line2 = String.format(line2, obs.pressureInHg, obs.pressureMillibars, obs.getPressureTrendText(), obs.visibilityMi, obs.visibilityKm, obs.getSolarRadiationText(), obs.uvIndex, obs.precipTodayString, obs.precipHourString);
+            String line3 = "Active severe weather alerts: %s";
+
+            if (enableAlerts && alerts != null) {
+                if (alerts.isEmpty()) {
+                    line3 = String.format(line3, "NONE");
+                } else {
+                    String alert = "%s from %s to %s";
+                    String output = alerts.stream()
+                        .map(s -> String.format(alert, s.description, s.issued, s.expires))
+                        .collect(Collectors.joining(", "));
+                    line3 = String.format(line3, "\0034" + output + "\0034");
+                }
+            }
+            // WARNING: Attribution is REQUIRED by the Terms of Service for the Weather Underground API
+            String line4 = "Data provided by Weather Underground: <http://www.wunderground.com>. Forecast for this location: <%s>; conditions for this location: <%s>.";
+            line4 = String.format(line4, obs.forecastUrl, obs.historyUrl);
+
+            String target = event.getUser().getNick();
+            if (event instanceof GenericChannelEvent) {
+                target = ((GenericChannelEvent) event).getChannel().getName();
+            }
+
+            event.getBot().sendIRC().message(target, line1);
+            event.getBot().sendIRC().message(target, line2);
+            if (enableAlerts) {
+                event.getBot().sendIRC().message(target, line3);
+            }
+            event.getBot().sendIRC().message(target, line4);
         }
     }
 
