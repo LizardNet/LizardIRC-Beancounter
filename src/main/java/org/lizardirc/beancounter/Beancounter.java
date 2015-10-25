@@ -77,6 +77,7 @@ public class Beancounter {
         String saslUsername = properties.getProperty("sasl.username", "");
         String saslPassword = properties.getProperty("sasl.password", "");
         boolean autoReconnect = Boolean.parseBoolean(properties.getProperty("autoReconnect", "true"));
+        String serverPassword = properties.getProperty("serverPassword", "");
 
         ExecutorService executorService = constructExecutorService();
         ListenerManager<PircBotX> listenerManager = new ThreadedListenerManager<>(executorService);
@@ -114,6 +115,10 @@ public class Beancounter {
 
         if (!saslUsername.isEmpty() && !saslPassword.isEmpty()) {
             confBuilder.addCapHandler(new SASLCapHandler(saslUsername, saslPassword));
+        }
+
+        if (!serverPassword.isEmpty()) {
+            confBuilder.setServerPassword(serverPassword);
         }
 
         setVersionString(confBuilder);

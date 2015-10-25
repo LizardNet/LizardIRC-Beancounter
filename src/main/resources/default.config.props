@@ -18,6 +18,11 @@ serverHost=
 # botUsername: String - The username (nick!username@host) the bot should use. Defaults to beancounter.
 #botUsername=beancounter
 
+# serverPassword: String - The password the bot should provide if connecting to a password-protected IRC server.  Most
+# IRC networks will not require this, so if in doubt, just leave this blank.  If blank (default), the bot will provide
+# no password on connection.
+#serverPassword=
+
 # useTls: Boolean - Set this to true if the bot should attempt to use an encrypted IRC connection (default)
 #useTls=true
 
