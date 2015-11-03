@@ -37,6 +37,7 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
@@ -121,9 +122,12 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             }
 
             Queue<String> window = windows.getUnchecked(speaker);
+
+            Callable<Optional<String>> callable = new SedListenerCallable(p, replacement, options.contains("g"), window);
+            Future<Optional<String>> future = executorService.submit(callable);
+
             try {
-                Callable<Optional<String>> callable = new SedListenerCallable(p, replacement, options.contains("g"), window);
-                Optional<String> response = executorService.submit(callable).get(5, TimeUnit.SECONDS);
+                Optional<String> response = future.get(5, TimeUnit.SECONDS);
 
                 response.ifPresent(s -> {
                     window.add(s);
@@ -138,6 +142,9 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             } catch (TimeoutException e) {
                 event.respond("Timeout while processing replacement.");
                 System.err.println("WARNING: " + corrector.getNick() + " caused regex timeout with regex " + message + '.');
+                if (!future.cancel(true)) {
+                    event.respond("WARNING: Attempt to cancel pending regex operations DID NOT succeed.");
+                }
             }
         } else {
             windows.getUnchecked(event.getUser()).add(message);
