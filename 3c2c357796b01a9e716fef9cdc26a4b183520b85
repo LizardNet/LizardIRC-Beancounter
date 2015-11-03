@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_e8ae13e7",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-03T11:57:15Z",
+      "side": 1,
+      "message": "Just to explain what the purpose of this is - It\u0027s easier to use a null byte than an actual null reference (especially for encoding into the PersistenceManager), and the reason why I put this here at all is this effectively allows you to use ?remindme for private reminders - a reminder given in PM will *always* be returned in PM.",
+      "revId": "3c2c357796b01a9e716fef9cdc26a4b183520b85",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
