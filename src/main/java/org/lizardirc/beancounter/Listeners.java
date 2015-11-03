@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.PircBotX;
@@ -68,13 +69,15 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
     private final Set<Listener<T>> ownListeners = new HashSet<>();
 
     private final ExecutorService executorService;
+    private final ScheduledExecutorService scheduledExecutorService;
     private final ListenerManager<T> listenerManager;
     private final Properties properties;
 
     private AccessControl<T> acl;
 
-    public Listeners(ExecutorService executorService, ListenerManager<T> listenerManager, Properties properties) {
+    public Listeners(ExecutorService executorService, ScheduledExecutorService scheduledExecutorService, ListenerManager<T> listenerManager, Properties properties) {
         this.executorService = executorService;
+        this.scheduledExecutorService = scheduledExecutorService;
         this.listenerManager = listenerManager;
         this.properties = properties;
     }
@@ -116,6 +119,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
         UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
         InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
+        ReminderListener<T> reminderListener = new ReminderListener<T>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -128,6 +132,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
             handlers.add(new WeatherHandler<>(pm.getNamespace("weatherHandler"), acl));
         }
         handlers.add(inviteAcceptor.getCommandHandler());
+        handlers.add(reminderListener.getCommandHandler());
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -142,6 +147,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(new PerChannel<>(() -> new SedListener<>(executorService, 5)));
         ownListeners.add(inviteAcceptor);
         ownListeners.add(userLastSeenListener);
+        ownListeners.add(reminderListener);
 
         ownListeners.forEach(listenerManager::addListener);
     }
