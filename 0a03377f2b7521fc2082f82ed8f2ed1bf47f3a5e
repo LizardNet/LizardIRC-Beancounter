@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_287c2b72",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "Ah yes, the ugliest of warts in Java: date and time libraries. Three implementations in the standard libraries, none of them satisfactory. A third-party library that comes close.",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_e895f388",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "Be advised that daemon threads should be treated with caution; there is absolutely no cleanup involved so it\u0027s not safe to do anything involving IO with them, for example.",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_0881674a",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "Future\u003cReasonable\u003e future \u003d scheduledExecutorService.submit(callable);",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_c8922f9f",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "or just .sorted()",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_48ee3f24",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "Why not empty string?",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_68e9031a",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "I wouldn\u0027t bother collecting this to a list at all; just keep it as a stream.",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_888c3781",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "You don\u0027t need this special case; it behaves identically to the general case.",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_08f847e4",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "This is one case where I would hold off on the streams API, to be honest. It\u0027s easier to just iterate over the original list manually:\n\nString userHostmask \u003d event.getUser().getLogin() + \u0027@\u0027 + event.getUser().getHostmask();\nIterator\u003cReminder\u003e iter \u003d reminders.iterator();\nwhile (iter.hasNext()) {\n    Reminder r \u003d iter.next();\n    if (r.getTarget().equalsIgnoreCase(userHostmask)) {\n        if (deliverReminder(r)) {\n            iter.remove();\n        }\n    }\n}\nsync();",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_e8dcd376",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "Could maybe just do onEvent() and instanceof GenericUserEvent?",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_a8e6db42",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "Probably easier to convert to lower case in the constructor if you don\u0027t care about case anywhere",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_c8d90f85",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-03T12:35:23Z",
+      "side": 1,
+      "message": "Objects.hash(from, target, message, channel, enteredTime)?",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
