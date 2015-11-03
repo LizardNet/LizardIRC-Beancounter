@@ -42,6 +42,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -92,7 +94,7 @@ public class Beancounter {
             .setCapEnabled(true) // Of course, the PircBotX documentation doesn't indicate this is necessary....
             .setAutoNickChange(true);
 
-        Listeners<PircBotX> listeners = new Listeners<>(executorService, confBuilder.getListenerManager(), properties);
+        Listeners<PircBotX> listeners = new Listeners<>(executorService, constructScheduledExecutorService(), confBuilder.getListenerManager(), properties);
         listeners.register();
 
         if (useTls) {
@@ -209,5 +211,13 @@ public class Beancounter {
         ThreadPoolExecutor ret = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<>(), factory);
         ret.allowCoreThreadTimeOut(true);
         return ret;
+    }
+
+    private ScheduledExecutorService constructScheduledExecutorService() {
+        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+            .namingPattern("scheduledExecutorPool-thread%d")
+            .daemon(true)
+            .build();
+        return Executors.newScheduledThreadPool(5, factory); // This seems like it should be enough for the reasonable future
     }
 }
