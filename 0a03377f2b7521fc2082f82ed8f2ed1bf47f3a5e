@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_280f8be3",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-04T11:33:25Z",
+      "side": 1,
+      "message": "Yeah, anyMatch is doing it anyway. The Iterator route has the same performance in the case of no matches, and better performance if there\u0027s a match because A) it doesn\u0027t reiterate, B) it doesn\u0027t create a copy of the set.",
+      "parentUuid": "ba57610f_483cff93",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_e8dcd376",
         "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
         "patchSetId": 2
@@ -293,6 +311,24 @@
       "side": 1,
       "message": "We could, but in this case I specifically only want to pounce on joins and messages/actions to a channel.",
       "parentUuid": "ba57610f_e8dcd376",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_0814c7f3",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-04T11:33:25Z",
+      "side": 1,
+      "message": "Alright, sounds good.",
+      "parentUuid": "ba57610f_a8bdbb04",
       "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -363,6 +399,24 @@
       "side": 1,
       "message": "Done, but every example I\u0027ve seen of hashCode() involves rolling your own instead of using Objects.hash() - what\u0027s up with that?",
       "parentUuid": "ba57610f_c8d90f85",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_e8f853c6",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-04T11:33:25Z",
+      "side": 1,
+      "message": "No idea; the only reason I can think of is that people are scared off by the fact that it uses powers of 31 as its multipliers (same as String does) and can therefore (very, very rarely) result in odd collisions when hashing a bunch of strings. It doesn\u0027t matter, because hashCode is explicitly allowed to collide.",
+      "parentUuid": "ba57610f_6837c3b1",
       "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
