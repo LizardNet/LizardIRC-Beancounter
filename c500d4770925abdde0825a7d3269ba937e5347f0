@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_8851d7da",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:08:40Z",
+      "side": 1,
+      "message": "Oh shoot, I forgot to actually check if the user is in the target channel",
+      "revId": "c500d4770925abdde0825a7d3269ba937e5347f0",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
