@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_68d0e353",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "Indeed, though I\u0027m mostly using daemon threads here because we\u0027re also using them for the primary threadpool.  Actually, that being said, should we use daemon threads in either place?  Threads in both places will be dealing with the PresistenceManager.",
+      "parentUuid": "ba57610f_e895f388",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_0881674a",
         "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2015-11-03T12:35:23Z",
       "side": 1,
       "message": "Future\u003cReasonable\u003e future \u003d scheduledExecutorService.submit(callable);",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_48d51f42",
+        "filename": "src/main/java/org/lizardirc/beancounter/Beancounter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "future.cancel()",
+      "parentUuid": "ba57610f_0881674a",
       "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_28caeba1",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "lol, right",
+      "parentUuid": "ba57610f_c8922f9f",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_48ee3f24",
         "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
         "patchSetId": 2
@@ -81,6 +135,24 @@
       "writtenOn": "2015-11-03T12:35:23Z",
       "side": 1,
       "message": "Why not empty string?",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_08cf27b2",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba57610f_48ee3f24",
       "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_e8c3b388",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba57610f_68e9031a",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_888c3781",
         "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
         "patchSetId": 2
@@ -115,6 +205,24 @@
       "writtenOn": "2015-11-03T12:35:23Z",
       "side": 1,
       "message": "You don\u0027t need this special case; it behaves identically to the general case.",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_c8c0ef7e",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "Good catch, done",
+      "parentUuid": "ba57610f_888c3781",
       "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_483cff93",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "Done (also done to the similar TimedReminderProcessor.run()), but question: Does doing the iteration like this every time pounce() is called make things slower?  Or does it not because that\u0027s what stream().anyMatch() is doing anyway?",
+      "parentUuid": "ba57610f_08f847e4",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_e8dcd376",
         "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
         "patchSetId": 2
@@ -149,6 +275,24 @@
       "writtenOn": "2015-11-03T12:35:23Z",
       "side": 1,
       "message": "Could maybe just do onEvent() and instanceof GenericUserEvent?",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_a8bdbb04",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "We could, but in this case I specifically only want to pounce on joins and messages/actions to a channel.",
+      "parentUuid": "ba57610f_e8dcd376",
       "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_88baf708",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "Especially for from, I want to preserve the case for presentation purposes.  I could convert target and channel to lower case in the constructor, I suppose.",
+      "parentUuid": "ba57610f_a8e6db42",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_c8d90f85",
         "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
         "patchSetId": 2
@@ -183,6 +345,41 @@
       "writtenOn": "2015-11-03T12:35:23Z",
       "side": 1,
       "message": "Objects.hash(from, target, message, channel, enteredTime)?",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_6837c3b1",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "Done, but every example I\u0027ve seen of hashCode() involves rolling your own instead of using Objects.hash() - what\u0027s up with that?",
+      "parentUuid": "ba57610f_c8d90f85",
+      "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_2841cb0b",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-04T04:05:15Z",
+      "side": 1,
+      "message": "Oops, I *do* care about the case of the message.",
       "revId": "0a03377f2b7521fc2082f82ed8f2ed1bf47f3a5e",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
