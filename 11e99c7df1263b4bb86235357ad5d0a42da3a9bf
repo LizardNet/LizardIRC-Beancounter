@@ -16,6 +16,24 @@
       "revId": "11e99c7df1263b4bb86235357ad5d0a42da3a9bf",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_682c634b",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-20T22:38:31Z",
+      "side": 1,
+      "message": "ZonedDateTime.format() flatly refuses to display dates with years further in the future than 9999 (i.e., with more than four digits of display).\n\nFile a bug upstream; otherwise, not my problem.  :P",
+      "parentUuid": "ba57610f_a8025bb2",
+      "revId": "11e99c7df1263b4bb86235357ad5d0a42da3a9bf",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
