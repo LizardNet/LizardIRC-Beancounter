@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_a8025bb2",
+        "filename": "src/main/java/org/lizardirc/beancounter/ReminderListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-20T22:11:30Z",
+      "side": 1,
+      "message": "Not future proof.",
+      "revId": "11e99c7df1263b4bb86235357ad5d0a42da3a9bf",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
