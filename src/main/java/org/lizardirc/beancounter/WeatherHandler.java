@@ -120,14 +120,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
         apiKey = pm.get("apiKey").orElse(null);
         enableAlerts = pm.getBoolean("enableAlerts").orElse(false);
 
-        String artifactVersion = getClass().getPackage().getImplementationVersion();
-        if (artifactVersion == null) {
-            artifactVersion = "";
-        } else {
-            artifactVersion = '/' + artifactVersion;
-        }
-
-        httpUserAgent = "LizardIRC-Beancounter" + artifactVersion + " (compatible; +https://www.lizardirc.org/index.php?page=beancounter)";
+        httpUserAgent = Miscellaneous.generateHttpUserAgent();
 
         rateLimiter = new WeatherApiRateLimiter(pm);
 

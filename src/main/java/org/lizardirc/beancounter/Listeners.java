@@ -120,6 +120,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
         InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
         ReminderListener<T> reminderListener = new ReminderListener<T>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
+        EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -133,6 +134,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         }
         handlers.add(inviteAcceptor.getCommandHandler());
         handlers.add(reminderListener.getCommandHandler());
+        handlers.add(earthquakeListener.getCommandHandler());
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -148,6 +150,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(inviteAcceptor);
         ownListeners.add(userLastSeenListener);
         ownListeners.add(reminderListener);
+        ownListeners.add(earthquakeListener);
 
         ownListeners.forEach(listenerManager::addListener);
     }
