@@ -63,8 +63,8 @@ import org.lizardirc.beancounter.security.FingerprintingSslSocketFactory;
 import org.lizardirc.beancounter.security.VerifyingSslSocketFactory;
 
 public class Beancounter {
-    private static final String PROJECT_NAME = "LizardIRC/Beancounter";
-    private static final String PROJECT_URL = "https://github.com/LizardNet/LizardIRC-Beancounter";
+    public static final String PROJECT_NAME = "LizardIRC/Beancounter";
+    public static final String PROJECT_URL = "https://www.lizardirc.org/index.php?page=beancounter";
     private final PircBotX bot;
 
     public Beancounter(Properties properties) {
