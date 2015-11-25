@@ -40,6 +40,8 @@ import java.util.stream.Collectors;
 
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
+import org.lizardirc.beancounter.Beancounter;
+
 public final class Miscellaneous {
     public static boolean isChannelLike(GenericMessageEvent<?> event, String arg) {
         // Determine if the argument string appears to be a channel - i.e., does it start with a character the network
@@ -66,5 +68,19 @@ public final class Miscellaneous {
         List<T> list = new ArrayList<>(c);
         Collections.sort(list);
         return list;
+    }
+
+    public static String generateHttpUserAgent() {
+        String artifactVersion = Beancounter.class.getPackage().getImplementationVersion();
+        if (artifactVersion == null) {
+            artifactVersion = "";
+        } else {
+            artifactVersion = '/' + artifactVersion;
+        }
+
+        String projectName = Beancounter.PROJECT_NAME;
+        projectName = projectName.replace('/', '-');
+
+        return projectName + artifactVersion + " (compatible; +" + Beancounter.PROJECT_URL + ")";
     }
 }
