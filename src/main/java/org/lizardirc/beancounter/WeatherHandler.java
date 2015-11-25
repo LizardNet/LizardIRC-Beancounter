@@ -120,14 +120,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
         apiKey = pm.get("apiKey").orElse(null);
         enableAlerts = pm.getBoolean("enableAlerts").orElse(false);
 
-        String artifactVersion = getClass().getPackage().getImplementationVersion();
-        if (artifactVersion == null) {
-            artifactVersion = "";
-        } else {
-            artifactVersion = '/' + artifactVersion;
-        }
-
-        httpUserAgent = "LizardIRC-Beancounter" + artifactVersion + " (compatible; +https://www.lizardirc.org/index.php?page=beancounter)";
+        httpUserAgent = Miscellaneous.generateHttpUserAgent();
 
         rateLimiter = new WeatherApiRateLimiter(pm);
 
@@ -509,18 +502,18 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
         }
     }
 
-    private String getAutocompleteData(String query) throws IOException {
+    private BufferedReader getAutocompleteData(String query) throws IOException {
         URL url = new URL(WUNDERGROUND_AUTOCOMPLETE_ENDPOINT + URLEncoder.encode(query, "UTF-8"));
         return getApiData(url);
     }
 
-    private String getWeatherData(String queryLocation) throws IOException {
+    private BufferedReader getWeatherData(String queryLocation) throws IOException {
         rateLimiter.check();
         URL url = new URL(String.format(WUNDERGROUND_API_ENDPOINT, apiKey, enableAlerts ? "alerts/conditions" : "conditions", queryLocation));
         return getApiData(url);
     }
 
-    private String getApiData(URL url) throws IOException {
+    private BufferedReader getApiData(URL url) throws IOException {
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestProperty("User-Agent", httpUserAgent);
         httpURLConnection.connect();
@@ -531,24 +524,15 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader((InputStream) httpURLConnection.getContent(), "UTF-8"));
 
-        StringBuilder retval = new StringBuilder();
-        int value;
-        while ((value = reader.read()) != -1) {
-            char c = (char)value;
-            retval.append(c);
-        }
-
-        reader.close();
-
         if (httpURLConnection.getHeaderField("X-API-Error") != null) {
             if (httpURLConnection.getHeaderField("X-API-Error").equals("true")) {
                 Gson gson = new Gson();
-                WeatherApiErrorData error = gson.fromJson(retval.toString(), WeatherApiResponse.class).response.error;
+                WeatherApiErrorData error = gson.fromJson(reader, WeatherApiResponse.class).response.error;
                 throw new ApiGeneralException(error.type + " (" + error.description + ')');
             }
         }
 
-        return retval.toString();
+        return reader;
     }
 
     private static class LocationApiResponse {
