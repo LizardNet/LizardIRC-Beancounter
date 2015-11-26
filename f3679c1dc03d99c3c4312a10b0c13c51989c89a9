@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_6888e322",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-26T09:26:45Z",
+      "side": 1,
+      "message": "Done (using BufferedReaders)",
+      "parentUuid": "ba57610f_68a103a9",
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_48a63fc3",
         "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
         "patchSetId": 4
@@ -42,6 +60,24 @@
         "endLine": 181,
         "endChar": 5
       },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_488d1f31",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-26T09:26:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba57610f_48a63fc3",
       "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_2882eb00",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-26T09:26:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba57610f_28ab0b8b",
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_a89edb61",
         "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
         "patchSetId": 4
@@ -88,6 +142,24 @@
         "endLine": 440,
         "endChar": 9
       },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_08872711",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-26T09:26:45Z",
+      "side": 1,
+      "message": "No.  I blame brainfarts of the overengineering variety.",
+      "parentUuid": "ba57610f_a89edb61",
       "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -117,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_e87bb327",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-26T09:26:45Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "ba57610f_c8910f54",
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_e894d345",
         "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
         "patchSetId": 4
@@ -140,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_a875bb33",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-26T09:26:45Z",
+      "side": 1,
+      "message": "I had to do some funny stuff with a static block to make this work, but done.",
+      "parentUuid": "ba57610f_e894d345",
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_08b047f3",
         "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
         "patchSetId": 4
@@ -157,6 +265,24 @@
         "endLine": 503,
         "endChar": 9
       },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_c878ef2d",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-26T09:26:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba57610f_08b047f3",
       "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
