@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_68ba23e3",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2015-11-26T07:16:49Z",
+      "side": 1,
+      "message": "I AM TEH SMARRRRRTS",
+      "revId": "5bf1ee88eaf2c48097524c5a19859c219754ccff",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
