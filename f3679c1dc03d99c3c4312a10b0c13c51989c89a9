@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba57610f_68a103a9",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-26T08:29:59Z",
+      "side": 1,
+      "message": "Why not\n\n InputStreamReader isr \u003d new InputStreamReader(httpURLConnection.getInputStream(), \"UTF-8\");\n return gson.fromJson(isr, GeoJson.class);",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 63
+      },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_48a63fc3",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-26T08:29:59Z",
+      "side": 1,
+      "message": "How about\n\nprivate static final String[] romans \u003d {\"I\", \"II\", \"III\", \"IV\", \"V\", \"VI\", \"VII\", \"VIII\", \"IX\", \"X\", \"XI\", \"XII\"};\nprivate String convertDecToRoman(float f) {\n    int i \u003d (int) Math.ceil(f);\n    if (i \u003c 1) {\n        return \"N/A\";\n    } else if (i \u003e 12) {\n        return \"XII+\";\n    }\n    return romans[i - 1];\n}",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 5
+      },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_28ab0b8b",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-26T08:29:59Z",
+      "side": 1,
+      "message": "More concise, using enum property syntax:\n\n FEED_ALL_EARTHQUAKES(1, \"http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson\", \"USGS, All Earthquakes\"),\n FEED_MAGNITUDE_1_0(2, \"http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_day.geojson\", \"USGS, Earthquakes Magnitude 1.0+\"),\n FEED_MAGNITUDE_2_5(3, \"http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson\", \"USGS, Earthquakes Magnitude 2.5+\"),\n FEED_MAGNITUDE_4_5(4, \"http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson\", \"USGS, Earthquakes Magnitude 4.5+\"),\n FEED_SIGNIFICANT_EARTHQUAKES(5, \"http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson\", \"USGS, Significant Earthquakes\");\n\n private final int intValue;\n private final String url;\n private final String humanName;\n\n Feed(int intValue, String url, String humanName) {\n     this.intValue \u003d intValue;\n     this.url \u003d url;\n     this.humanName \u003d humanName;\n }",
+      "range": {
+        "startLine": 415,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 9
+      },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_a89edb61",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-26T08:29:59Z",
+      "side": 1,
+      "message": "Is there any benefit to this method over the instance method?",
+      "range": {
+        "startLine": 438,
+        "startChar": 0,
+        "endLine": 440,
+        "endChar": 9
+      },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_c8910f54",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-26T08:29:59Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 446,
+        "startChar": 0,
+        "endLine": 448,
+        "endChar": 9
+      },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_e894d345",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-26T08:29:59Z",
+      "side": 1,
+      "message": "The usual way is to make a private static Map, map.add(intValue, this) in the constructor, then use map.get(i);",
+      "range": {
+        "startLine": 455,
+        "startChar": 0,
+        "endLine": 478,
+        "endChar": 9
+      },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_08b047f3",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-26T08:29:59Z",
+      "side": 1,
+      "message": "public int toInt() {\n    return intValue;\n}",
+      "range": {
+        "startLine": 480,
+        "startChar": 0,
+        "endLine": 503,
+        "endChar": 9
+      },
+      "revId": "f3679c1dc03d99c3c4312a10b0c13c51989c89a9",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_c8ca2f6e",
         "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
         "patchSetId": 4
