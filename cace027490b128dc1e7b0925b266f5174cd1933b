@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_a8da5b15",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-11-30T06:13:25Z",
+      "side": 1,
+      "message": "More concisely,\n\n for (Feed f : feedMap.keySet()) {",
+      "range": {
+        "startLine": 442,
+        "startChar": 0,
+        "endLine": 448,
+        "endChar": 41
+      },
+      "revId": "cace027490b128dc1e7b0925b266f5174cd1933b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
