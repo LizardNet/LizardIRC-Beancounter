@@ -101,7 +101,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
 
             User corrector = event.getUser();
             User speaker = event.getChannel().getUsers().stream()
-                .filter(u -> u.getNick().equals(target))
+                .filter(u -> u.getNick().equalsIgnoreCase(target))
                 .findFirst()
                 .orElse(corrector);
 
