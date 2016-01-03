@@ -149,10 +149,11 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 }
             }
         } else {
-            windows.getUnchecked(event.getUser()).add(message);
             m = PATTERN_BAD_SED.matcher(message);
             if (m.matches()) {
                 event.getChannel().send().action("slaps " + event.getUser().getNick() + " with a copy of the sed user manual");
+            } else {
+                windows.getUnchecked(event.getUser()).add(message);
             }
         }
     }
