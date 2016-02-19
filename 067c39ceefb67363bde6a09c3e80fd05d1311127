@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_070ef634",
+        "filename": "src/main/java/org/lizardirc/beancounter/DiceHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-02-19T23:28:36Z",
+      "side": 1,
+      "message": "It may just be me, but this method doesn\u0027t seem to give a good distribution of outcomes.  If you know of a better way, let me know.",
+      "revId": "067c39ceefb67363bde6a09c3e80fd05d1311127",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
