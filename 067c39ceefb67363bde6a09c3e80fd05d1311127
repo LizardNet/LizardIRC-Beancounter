@@ -16,6 +16,24 @@
       "revId": "067c39ceefb67363bde6a09c3e80fd05d1311127",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_c70fbe2d",
+        "filename": "src/main/java/org/lizardirc/beancounter/DiceHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-02-19T23:42:44Z",
+      "side": 1,
+      "message": "Looks like 5:5:1 heads:tails:FNF to me. You might simplify it by removing the lower bounds checks since they\u0027re redundant here (by contract of `nextInt` for `\u003e\u003d 0`, by control flow for `\u003e\u003d 5`).",
+      "parentUuid": "9a5c5d37_070ef634",
+      "revId": "067c39ceefb67363bde6a09c3e80fd05d1311127",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
