@@ -76,8 +76,18 @@ public class DiceHandler<T extends PircBotX> implements CommandHandler<T> {
         String requestor = event.getUser().getNick();
         switch (commands.get(0)) {
             case "coin":
-                String result = random.nextBoolean() ? "heads." : "tails.";
-                action = "flips a coin for " + requestor + ". It lands on " + result;
+                String result;
+                int flip = random.nextInt(11);
+
+                if (flip <= 4) {
+                    result = "heads";
+                } else if (flip <= 9) {
+                    result = "tails";
+                } else {
+                    result = "FILE_NOT_FOUND";
+                }
+
+                action = "flips a coin for " + requestor + ". It lands on " + result + '.';
                 event.getBot().sendIRC().action(channel, action);
                 break;
             case "dice":
