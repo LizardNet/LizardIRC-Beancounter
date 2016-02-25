@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2016 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -364,7 +364,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
                                     event.respond("This channel, " + thisChannel.getName() + ", is *NOT* tracked by the " + COMMAND_SEEN + " command.");
                                 } else {
                                     if (thisChannel.isSecret()) {
-                                        event.respond("This channel, " + thisChannel.getName() + ", *would* tracked by the " + COMMAND_SEEN + " command; however, it is marked as secret (channel mode +s), so it is *not*.");
+                                        event.respond("This channel, " + thisChannel.getName() + ", *would* be tracked by the " + COMMAND_SEEN + " command; however, it is marked as secret (channel mode +s), so it is *not*.");
                                     } else {
                                         event.respond("This channel, " + thisChannel.getName() + ", is tracked by the " + COMMAND_SEEN + " command.");
                                     }
