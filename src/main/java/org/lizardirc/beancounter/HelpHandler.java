@@ -61,7 +61,7 @@ public class HelpHandler<T extends PircBotX> implements CommandHandler<T> {
 
     @Override
     public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
-        if (commands.size() == 0) {
+        if (commands.isEmpty()) {
             return COMMANDS;
         }
 

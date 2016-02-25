@@ -125,6 +125,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
         handlers.add(new DiceHandler<>());
+        handlers.add(new FaceHandler<>());
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(acl.getHandler());
