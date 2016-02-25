@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_075cb624",
+        "filename": "src/main/java/org/lizardirc/beancounter/FaceHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-02-25T11:43:12Z",
+      "side": 1,
+      "message": "Missing standard header comment block",
+      "revId": "0902e330bc7bbd919fb1cb42e38a10712f528094",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_e7408237",
+        "filename": "src/main/java/org/lizardirc/beancounter/FaceHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-02-25T11:43:12Z",
+      "side": 1,
+      "message": "I see wut you did thar",
+      "revId": "0902e330bc7bbd919fb1cb42e38a10712f528094",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
