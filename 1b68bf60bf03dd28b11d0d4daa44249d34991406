@@ -16,6 +16,24 @@
       "revId": "1b68bf60bf03dd28b11d0d4daa44249d34991406",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_e76762e9",
+        "filename": "src/main/java/org/lizardirc/beancounter/FaceHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-02-25T12:16:32Z",
+      "side": 1,
+      "message": "Not unless the command parser has a bug. Consider it an easter egg in the source.",
+      "parentUuid": "9a5c5d37_276e9aca",
+      "revId": "1b68bf60bf03dd28b11d0d4daa44249d34991406",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
