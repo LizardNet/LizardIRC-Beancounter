@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_276e9aca",
+        "filename": "src/main/java/org/lizardirc/beancounter/FaceHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-02-25T12:04:54Z",
+      "side": 1,
+      "message": "LOL.  But is there any situation where this could happen?",
+      "revId": "1b68bf60bf03dd28b11d0d4daa44249d34991406",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
