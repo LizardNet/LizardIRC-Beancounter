@@ -51,7 +51,7 @@ public class DiceHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("coin", "dice", "more", "roll");
     private static final Pattern DESCRIPTOR = Pattern.compile("(?:([0-9]+)?d)?([0-9]+)");
 
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     private String moreInfo = null;
 

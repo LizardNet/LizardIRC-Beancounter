@@ -119,13 +119,14 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
         UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
         InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
-        ReminderListener<T> reminderListener = new ReminderListener<T>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
+        ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
         handlers.add(new DiceHandler<>());
         handlers.add(new FaceHandler<>());
+        handlers.add(new GoatHandler<>(acl));
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(acl.getHandler());
