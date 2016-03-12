@@ -74,7 +74,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     private static final String REGEX_AB = "s([^\\\\\\sA-Za-z0-9])" + REGEX_B;
     private static final String REGEX_CB = "\\2" + REGEX_B;
     private static final String REGEX_SED = REGEX_D + REGEX_AB + REGEX_CB + REGEX_CB;
-    private static final String REGEX_BAD_SED = REGEX_D + REGEX_AB + REGEX_CB;
+    private static final String REGEX_BAD_SED = REGEX_D + "/" + REGEX_B + "/" + REGEX_B;
     private static final Pattern PATTERN_SED = Pattern.compile(REGEX_SED);
     private static final Pattern PATTERN_BAD_SED = Pattern.compile(REGEX_BAD_SED);
 
