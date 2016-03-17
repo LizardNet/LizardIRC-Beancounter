@@ -179,7 +179,7 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     private void spin() {
-        for (int i = random.nextInt(loaded.size()); i > 0; i++) {
+        for (int i = random.nextInt(loaded.size()); i > 0; i--) {
             loaded.add(loaded.remove(0));
         }
     }
