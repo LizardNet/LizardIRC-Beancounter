@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_c76e9e96",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-03-27T09:59:26Z",
+      "side": 1,
+      "message": "`\u0026\u0026`, so the indentation is reduced and the diff is cleaner? Also, pretty sure you can use `\u003d\u003d` with enums, which might read a bit nicer.",
+      "revId": "3ccd7cf0d852b87ef8719ca7ede3116749241c3d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_a76baa84",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-03-27T09:59:26Z",
+      "side": 1,
+      "message": "`\" * \"` can be inlined here",
+      "revId": "3ccd7cf0d852b87ef8719ca7ede3116749241c3d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_8768a688",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-03-27T09:59:26Z",
+      "side": 1,
+      "message": "and here to reduce the number of append calls overall, if you like",
+      "revId": "3ccd7cf0d852b87ef8719ca7ede3116749241c3d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
