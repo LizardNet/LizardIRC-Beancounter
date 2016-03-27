@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a5c5d37_47318ea1",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-03-27T10:24:00Z",
+      "side": 1,
+      "message": "Done as suggested on IRC",
+      "parentUuid": "9a5c5d37_c76e9e96",
+      "revId": "3ccd7cf0d852b87ef8719ca7ede3116749241c3d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_a76baa84",
         "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9a5c5d37_27269a69",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-03-27T10:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a5c5d37_a76baa84",
+      "revId": "3ccd7cf0d852b87ef8719ca7ede3116749241c3d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_8768a688",
         "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2016-03-27T09:59:26Z",
       "side": 1,
       "message": "and here to reduce the number of append calls overall, if you like",
+      "revId": "3ccd7cf0d852b87ef8719ca7ede3116749241c3d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_072b9631",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-03-27T10:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a5c5d37_8768a688",
       "revId": "3ccd7cf0d852b87ef8719ca7ede3116749241c3d",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
