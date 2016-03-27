@@ -49,10 +49,14 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.EvictingQueue;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.MessageEvent;
+import org.pircbotx.hooks.events.ActionEvent;
+import org.pircbotx.hooks.types.GenericChannelEvent;
+import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.utils.InterruptibleCharSequence;
 
@@ -80,7 +84,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
 
     private static final Pattern PATTERN_OPTIONS = Pattern.compile("[gi]*");
 
-    private final LoadingCache<User, Queue<String>> windows;
+    private final LoadingCache<User, Queue<UserMessage>> windows;
     private final ExecutorService executorService;
 
     public SedListener(ExecutorService executorService, int windowSize) {
@@ -90,17 +94,33 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     }
 
     @Override
-    public void onMessage(MessageEvent<T> event) throws Exception {
+    public void onGenericMessage(GenericMessageEvent<T> event) throws Exception {
+        if (!(event instanceof GenericChannelEvent)) {
+            return;
+        }
+
         String message = event.getMessage();
         Matcher m = PATTERN_SED.matcher(message);
+
+        final UserMessageType messageType;
+        if (event instanceof ActionEvent) {
+            messageType = UserMessageType.ACTION;
+        } else {
+            messageType = UserMessageType.MESSAGE;
+        }
+
         if (m.matches()) {
+            if (messageType != UserMessageType.MESSAGE) {
+                return;
+            }
+
             String target = m.group(1);
             String regex = m.group(3);
             String replacement = m.group(4);
             String options = m.group(5);
 
             User corrector = event.getUser();
-            User speaker = event.getChannel().getUsers().stream()
+            User speaker = ((GenericChannelEvent) event).getChannel().getUsers().stream()
                 .filter(u -> u.getNick().equalsIgnoreCase(target))
                 .findFirst()
                 .orElse(corrector);
@@ -123,23 +143,34 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 return;
             }
 
-            Queue<String> window = windows.getUnchecked(speaker);
+            Queue<UserMessage> window = windows.getUnchecked(speaker);
 
-            Callable<Optional<String>> callable = new SedListenerCallable(p, replacement, options.contains("g"), window);
-            Future<Optional<String>> future = executorService.submit(callable);
+            Callable<Optional<UserMessage>> callable = new SedListenerCallable(p, replacement, options.contains("g"), window);
+            Future<Optional<UserMessage>> future = executorService.submit(callable);
 
             try {
-                Optional<String> response = future.get(5, TimeUnit.SECONDS);
+                Optional<UserMessage> response = future.get(5, TimeUnit.SECONDS);
 
                 response.ifPresent(s -> {
                     window.add(s);
 
-                    StringBuilder sb = new StringBuilder(corrector.getNick());
-                    if (!corrector.equals(speaker)) {
-                        sb.append(" thinks ").append(speaker.getNick());
+                    StringBuilder sb;
+                    if (s.getType() == UserMessageType.ACTION) {
+                        if (!corrector.equals(speaker)) {
+                            sb = new StringBuilder(corrector.getNick());
+                            sb.append(" suggests a correction: * ");
+                        } else {
+                            sb = new StringBuilder("Correction: * ");
+                        }
+                        sb.append(speaker.getNick()).append(' ');
+                    } else {
+                        sb = new StringBuilder(corrector.getNick());
+                        if (!corrector.equals(speaker)) {
+                            sb.append(" thinks ").append(speaker.getNick());
+                        }
+                        sb.append(" meant to say: ");
                     }
-                    sb.append(" meant to say: ").append(s);
-                    event.getChannel().send().message(sb.toString());
+                    ((GenericChannelEvent) event).getChannel().send().message(sb.append(s.getMessage()).toString());
                 });
             } catch (TimeoutException e) {
                 event.respond("Timeout while processing replacement.");
@@ -151,42 +182,71 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
         } else {
             m = PATTERN_BAD_SED.matcher(message);
             if (m.matches()) {
-                event.getChannel().send().action("slaps " + event.getUser().getNick() + " with a copy of the sed user manual");
+                ((GenericChannelEvent) event).getChannel().send().action("slaps " + event.getUser().getNick() + " with a copy of the sed user manual");
                 event.respond("Add a slash to the end, like this: s/foo/bar/");
             } else {
-                windows.getUnchecked(event.getUser()).add(message);
+                windows.getUnchecked(event.getUser()).add(new UserMessage(messageType, message));
             }
         }
     }
 
-    private static class SedListenerCallable implements Callable<Optional<String>> {
+    private static class SedListenerCallable implements Callable<Optional<UserMessage>> {
         private final Pattern p;
         private final String replacement;
         private final boolean global;
-        private final List<CharSequence> window;
+        private final List<Pair<UserMessageType, CharSequence>> window;
 
-        public SedListenerCallable(Pattern p, String replacement, boolean global, Queue<String> window) {
+        public SedListenerCallable(Pattern p, String replacement, boolean global, Queue<UserMessage> window) {
             this.p = p;
             this.replacement = replacement;
             this.global = global;
             this.window = window.stream()
-                .map(InterruptibleCharSequence::new)
+                .map(entry -> new ImmutablePair<UserMessageType, CharSequence>(entry.getType(), new InterruptibleCharSequence(entry.getMessage())))
                 .collect(Collectors.toList());
         }
 
         @Override
-        public Optional<String> call() throws Exception {
+        public Optional<UserMessage> call() throws Exception {
             return window.stream()
-                .map(p::matcher)
-                .filter(Matcher::find)
+                .map(item -> new ImmutablePair<>(item.getLeft(), p.matcher(item.getRight())))
+                .filter(item -> item.getRight().find())
                 .reduce((x, y) -> y) // findLast()
-                .map(matcher -> {
+                .map(item -> {
                     if (global) {
-                        return matcher.replaceAll(replacement);
+                        return new UserMessage(item.getLeft(), item.getRight().replaceAll(replacement));
                     } else {
-                        return matcher.replaceFirst(replacement);
+                        return new UserMessage(item.getLeft(), item.getRight().replaceFirst(replacement));
                     }
                 });
         }
+    }
+
+    private static class UserMessage {
+        private final UserMessageType type;
+        private String message;
+
+        public UserMessage(UserMessageType type, String message) {
+            this.type = type;
+            this.message = message;
+        }
+
+        public UserMessageType getType() {
+            return type;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        // There is no setter for UserMessageType - this value should never change for a given UserMessage.
+    }
+
+    private enum UserMessageType {
+        MESSAGE,
+        ACTION
     }
 }
