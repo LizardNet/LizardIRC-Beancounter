@@ -43,6 +43,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,16 +52,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
@@ -153,6 +157,18 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
             return "XII+";
         }
         return romans[i - 1];
+    }
+
+    /**
+     * Extracts all IDs from the given event (second parameter) and adds or updates all possible id to event mappings
+     * in the given map (first parameter).
+     *
+     * @param eventMap The map of event IDs to events
+     * @param event The event to be added or updated
+     */
+    private static void addOrUpdateEvent(Map<String, GeoJsonFeature> eventMap, GeoJsonFeature event) {
+        event.getAllIds()
+            .forEach(id -> eventMap.put(id.toLowerCase(), event));
     }
 
     private class EarthquakeListenerHandler<U extends PircBotX> implements CommandHandler<U> {
@@ -453,11 +469,14 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
 
                 // IFF the feed has been previously checked, get a list of events that have update times since the last check
                 if (lastReportedEvent.containsKey(f) && lastReportedEvent.get(f) != null) {
+                    Map<String, GeoJsonFeature> seenEventsThisFeed = seenEvents.get(f);
+
                     // Before we begin: Since the feeds only contain events that occurred over the last day, we want
                     // to remove dropped events from the seenEvents multimap to avoid memory leaks.  So, let's do that
                     // now.
                     Set<String> eventIdsInFeed = data.features.stream()
-                        .map(i -> i.id.toLowerCase())
+                        .flatMap(GeoJsonFeature::getAllIds)
+                        .map(String::toLowerCase)
                         .collect(Collectors.toSet());
                     Iterator<String> itr = seenEvents.getOrDefault(f, Collections.emptyMap()).keySet().iterator();
                     while (itr.hasNext()) {
@@ -488,8 +507,14 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
                         // For both updated events and new events, update the multimap with the new event.
 
                         String eventType;
-                        if (seenEvents.get(f).containsKey(event.id.toLowerCase())) {
-                            if (event.equals(seenEvents.get(f).get(event.id.toLowerCase()))) {
+
+                        Optional<GeoJsonFeature> oldEvent = event.getAllIds()
+                            .filter(seenEventsThisFeed::containsKey)
+                            .map(seenEventsThisFeed::get)
+                            .findAny();
+
+                        if (oldEvent.isPresent()) {
+                            if (event.equals(oldEvent.get())) {
                                 continue; // This event, though it has been marked as updated, contains the same reported data.  Continue.
                             }
                             eventType = "\0033Updated\017";
@@ -497,7 +522,7 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
                             eventType = "\0037New\017";
                         }
 
-                        seenEvents.get(f).put(event.id.toLowerCase(), event);
+                        addOrUpdateEvent(seenEventsThisFeed, event);
 
                         // Build the message to output to IRC
                         // IMPORTANT: If you change the reported data here, remember to also change GeoJsonFeature.hashCode()
@@ -528,9 +553,9 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
                     // we will go ahead and collect the IDs currently visible in the feed in the seenEvents multimap
                     // so we'll know in the future what events are new, and which ones are just updates.  Also set up
                     // the multimap here.
-                    seenEvents.put(f, new HashMap<>(data.features.stream()
-                            .collect(Collectors.toMap(i -> i.id.toLowerCase(), i -> i))
-                    ));
+                    seenEvents.put(f, new HashMap<>());
+                    data.features.stream()
+                        .forEach(feature -> addOrUpdateEvent(seenEvents.get(f), feature));
 
                     // Unfortunately, the top item in the feed is not guaranteed to be the most recently updated, so
                     // we manually have to determine this
@@ -573,6 +598,16 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
         public GeoJsonFeatureProperty properties;
         public GeoJsonFeatureGeometry geometry;
         public String id;
+
+        /**
+         * Returns all IDs that identify this GeoJsonFeature, making no distinction between primary and alternate IDs.
+         *
+         * @return A stream of ID strings that identify this GeoJsonFeature
+         */
+        public Stream<String> getAllIds() {
+            return Stream.concat(properties.getAlternateIds(), Stream.of(id))
+                .distinct();
+        }
 
         // hashCode() and equals() below should only check fields that we report to IRC in FeedChecker.run(), AND the id field.
 
@@ -631,6 +666,7 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
         public String alert;
         public String status;
         public int tsunami;
+        private String ids;
         public String magType;
         public String type;
 
@@ -640,6 +676,11 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
 
         public ZonedDateTime getUpdatedTime() {
             return ZonedDateTime.ofInstant(Instant.ofEpochMilli(updated), ZoneId.systemDefault());
+        }
+
+        public Stream<String> getAlternateIds() {
+            return Arrays.asList(StringUtils.strip(ids, ", ").split(",")).stream()
+                .distinct();
         }
     }
 
