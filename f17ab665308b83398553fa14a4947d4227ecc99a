@@ -16,6 +16,24 @@
       "revId": "f17ab665308b83398553fa14a4947d4227ecc99a",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_678ff224",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-04-08T07:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a5c5d37_e77be227",
+      "revId": "f17ab665308b83398553fa14a4947d4227ecc99a",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
