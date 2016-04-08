@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_e77be227",
+        "filename": "src/main/java/org/lizardirc/beancounter/EarthquakeListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-04-08T07:33:48Z",
+      "side": 1,
+      "message": "I think you might be able to get away with `Stream.of(StringUtils.strip(ids, \", \").split(\",\"))`, but this works.",
+      "revId": "f17ab665308b83398553fa14a4947d4227ecc99a",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
