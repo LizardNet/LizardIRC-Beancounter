@@ -108,7 +108,7 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
     public void onConnect(ConnectEvent<T> event) {
         bot = event.getBot();
 
-        if (!feedMap.isEmpty()) {
+        if (!feedMap.isEmpty() && future == null) {
             future = scheduleFeedChecker();
         }
     }
