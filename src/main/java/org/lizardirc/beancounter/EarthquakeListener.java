@@ -108,7 +108,10 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
     public void onConnect(ConnectEvent<T> event) {
         bot = event.getBot();
 
-        if (!feedMap.isEmpty()) {
+        /* TODO: A better solution for preventing the multiple-scheduling-on-reconnect problem will be needed when
+         * the bot is refactored to be modular.
+         */
+        if (!feedMap.isEmpty() && future == null) {
             future = scheduleFeedChecker();
         }
     }
