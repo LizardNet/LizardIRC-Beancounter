@@ -32,6 +32,7 @@
 
 package org.lizardirc.beancounter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
@@ -67,17 +68,19 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // C) The delimiter, as a backreference
     // D) One or more non-whitespace characters, followed by a colon and a space
     // We optionally match D. This is the target ("Alice" in `Alice: s/foo/bar`)
-    // We match s, followed by A. This is the delimiter.
+    // We match the mode
+    // We match A. This is the delimiter.
     // We then match B. This is the search regex.
     // We match C.
     // We match B. This is the replacement string.
     // We match C again.
     // We match B. These are the options.
+    private static final String REGEX_MODE = "([ys])";
     private static final String REGEX_D = "(?:([^\\s]+): )?";
     private static final String REGEX_B = "((?:\\\\.|[^\\\\])*)";
-    private static final String REGEX_AB = "s([^\\\\\\sA-Za-z0-9])" + REGEX_B;
-    private static final String REGEX_CB = "\\2" + REGEX_B;
-    private static final String REGEX_SED = REGEX_D + REGEX_AB + REGEX_CB + REGEX_CB;
+    private static final String REGEX_AB = "([^\\\\\\sA-Za-z0-9])" + REGEX_B;
+    private static final String REGEX_CB = "\\3" + REGEX_B;
+    private static final String REGEX_SED = REGEX_D + REGEX_MODE + REGEX_AB + REGEX_CB + REGEX_CB;
     private static final String REGEX_BAD_SED = REGEX_D + "s/" + REGEX_B + "/" + REGEX_B;
     private static final Pattern PATTERN_SED = Pattern.compile(REGEX_SED);
     private static final Pattern PATTERN_BAD_SED = Pattern.compile(REGEX_BAD_SED);
@@ -115,9 +118,9 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             }
 
             String target = m.group(1);
-            String regex = m.group(3);
-            String replacement = m.group(4);
-            String options = m.group(5);
+            String regex = m.group(4);
+            String replacement = m.group(5);
+            String options = m.group(6);
 
             User corrector = event.getUser();
             User speaker = ((GenericChannelEvent) event).getChannel().getUsers().stream()
@@ -135,17 +138,42 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 flags = Pattern.CASE_INSENSITIVE;
             }
 
-            Pattern p;
-            try {
-                p = Pattern.compile(regex, flags);
-            } catch (PatternSyntaxException e) {
-                event.respond("Invalid regex '" + regex + "': " + e.getMessage());
-                return;
-            }
+            // The mode to operate in - either regex replace (s) or transliterate (y)
+            String mode = m.group(2);
 
             Queue<UserMessage> window = windows.getUnchecked(speaker);
+            Callable<Optional<UserMessage>> callable = null;
 
-            Callable<Optional<UserMessage>> callable = new SedListenerCallable(p, replacement, options.contains("g"), window);
+            switch (mode) {
+                case "s":
+                    Pattern p;
+                    try {
+                        p = Pattern.compile(regex, flags);
+                    } catch (PatternSyntaxException e) {
+                        event.respond("Invalid regex '" + regex + "': " + e.getMessage());
+                        return;
+                    }
+
+                    callable = new RegexReplacementCallable(p, replacement, options.contains("g"), window);
+                    break;
+                case "y":
+                    if (regex.length() != replacement.length()) {
+                        event.respond("Strings for 'y' command are different lengths");
+                        return;
+                    }
+
+                    if (!options.isEmpty()) {
+                        event.respond("extra characters after command");
+                        return;
+                    }
+
+                    callable = new TransliterationCallable(regex, replacement, window);
+                    break;
+                default:
+                    // unknown or not implemented mode.
+                    return;
+            }
+
             Future<Optional<UserMessage>> future = executorService.submit(callable);
 
             try {
@@ -190,13 +218,13 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
         }
     }
 
-    private static class SedListenerCallable implements Callable<Optional<UserMessage>> {
+    private static class RegexReplacementCallable implements Callable<Optional<UserMessage>> {
         private final Pattern p;
         private final String replacement;
         private final boolean global;
         private final List<Pair<UserMessageType, CharSequence>> window;
 
-        public SedListenerCallable(Pattern p, String replacement, boolean global, Queue<UserMessage> window) {
+        public RegexReplacementCallable(Pattern p, String replacement, boolean global, Queue<UserMessage> window) {
             this.p = p;
             this.replacement = replacement;
             this.global = global;
@@ -218,6 +246,56 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                         return new UserMessage(item.getLeft(), item.getRight().replaceFirst(replacement));
                     }
                 });
+        }
+    }
+
+    private static class TransliterationCallable implements Callable<Optional<UserMessage>> {
+        private final String toReplace;
+        private final String replacement;
+        private final List<Pair<UserMessageType, CharSequence>> window;
+
+        public TransliterationCallable(String toReplace, String replacement, Queue<UserMessage> window) {
+            this.toReplace = toReplace;
+            this.replacement = replacement;
+            this.window = window.stream()
+                    .map(entry -> new ImmutablePair<UserMessageType, CharSequence>(entry.getType(), new InterruptibleCharSequence(entry.getMessage())))
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public Optional<UserMessage> call() throws Exception {
+            String[] toReplace = this.toReplace.split("");
+            String[] replacements = this.replacement.split("");
+
+            HashMap<String,String> h = new HashMap<>();
+            for (int i = toReplace.length - 1; i >= 0; i--) {
+                h.put(toReplace[i], replacements[i]);
+            }
+
+            return window.stream()
+                    .filter(item -> {
+                        String message = item.getRight().toString();
+                        for (String aToReplace : toReplace) {
+                            if (!message.contains(aToReplace)) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    })
+                    .reduce((x, y) -> y) // findLast()
+                    .map(item -> {
+                        String[] message = item.getRight().toString().split("");
+                        StringBuilder sb = new StringBuilder();
+                        for (String key : message) {
+                            if (h.containsKey(key)) {
+                                sb.append(h.get(key));
+                            } else {
+                                sb.append(key);
+                            }
+                        }
+
+                        return new UserMessage(item.getLeft(), sb.toString());
+                    });
         }
     }
 
