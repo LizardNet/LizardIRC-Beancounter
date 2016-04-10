@@ -11,6 +11,11 @@ LIZARDIRC/BEANCOUNTER AUTHORS
 **PGP Key ID: 8B13 1400 1489 D903 9203  B253 9683 BCE5 1A35 6CC6
 **LizardIRC nickname: TLUL (network staff)
 
+*Simon Walker
+**Email: github [at] stwalkerster [dot] co [dot] uk
+**PGP Key ID: 6EDA 5D87 60CC 091E 3B9F  6508 10DA 657D 9612 BE5C
+**LizardIRC nickname: stwalkerster
+
 Anyone who commits to this project should be added to this list, even for a
 single minor commit!
 
