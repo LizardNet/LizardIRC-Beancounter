@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_87c0a62b",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-04-10T16:27:19Z",
+      "side": 1,
+      "message": "Might want to iterate backwards to behave the same as sed in this example:\n\n    $ echo \u0027foobar\u0027 | sed -re \u0027y/oaoa/aeiu/\u0027\n    faaber\n\nIn other words, the map contains the *first* replacement listed, rather than the last.",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 13
+      },
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
