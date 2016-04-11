@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "9a5c5d37_e7f7628b",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-04-11T00:56:14Z",
+      "side": 1,
+      "message": "Okay, that\u0027s probably better actually.  I also just realized that this is how we do things in EarthquakeListener for the GeoJson* inner classes (which really probably shouldn\u0027t be inner anyway, but w/e).",
+      "parentUuid": "9a5c5d37_6704927e",
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_07ecb6c6",
         "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
         "patchSetId": 1
