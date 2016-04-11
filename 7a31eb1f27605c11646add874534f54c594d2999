@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a5c5d37_c7cd7e5f",
+        "filename": "AUTHORS.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-04-11T00:22:01Z",
+      "side": 1,
+      "message": "Suggestion: Since it doesn\u0027t look like you did, consider signing this commit with your key to provably tie this thumbprint to you.",
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_47e2aed6",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-04-11T00:22:01Z",
+      "side": 1,
+      "message": "Perhaps replace the if\u0027s here with a switch block, which is more in keeping with the code style we use in other places (and make the callable \u003d\u003d null case the \"default\" case)?",
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_27e7bae6",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-04-11T00:22:01Z",
+      "side": 1,
+      "message": "So, our class naming conventions are kinda wonky, and we will eventually be splitting out all the various command listeners to packages of their own and then all these inner classes out into their own files.  But, in the meantime, I would say rename this class to \"SedListenerReplacementCallable\"...",
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_07ecb6c6",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-04-11T00:22:01Z",
+      "side": 1,
+      "message": "...and this one to \"SedListenerTransliterationCallable\" (basically, inner classes follow the pattern OuterClassName + Descriptor).",
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_87c0a62b",
         "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
         "patchSetId": 1
