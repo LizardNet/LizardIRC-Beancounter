@@ -36,6 +36,41 @@
     },
     {
       "key": {
+        "uuid": "9a5c5d37_47098e94",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-04-11T00:41:56Z",
+      "side": 1,
+      "message": "+1, but note that the default case can\u0027t happen, because mode matches `[ys]`.",
+      "parentUuid": "9a5c5d37_47e2aed6",
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_27fe9a6c",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-04-11T00:41:56Z",
+      "side": 1,
+      "message": "Typically `options.isEmpty()` is preferred for readability.",
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_27e7bae6",
         "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
         "patchSetId": 1
@@ -47,6 +82,24 @@
       "writtenOn": "2016-04-11T00:22:01Z",
       "side": 1,
       "message": "So, our class naming conventions are kinda wonky, and we will eventually be splitting out all the various command listeners to packages of their own and then all these inner classes out into their own files.  But, in the meantime, I would say rename this class to \"SedListenerReplacementCallable\"...",
+      "revId": "7a31eb1f27605c11646add874534f54c594d2999",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_6704927e",
+        "filename": "src/main/java/org/lizardirc/beancounter/SedListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-04-11T00:41:56Z",
+      "side": 1,
+      "message": "I\u0027d just as soon say drop the ``SedListener\u0027\u0027 part entirely; the fact that it\u0027s an inner class makes that clear enough. ``[Regex]ReplacementCallable\u0027\u0027 and ``TransliterationCallable\u0027\u0027 sound like good names to me.",
+      "parentUuid": "9a5c5d37_27e7bae6",
       "revId": "7a31eb1f27605c11646add874534f54c594d2999",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
