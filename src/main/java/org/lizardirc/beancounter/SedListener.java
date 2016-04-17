@@ -50,8 +50,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.EvictingQueue;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -60,6 +59,7 @@ import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.utils.InterruptibleCharSequence;
+import org.lizardirc.beancounter.utils.Pair;
 
 public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // There are several substring types that we match.
@@ -101,6 +101,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
         if (!(event instanceof GenericChannelEvent)) {
             return;
         }
+        Channel channel = ((GenericChannelEvent) event).getChannel();
 
         String message = event.getMessage();
         Matcher m = PATTERN_SED.matcher(message);
@@ -123,7 +124,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             String options = m.group(6);
 
             User corrector = event.getUser();
-            User speaker = ((GenericChannelEvent) event).getChannel().getUsers().stream()
+            User speaker = channel.getUsers().stream()
                 .filter(u -> u.getNick().equalsIgnoreCase(target))
                 .findFirst()
                 .orElse(corrector);
@@ -182,23 +183,26 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 response.ifPresent(s -> {
                     window.add(s);
 
-                    StringBuilder sb;
-                    if (s.getType() == UserMessageType.ACTION) {
-                        if (!corrector.equals(speaker)) {
-                            sb = new StringBuilder(corrector.getNick());
-                            sb.append(" suggests a correction: * ");
-                        } else {
-                            sb = new StringBuilder("Correction: * ");
-                        }
-                        sb.append(speaker.getNick()).append(' ');
-                    } else {
-                        sb = new StringBuilder(corrector.getNick());
-                        if (!corrector.equals(speaker)) {
-                            sb.append(" thinks ").append(speaker.getNick());
-                        }
-                        sb.append(" meant to say: ");
+                    StringBuilder sb = new StringBuilder();
+                    switch (s.getType()) {
+                        case MESSAGE:
+                            sb.append(corrector.getNick());
+                            if (!corrector.equals(speaker)) {
+                                sb.append(" thinks ").append(speaker.getNick());
+                            }
+                            sb.append(" meant to say: ");
+                            break;
+                        case ACTION:
+                            if (!corrector.equals(speaker)) {
+                                sb.append(corrector.getNick());
+                                sb.append(" suggests a correction: * ");
+                            } else {
+                                sb = new StringBuilder("Correction: * ");
+                            }
+                            sb.append(speaker.getNick()).append(' ');
+                            break;
                     }
-                    ((GenericChannelEvent) event).getChannel().send().message(sb.append(s.getMessage()).toString());
+                    channel.send().message(sb.append(s.getMessage()).toString());
                 });
             } catch (TimeoutException e) {
                 event.respond("Timeout while processing replacement.");
@@ -210,7 +214,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
         } else {
             m = PATTERN_BAD_SED.matcher(message);
             if (m.matches()) {
-                ((GenericChannelEvent) event).getChannel().send().action("slaps " + event.getUser().getNick() + " with a copy of the sed user manual");
+                channel.send().action("slaps " + event.getUser().getNick() + " with a copy of the sed user manual");
                 event.respond("Add a slash to the end, like this: s/foo/bar/");
             } else {
                 windows.getUnchecked(event.getUser()).add(new UserMessage(messageType, message));
@@ -222,44 +226,44 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
         private final Pattern p;
         private final String replacement;
         private final boolean global;
-        private final List<Pair<UserMessageType, CharSequence>> window;
+        private final List<Pair<UserMessageType, ? extends CharSequence>> window;
 
         public RegexReplacementCallable(Pattern p, String replacement, boolean global, Queue<UserMessage> window) {
             this.p = p;
             this.replacement = replacement;
             this.global = global;
             this.window = window.stream()
-                .map(entry -> new ImmutablePair<UserMessageType, CharSequence>(entry.getType(), new InterruptibleCharSequence(entry.getMessage())))
+                .map(entry -> entry.mapRight(InterruptibleCharSequence::new))
                 .collect(Collectors.toList());
         }
 
         @Override
         public Optional<UserMessage> call() throws Exception {
             return window.stream()
-                .map(item -> new ImmutablePair<>(item.getLeft(), p.matcher(item.getRight())))
+                .map(item -> item.mapRight(p::matcher))
                 .filter(item -> item.getRight().find())
                 .reduce((x, y) -> y) // findLast()
-                .map(item -> {
+                .map(item -> item.mapRight(str -> {
                     if (global) {
-                        return new UserMessage(item.getLeft(), item.getRight().replaceAll(replacement));
+                        return str.replaceAll(replacement);
                     } else {
-                        return new UserMessage(item.getLeft(), item.getRight().replaceFirst(replacement));
+                        return str.replaceFirst(replacement);
                     }
-                });
+                }).map(UserMessage::new));
         }
     }
 
     private static class TransliterationCallable implements Callable<Optional<UserMessage>> {
         private final String toReplace;
         private final String replacement;
-        private final List<Pair<UserMessageType, CharSequence>> window;
+        private final List<Pair<UserMessageType, ? extends CharSequence>> window;
 
         public TransliterationCallable(String toReplace, String replacement, Queue<UserMessage> window) {
             this.toReplace = toReplace;
             this.replacement = replacement;
             this.window = window.stream()
-                    .map(entry -> new ImmutablePair<UserMessageType, CharSequence>(entry.getType(), new InterruptibleCharSequence(entry.getMessage())))
-                    .collect(Collectors.toList());
+                .map(entry -> entry.mapRight(InterruptibleCharSequence::new))
+                .collect(Collectors.toList());
         }
 
         @Override
@@ -267,60 +271,50 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             String[] toReplace = this.toReplace.split("");
             String[] replacements = this.replacement.split("");
 
-            HashMap<String,String> h = new HashMap<>();
+            HashMap<String, String> h = new HashMap<>();
             for (int i = toReplace.length - 1; i >= 0; i--) {
                 h.put(toReplace[i], replacements[i]);
             }
 
             return window.stream()
-                    .filter(item -> {
-                        String message = item.getRight().toString();
-                        for (String aToReplace : toReplace) {
-                            if (!message.contains(aToReplace)) {
-                                return false;
-                            }
+                .filter(item -> {
+                    String message = item.getRight().toString();
+                    for (String aToReplace : toReplace) {
+                        if (!message.contains(aToReplace)) {
+                            return false;
                         }
-                        return true;
-                    })
-                    .reduce((x, y) -> y) // findLast()
-                    .map(item -> {
-                        String[] message = item.getRight().toString().split("");
-                        StringBuilder sb = new StringBuilder();
-                        for (String key : message) {
-                            if (h.containsKey(key)) {
-                                sb.append(h.get(key));
-                            } else {
-                                sb.append(key);
-                            }
+                    }
+                    return true;
+                })
+                .reduce((x, y) -> y) // findLast()
+                .map(item -> {
+                    String[] message = item.getRight().toString().split("");
+                    StringBuilder sb = new StringBuilder();
+                    for (String key : message) {
+                        if (h.containsKey(key)) {
+                            sb.append(h.get(key));
+                        } else {
+                            sb.append(key);
                         }
+                    }
 
-                        return new UserMessage(item.getLeft(), sb.toString());
-                    });
+                    return new UserMessage(item.getLeft(), sb.toString());
+                });
         }
     }
 
-    private static class UserMessage {
-        private final UserMessageType type;
-        private String message;
-
+    private static class UserMessage extends Pair<UserMessageType, String> {
         public UserMessage(UserMessageType type, String message) {
-            this.type = type;
-            this.message = message;
+            super(type, message);
         }
 
         public UserMessageType getType() {
-            return type;
+            return getLeft();
         }
 
         public String getMessage() {
-            return message;
+            return getRight();
         }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        // There is no setter for UserMessageType - this value should never change for a given UserMessage.
     }
 
     private enum UserMessageType {
