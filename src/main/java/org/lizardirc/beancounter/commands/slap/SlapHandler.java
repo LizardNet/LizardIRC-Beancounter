@@ -30,7 +30,7 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.commands.slap;
 
 import java.util.Collections;
 import java.util.List;
