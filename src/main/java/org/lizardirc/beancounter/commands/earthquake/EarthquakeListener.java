@@ -30,7 +30,7 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.commands.earthquake;
 
 import java.io.BufferedReader;
 import java.io.IOException;
