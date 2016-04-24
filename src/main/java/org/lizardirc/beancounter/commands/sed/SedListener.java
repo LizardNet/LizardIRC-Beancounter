@@ -30,10 +30,8 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.commands.sed;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.Callable;
@@ -44,7 +42,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -57,9 +54,6 @@ import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ActionEvent;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-
-import org.lizardirc.beancounter.utils.InterruptibleCharSequence;
-import org.lizardirc.beancounter.utils.Pair;
 
 public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // There are several substring types that we match.
@@ -220,105 +214,5 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 windows.getUnchecked(event.getUser()).add(new UserMessage(messageType, message));
             }
         }
-    }
-
-    private static class RegexReplacementCallable implements Callable<Optional<UserMessage>> {
-        private final Pattern p;
-        private final String replacement;
-        private final boolean global;
-        private final List<Pair<UserMessageType, ? extends CharSequence>> window;
-
-        public RegexReplacementCallable(Pattern p, String replacement, boolean global, Queue<UserMessage> window) {
-            this.p = p;
-            this.replacement = replacement;
-            this.global = global;
-            this.window = window.stream()
-                .map(entry -> entry.mapRight(InterruptibleCharSequence::new))
-                .collect(Collectors.toList());
-        }
-
-        @Override
-        public Optional<UserMessage> call() throws Exception {
-            return window.stream()
-                .map(item -> item.mapRight(p::matcher))
-                .filter(item -> item.getRight().find())
-                .reduce((x, y) -> y) // findLast()
-                .map(item -> item.mapRight(str -> {
-                    if (global) {
-                        return str.replaceAll(replacement);
-                    } else {
-                        return str.replaceFirst(replacement);
-                    }
-                }).map(UserMessage::new));
-        }
-    }
-
-    private static class TransliterationCallable implements Callable<Optional<UserMessage>> {
-        private final String toReplace;
-        private final String replacement;
-        private final List<Pair<UserMessageType, ? extends CharSequence>> window;
-
-        public TransliterationCallable(String toReplace, String replacement, Queue<UserMessage> window) {
-            this.toReplace = toReplace;
-            this.replacement = replacement;
-            this.window = window.stream()
-                .map(entry -> entry.mapRight(InterruptibleCharSequence::new))
-                .collect(Collectors.toList());
-        }
-
-        @Override
-        public Optional<UserMessage> call() throws Exception {
-            String[] toReplace = this.toReplace.split("");
-            String[] replacements = this.replacement.split("");
-
-            HashMap<String, String> h = new HashMap<>();
-            for (int i = toReplace.length - 1; i >= 0; i--) {
-                h.put(toReplace[i], replacements[i]);
-            }
-
-            return window.stream()
-                .filter(item -> {
-                    String message = item.getRight().toString();
-                    for (String aToReplace : toReplace) {
-                        if (!message.contains(aToReplace)) {
-                            return false;
-                        }
-                    }
-                    return true;
-                })
-                .reduce((x, y) -> y) // findLast()
-                .map(item -> {
-                    String[] message = item.getRight().toString().split("");
-                    StringBuilder sb = new StringBuilder();
-                    for (String key : message) {
-                        if (h.containsKey(key)) {
-                            sb.append(h.get(key));
-                        } else {
-                            sb.append(key);
-                        }
-                    }
-
-                    return new UserMessage(item.getLeft(), sb.toString());
-                });
-        }
-    }
-
-    private static class UserMessage extends Pair<UserMessageType, String> {
-        public UserMessage(UserMessageType type, String message) {
-            super(type, message);
-        }
-
-        public UserMessageType getType() {
-            return getLeft();
-        }
-
-        public String getMessage() {
-            return getRight();
-        }
-    }
-
-    private enum UserMessageType {
-        MESSAGE,
-        ACTION
     }
 }

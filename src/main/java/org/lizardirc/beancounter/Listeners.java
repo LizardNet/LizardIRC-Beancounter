@@ -50,9 +50,18 @@ import org.pircbotx.hooks.managers.ListenerManager;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import redis.clients.jedis.Jedis;
 
+import org.lizardirc.beancounter.commands.admin.AdminHandler;
+import org.lizardirc.beancounter.commands.dice.DiceHandler;
 import org.lizardirc.beancounter.commands.earthquake.EarthquakeListener;
+import org.lizardirc.beancounter.commands.faces.FaceHandler;
+import org.lizardirc.beancounter.commands.goat.GoatHandler;
+import org.lizardirc.beancounter.commands.help.HelpHandler;
 import org.lizardirc.beancounter.commands.remind.ReminderListener;
+import org.lizardirc.beancounter.commands.roulette.RouletteHandler;
+import org.lizardirc.beancounter.commands.sed.SedListener;
 import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
+import org.lizardirc.beancounter.commands.slap.SlapHandler;
+import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
@@ -165,7 +174,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         if (commands.size() == 0) {
             return COMMANDS;
         }
-        return Collections.<String>emptySet();
+        return Collections.emptySet();
     }
 
     @Override
