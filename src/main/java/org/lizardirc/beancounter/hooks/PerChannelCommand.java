@@ -71,7 +71,7 @@ public class PerChannelCommand<T extends PircBotX> implements CommandHandler<T> 
                 e.printStackTrace(); // TODO log this properly
             }
         }
-        return Collections.<String>emptySet();
+        return Collections.emptySet();
     }
 
     @Override

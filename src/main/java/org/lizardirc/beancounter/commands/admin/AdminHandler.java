@@ -30,7 +30,7 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter;
+package org.lizardirc.beancounter.commands.admin;
 
 import java.util.Collections;
 import java.util.List;
@@ -81,7 +81,7 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
         if (commands.size() == 0) {
             return COMMANDS;
         }
-        return Collections.<String>emptySet();
+        return Collections.emptySet();
     }
 
     @Override
