@@ -50,6 +50,9 @@ import org.pircbotx.hooks.managers.ListenerManager;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import redis.clients.jedis.Jedis;
 
+import org.lizardirc.beancounter.commands.earthquake.EarthquakeListener;
+import org.lizardirc.beancounter.commands.remind.ReminderListener;
+import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
