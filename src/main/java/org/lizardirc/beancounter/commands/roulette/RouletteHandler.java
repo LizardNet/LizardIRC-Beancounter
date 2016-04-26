@@ -105,13 +105,24 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
                 break;
             case "roulette":
                 if (!loaded.contains(true)) {
-                    action.accept("notices the gun feels rather light. The chamber is empty!");
-                    reload(action);
+                    if (!loaded.isEmpty()) { // don't say this the first time playing
+                        action.accept("notices the gun feels rather light. The chamber is empty!");
+                    }
+                    if (lastBullets > 0) {
+                        reload(action);
+                    } else {
+                        message.accept("ಠ_ಠ " + target);
+                    }
                 }
 
                 message.accept(target + " picks up the gun, points it at eir head, pulls the trigger, and...");
+
                 loaded.add(false);
-                if (loaded.remove(0)) {
+                if (loaded.remove(0) || lastBullets == 0) {
+                    if (lastBullets == 0) {
+                        message.accept("The suspense is killing " + target + "!");
+                    }
+
                     if (outChan != null) {
                         outChan.kick(event.getUser(), "*BANG*! You're dead, Jim!");
                     }
