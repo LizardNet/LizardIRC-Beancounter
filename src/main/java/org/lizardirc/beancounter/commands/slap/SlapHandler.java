@@ -47,6 +47,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
+import org.lizardirc.beancounter.utils.Strings;
 
 public class SlapHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String CMD_SLAP = "slap";
@@ -167,7 +168,7 @@ public class SlapHandler<T extends PircBotX> implements CommandHandler<T> {
                 String modifier = modifiers.get(random.nextInt(modifiers.size()));
                 String item = items.get(random.nextInt(items.size()));
                 String itemMod = item_mods.get(random.nextInt(item_mods.size()));
-                String n = itemMod.matches("[aeiou].*") ? "n" : "";
+                String n = Strings.startsWithVowel(itemMod) ? "n" : "";
                 String completed = action + " " + target + " " + modifier + " with " + String.format(item, itemMod, n);
                 event.getBot().sendIRC().action(channel, completed.replaceAll(" +", " "));
                 break;

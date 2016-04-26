@@ -48,6 +48,7 @@ import org.pircbotx.output.OutputChannel;
 import org.pircbotx.output.OutputIRC;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
+import org.lizardirc.beancounter.utils.Strings;
 
 public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final Set<String> COMMANDS = ImmutableSet.of("poulette", "reload", "roulette", "spin");
@@ -149,11 +150,14 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
             action.accept("looks for a gun with " + chambers + " chambers, but can't find one.");
             chambers = 6;
         }
-        action.accept("picks up a " + chambers + "-chamber gun");
+        action.accept((Strings.startsWithVowel(String.valueOf(chambers)) ? "grabs an " : "grabs a ") + chambers + "-chamber gun");
 
         if (bullets < 0) {
-            String pluralized = bullets == -1 ? " bullet" : " bullets";
-            action.accept("takes " + (-bullets) + pluralized + " out of the empty gun and throws them away");
+            if (bullets == -1) {
+                action.accept("takes 1 bullet out of the empty gun and throws it away");
+            } else {
+                action.accept("takes " + -bullets + " bullets out of the empty gun and throws them away");
+            }
             bullets = 0;
         } else if (bullets > chambers) {
             action.accept("puts " + bullets + " bullets into the gun. " + (bullets - chambers) + " fall out.");
