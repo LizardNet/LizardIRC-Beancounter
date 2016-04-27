@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_e7af622a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-04-27T04:47:43Z",
+      "side": 1,
+      "message": "(yes it is, apparently: https://en.wiktionary.org/wiki/uninstantiable)",
+      "revId": "b911e928dabff8726ed129e49eaaf72083525904",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
