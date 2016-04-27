@@ -43,6 +43,10 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.lizardirc.beancounter.Beancounter;
 
 public final class Miscellaneous {
+    private Miscellaneous() {
+        throw new IllegalStateException("Cannot instantiate this class");
+    }
+
     public static boolean isChannelLike(GenericMessageEvent<?> event, String arg) {
         // Determine if the argument string appears to be a channel - i.e., does it start with a character the network
         // recognizes as a channel name (usually # and &)?
