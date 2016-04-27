@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_87f8a64a",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/Strings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-04-27T04:17:41Z",
+      "side": 1,
+      "message": "My brain isn\u0027t going to even bother trying to figure out what this regex does.",
+      "revId": "7e5254b06fb6033abaa10a596136a99b7509c4ed",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
