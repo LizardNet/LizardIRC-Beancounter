@@ -100,6 +100,9 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
             case RAISE:
                 if (remainder.isEmpty()) {
                     remainder = " your dongers";
+                } else if (remainder.toLowerCase().endsWith("mellowcraze")) {
+                    event.respond("ᕕ༼✿•̀︿•́༽ᕗ RAISE" + remainder.toUpperCase() + " ᕕ༼✿•̀︿•́༽ᕗ");
+                    break;
                 }
                 event.respond("ヽ༼ຈل͜ຈ༽ﾉ raise" + remainder + " ヽ༼ຈل͜ຈ༽ﾉ");
                 break;
