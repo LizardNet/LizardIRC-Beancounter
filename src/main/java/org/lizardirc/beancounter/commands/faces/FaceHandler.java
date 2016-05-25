@@ -50,7 +50,8 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String FLIP = "TableFLIP";
     private static final String FLIP2 = "FlipTable";
     private static final String RAISE = "Raise";
-    private static final Set<String> COMMANDS = ImmutableSet.of(LOOK_OF_DISAPPROVAL, LENNY, ANGRY_LENNY, LOOK_OF_LENNY, FLIP, FLIP2, RAISE);
+    private static final String LOWER = "Lower";
+    private static final Set<String> COMMANDS = ImmutableSet.of(LOOK_OF_DISAPPROVAL, LENNY, ANGRY_LENNY, LOOK_OF_LENNY, FLIP, FLIP2, RAISE, LOWER);
 
     private static final String ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[{(<>)}].!'\",&?";
     private static final String AHPLA = "ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz∀ᗺƆᗡƎℲפHIſʞ⅂WNOԀΌᴚS⊥∩ΛMX⅄Z0ƖᄅƐㄣϛ9ㄥ86]})><({[˙¡,„'⅋¿";
@@ -101,6 +102,12 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
                     remainder = " your dongers";
                 }
                 event.respond("ヽ༼ຈل͜ຈ༽ﾉ raise" + remainder + " ヽ༼ຈل͜ຈ༽ﾉ");
+                break;
+            case LOWER:
+                if (remainder.isEmpty()) {
+                    remainder = " your dongers";
+                }
+                event.respond("┌༼ຈل͜ຈ༽┐ lower" + remainder + " ┌༼ຈل͜ຈ༽┐");
                 break;
         }
     }
