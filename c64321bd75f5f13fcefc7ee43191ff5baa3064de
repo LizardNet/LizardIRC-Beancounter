@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a51691d_46799292",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/faces/FaceHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-05-31T23:27:45Z",
+      "side": 1,
+      "message": "Hmm. I shied away from using Unicode in the naming of AHPLA because I wanted it to be easy to type (else I would have called it ?Hd??). Thoughts?",
+      "revId": "c64321bd75f5f13fcefc7ee43191ff5baa3064de",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a51691d_66748e9c",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/faces/FaceHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-05-31T23:27:45Z",
+      "side": 1,
+      "message": "Should be just \"deniro\" || \"de niro\", so we can `?raise robert de niro`.\n\nAlso, maybe worth `String lowercase \u003d remainder.toLowerCase();` for efficiency?",
+      "revId": "c64321bd75f5f13fcefc7ee43191ff5baa3064de",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
