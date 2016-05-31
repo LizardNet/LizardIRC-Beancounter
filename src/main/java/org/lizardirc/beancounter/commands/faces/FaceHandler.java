@@ -55,6 +55,7 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
 
     private static final String ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[{(<>)}].!'\",&?";
     private static final String AHPLA = "ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz∀ᗺƆᗡƎℲפHIſʞ⅂WNOԀΌᴚS⊥∩ΛMX⅄Z0ƖᄅƐㄣϛ9ㄥ86]})><({[˙¡,„'⅋¿";
+    private static final String SMALL_CAPS = "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789[{(<>)}].!'\",&?";
     //private static final String ALT = "ɐpⅽqөʈɓµ!ɾʞꞁwuobdʁƨʇ∩٨ʍxʎzᗄᗷ⊂DEᖶ⅁HIᘃʞ⅂ʍNObⵚᖉᴤ⊥∩⋀MX⅄Z0123456789";
     //private static final String ALT = "ɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎzɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎz0123456789";
     //private static final String ALT = "68Ɫ95ᔭƐ210Z⅄XMᴧ∩⊥SᴚΌԀOᴎW⅂⋊ſIH⅁ℲƎ◖Ↄ𐐒∀zʎxʍʌnʇsɹbdouɯʃʞɾıɥƃɟǝpɔqɐ";
@@ -98,13 +99,24 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
             default:
                 remainder = ' ' + new IllegalArgumentException("Invalid command").toString();
             case RAISE:
+                String message;
+                String lowercase = remainder.toLowerCase();
+
                 if (remainder.isEmpty()) {
-                    remainder = " your dongers";
-                } else if (remainder.toLowerCase().endsWith("mellowcraze")) {
-                    event.respond("ᕕ༼✿•̀︿•́༽ᕗ RAISE" + remainder.toUpperCase() + " ᕕ༼✿•̀︿•́༽ᕗ");
-                    break;
+                    message = "ヽ༼ຈل͜ຈ༽ﾉ raise your dongers ヽ༼ຈل͜ຈ༽ﾉ";
+                } else if (lowercase.endsWith("mellowcraze")) {
+                    message = "ᕕ༼✿•̀︿•́༽ᕗ RAISE" + remainder.toUpperCase() + " ᕕ༼✿•̀︿•́༽ᕗ";
+                } else if (lowercase.endsWith("dagero")) {
+                    message = "ヽ༼ຈل͜O༽ﾉ ʀᴀɪs" + smallCaps(remainder) + " ヽ༼ຈل͜___ຈ༽ﾉ";
+                } else if (lowercase.endsWith("deniro") || lowercase.endsWith("de niro")) {
+                    message = "ヽ༼$ل͜$༽ﾉ ʀᴀɪsᴇ" + smallCaps(remainder) + " ヽ༼$ل͜$༽ﾉ";
+                } else if (lowercase.endsWith("dogers")) {
+                    message = "ヽ༼⚆̂ᴥ⚆̚༽ﾉ ʀᴀɪsᴇ" + smallCaps(remainder) + " ヽ༼⚆̂ᴥ⚆̚༽ﾉ";
+                } else {
+                    message = "ヽ༼ຈل͜ຈ༽ﾉ raise" + remainder + " ヽ༼ຈل͜ຈ༽ﾉ";
                 }
-                event.respond("ヽ༼ຈل͜ຈ༽ﾉ raise" + remainder + " ヽ༼ຈل͜ຈ༽ﾉ");
+
+                event.respond(message);
                 break;
             case LOWER:
                 if (remainder.isEmpty()) {
@@ -127,6 +139,19 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
             int index = ALPHA.indexOf(chars[i]);
             if (index >= 0) {
                 chars[i] = AHPLA.charAt(index);
+            }
+        }
+
+        return new String(chars);
+    }
+
+    private static String smallCaps(String input) {
+        char[] chars = input.toCharArray();
+
+        for (int i = 0; i < chars.length; i++) {
+            int index = ALPHA.indexOf(chars[i]);
+            if (index >= 0) {
+                chars[i] = SMALL_CAPS.charAt(index);
             }
         }
 
