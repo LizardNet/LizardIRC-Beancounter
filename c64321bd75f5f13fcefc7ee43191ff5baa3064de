@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a51691d_e6675ee9",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/faces/FaceHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-06-01T18:27:11Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a fair point.  Not as funny, but changed to SMALL_CAPS.",
+      "parentUuid": "7a51691d_46799292",
+      "revId": "c64321bd75f5f13fcefc7ee43191ff5baa3064de",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a51691d_66748e9c",
         "filename": "src/main/java/org/lizardirc/beancounter/commands/faces/FaceHandler.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-05-31T23:27:45Z",
       "side": 1,
       "message": "Should be just \"deniro\" || \"de niro\", so we can `?raise robert de niro`.\n\nAlso, maybe worth `String lowercase \u003d remainder.toLowerCase();` for efficiency?",
+      "revId": "c64321bd75f5f13fcefc7ee43191ff5baa3064de",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a51691d_06739ab2",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/faces/FaceHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-06-01T18:27:11Z",
+      "side": 1,
+      "message": "Done for both",
+      "parentUuid": "7a51691d_66748e9c",
       "revId": "c64321bd75f5f13fcefc7ee43191ff5baa3064de",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
