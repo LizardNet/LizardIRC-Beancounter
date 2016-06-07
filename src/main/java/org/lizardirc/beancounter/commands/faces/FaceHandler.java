@@ -51,11 +51,16 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String FLIP2 = "FlipTable";
     private static final String RAISE = "Raise";
     private static final String LOWER = "Lower";
-    private static final Set<String> COMMANDS = ImmutableSet.of(LOOK_OF_DISAPPROVAL, LENNY, ANGRY_LENNY, LOOK_OF_LENNY, FLIP, FLIP2, RAISE, LOWER);
+    private static final String SMALLCAPS = "SmallCaps";
+    private static final String SUPERSCRIPT = "SuperScript";
+    private static final String SWEAR_TO_GOD = "SwearToGod";
+    private static final Set<String> COMMANDS = ImmutableSet.of(LOOK_OF_DISAPPROVAL, LENNY, ANGRY_LENNY, LOOK_OF_LENNY,
+        FLIP, FLIP2, RAISE, LOWER, SMALLCAPS, SUPERSCRIPT, SWEAR_TO_GOD);
 
     private static final String ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[{(<>)}].!'\",&?";
     private static final String AHPLA = "ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz∀ᗺƆᗡƎℲפHIſʞ⅂WNOԀΌᴚS⊥∩ΛMX⅄Z0ƖᄅƐㄣϛ9ㄥ86]})><({[˙¡,„'⅋¿";
-    private static final String SMALL_CAPS = "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789[{(<>)}].!'\",&?";
+    private static final String SMALL_CAPS_CHARS = "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789[{(<>)}].!'\",&?";
+    private static final String SUPERSCRIPTS_CHARS = "ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖᑫʳˢᵗᵘᵛʷˣʸᶻᴬᴮᶜᴰᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾǫᴿˢᵀᵁⱽᵂˣʸᶻ⁰¹²³⁴⁵⁶⁷⁸⁹[{⁽<>⁾}].!'\",&?";
     //private static final String ALT = "ɐpⅽqөʈɓµ!ɾʞꞁwuobdʁƨʇ∩٨ʍxʎzᗄᗷ⊂DEᖶ⅁HIᘃʞ⅂ʍNObⵚᖉᴤ⊥∩⋀MX⅄Z0123456789";
     //private static final String ALT = "ɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎzɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎz0123456789";
     //private static final String ALT = "68Ɫ95ᔭƐ210Z⅄XMᴧ∩⊥SᴚΌԀOᴎW⅂⋊ſIH⅁ℲƎ◖Ↄ𐐒∀zʎxʍʌnʇsɹbdouɯʃʞɾıɥƃɟǝpɔqɐ";
@@ -71,6 +76,8 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
 
     @Override
     public void handleCommand(final GenericMessageEvent<T> event, final List<String> commands, String remainder) {
+        String message;
+
         if (!remainder.isEmpty()) {
             remainder = ' ' + remainder.trim();
         }
@@ -99,7 +106,6 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
             default:
                 remainder = ' ' + new IllegalArgumentException("Invalid command").toString();
             case RAISE:
-                String message;
                 String lowercase = remainder.toLowerCase();
 
                 if (remainder.isEmpty()) {
@@ -124,7 +130,40 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
                 }
                 event.respond("┌༼ຈل͜ຈ༽┐ lower" + remainder + " ┌༼ຈل͜ຈ༽┐");
                 break;
+            case SMALLCAPS:
+                if (remainder.isEmpty()) {
+                    remainder = "u wot m8";
+                }
+                event.respond(smallCaps(remainder.trim()));
+                break;
+            case SUPERSCRIPT:
+                if (remainder.isEmpty()) {
+                    remainder = "serious trouble";
+                }
+                event.respond(superscripts(remainder.trim()));
+                break;
+            case SWEAR_TO_GOD:
+                String boilerplate = "I swear to god if any of you motherfuckers %s you will be in serious trouble";
+
+                if (remainder.isEmpty()) {
+                    remainder = "copy and paste this";
+                }
+
+                message = "ヽ༼ຈل͜ຈ༽ﾉ " + superscripts(String.format(boilerplate, remainder.trim())) + " ヽ༼ຈل͜ຈ༽ﾉ";
+                event.respond(message);
+                break;
         }
+    }
+
+    private static String charConvert(char[] input, String convertTo) {
+        for (int i = 0; i < input.length; i++) {
+            int index = ALPHA.indexOf(input[i]);
+            if (index >= 0) {
+                input[i] = convertTo.charAt(index);
+            }
+        }
+
+        return new String(input);
     }
 
     private static String flip(String input) {
@@ -135,26 +174,14 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
             chars[chars.length - i - 1] = tmp;
         }
 
-        for (int i = 0; i < chars.length; i++) {
-            int index = ALPHA.indexOf(chars[i]);
-            if (index >= 0) {
-                chars[i] = AHPLA.charAt(index);
-            }
-        }
-
-        return new String(chars);
+        return charConvert(chars, AHPLA);
     }
 
     private static String smallCaps(String input) {
-        char[] chars = input.toCharArray();
+        return charConvert(input.toCharArray(), SMALL_CAPS_CHARS);
+    }
 
-        for (int i = 0; i < chars.length; i++) {
-            int index = ALPHA.indexOf(chars[i]);
-            if (index >= 0) {
-                chars[i] = SMALL_CAPS.charAt(index);
-            }
-        }
-
-        return new String(chars);
+    private static String superscripts(String input) {
+        return charConvert(input.toCharArray(), SUPERSCRIPTS_CHARS);
     }
 }
