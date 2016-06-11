@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a51691d_868c2a81",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-06-11T18:41:31Z",
+      "side": 1,
+      "message": "????? ?? ???",
+      "revId": "46428dc61d13ad8e36d1f5845e70e5e467d623c7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a51691d_a68f2675",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/faces/FaceHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-06-11T18:41:31Z",
+      "side": 1,
+      "message": "?????????????? ??",
+      "revId": "46428dc61d13ad8e36d1f5845e70e5e467d623c7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
