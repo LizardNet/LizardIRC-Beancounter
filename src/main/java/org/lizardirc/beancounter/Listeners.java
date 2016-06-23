@@ -44,6 +44,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
 import com.google.common.collect.ImmutableSet;
+import org.lizardirc.beancounter.commands.entrymsg.EntryMessageListener;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.managers.ListenerManager;
@@ -133,6 +134,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
         ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
+        EntryMessageListener<T> entryMessageListener = new EntryMessageListener<T>(pm.getNamespace("entryMessage"), acl);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -149,6 +151,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(inviteAcceptor.getCommandHandler());
         handlers.add(reminderListener.getCommandHandler());
         handlers.add(earthquakeListener.getCommandHandler());
+        handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -165,6 +168,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(userLastSeenListener);
         ownListeners.add(reminderListener);
         ownListeners.add(earthquakeListener);
+        ownListeners.add(entryMessageListener);
 
         ownListeners.forEach(listenerManager::addListener);
     }
