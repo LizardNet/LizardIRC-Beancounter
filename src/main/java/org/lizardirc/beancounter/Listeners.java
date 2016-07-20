@@ -54,7 +54,7 @@ import org.lizardirc.beancounter.commands.admin.AdminHandler;
 import org.lizardirc.beancounter.commands.dice.DiceHandler;
 import org.lizardirc.beancounter.commands.earthquake.EarthquakeListener;
 import org.lizardirc.beancounter.commands.entrymsg.EntryMessageListener;
-import org.lizardirc.beancounter.commands.faces.FaceHandler;
+import org.lizardirc.beancounter.commands.memes.MemeHandler;
 import org.lizardirc.beancounter.commands.goat.GoatHandler;
 import org.lizardirc.beancounter.commands.help.HelpHandler;
 import org.lizardirc.beancounter.commands.remind.ReminderListener;
@@ -134,12 +134,12 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
         ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
-        EntryMessageListener<T> entryMessageListener = new EntryMessageListener<T>(pm.getNamespace("entryMessage"), acl);
+        EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
         handlers.add(new DiceHandler<>());
-        handlers.add(new FaceHandler<>());
+        handlers.add(new MemeHandler<>());
         handlers.add(new GoatHandler<>(acl));
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
