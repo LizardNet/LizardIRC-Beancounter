@@ -30,19 +30,28 @@
  * developer to Gerrit before they are acted upon.
  */
 
-package org.lizardirc.beancounter.commands.faces;
+package org.lizardirc.beancounter.commands.memes;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
+import org.lizardirc.beancounter.Beancounter;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
+public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String LOOK_OF_DISAPPROVAL = "LookOfDisapproval";
     private static final String LENNY = "Lenny";
     private static final String ANGRY_LENNY = "AngryLenny";
@@ -54,8 +63,9 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String SMALLCAPS = "SmallCaps";
     private static final String SUPERSCRIPT = "SuperScript";
     private static final String SWEAR_TO_GOD = "SwearToGod";
+    private static final String LAMBORGHINI = "lamborghini";
     private static final Set<String> COMMANDS = ImmutableSet.of(LOOK_OF_DISAPPROVAL, LENNY, ANGRY_LENNY, LOOK_OF_LENNY,
-        FLIP, FLIP2, RAISE, LOWER, SMALLCAPS, SUPERSCRIPT, SWEAR_TO_GOD);
+        FLIP, FLIP2, RAISE, LOWER, SMALLCAPS, SUPERSCRIPT, SWEAR_TO_GOD, LAMBORGHINI);
 
     private static final String ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[{(<>)}].!'\",&?";
     private static final String AHPLA = "ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz∀ᗺƆᗡƎℲפHIſʞ⅂WNOԀΌᴚS⊥∩ΛMX⅄Z0ƖᄅƐㄣϛ9ㄥ86]})><({[˙¡,„'⅋¿";
@@ -65,6 +75,28 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
     //private static final String ALT = "ɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎzɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎz0123456789";
     //private static final String ALT = "68Ɫ95ᔭƐ210Z⅄XMᴧ∩⊥SᴚΌԀOᴎW⅂⋊ſIH⅁ℲƎ◖Ↄ𐐒∀zʎxʍʌnʇsɹbdouɯʃʞɾıɥƃɟǝpɔqɐ";
     // ^ some other mappings from other tools that might be helpful
+
+    private final List<String> lamborghiniAccount;
+    private final Random random = new Random();
+
+    public MemeHandler() {
+        List<String> lamborghiniAccount;
+
+        try (InputStream lamborghiniFile = Beancounter.class.getResourceAsStream("/lamborghinis.json")) {
+            Gson lamborghiniDeserializer = new Gson();
+            Type lamborghiniAccountType = new TypeToken<List<String>>(){}.getType();
+            InputStreamReader lamborghiniReader = new InputStreamReader(lamborghiniFile);
+
+            List<String> mutableLamborghinis = lamborghiniDeserializer.fromJson(lamborghiniReader, lamborghiniAccountType);
+            lamborghiniAccount = ImmutableList.copyOf(mutableLamborghinis);
+        } catch (IOException | NullPointerException e) {
+            System.err.println("Caught IOException or NullPointerException trying to read in lamborghinis: " + e.getMessage());
+            e.printStackTrace();
+            lamborghiniAccount = ImmutableList.of();
+        }
+
+        this.lamborghiniAccount = lamborghiniAccount;
+    }
 
     @Override
     public Set<String> getSubCommands(final GenericMessageEvent<T> event, final List<String> commands) {
@@ -151,6 +183,14 @@ public class FaceHandler<T extends PircBotX> implements CommandHandler<T> {
 
                 message = "ヽ༼ຈل͜ຈ༽ﾉ " + superscripts(String.format(boilerplate, remainder.trim())) + " ヽ༼ຈل͜ຈ༽ﾉ";
                 event.respond(message);
+                break;
+            case LAMBORGHINI:
+                if (lamborghiniAccount.isEmpty()) {
+                    event.respond("Someone withdrew all the lamborghinis from my lamborghini account!  D:");
+                    // This shouldn't ever happen
+                } else {
+                    event.respond(lamborghiniAccount.get(random.nextInt(lamborghiniAccount.size())));
+                }
                 break;
         }
     }

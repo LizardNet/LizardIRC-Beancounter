@@ -130,9 +130,6 @@
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-        <includes>
-          <include>*.props</include>
-        </includes>
       </resource>
     </resources>
   </build>
