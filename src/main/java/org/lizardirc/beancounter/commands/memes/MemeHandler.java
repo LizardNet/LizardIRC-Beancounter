@@ -1,4 +1,4 @@
-/**
+/*
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
@@ -40,12 +40,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.pircbotx.PircBotX;
+import org.pircbotx.User;
+import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.Beancounter;
@@ -76,18 +79,18 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
     //private static final String ALT = "68Ɫ95ᔭƐ210Z⅄XMᴧ∩⊥SᴚΌԀOᴎW⅂⋊ſIH⅁ℲƎ◖Ↄ𐐒∀zʎxʍʌnʇsɹbdouɯʃʞɾıɥƃɟǝpɔqɐ";
     // ^ some other mappings from other tools that might be helpful
 
-    private final List<String> lamborghiniAccount;
+    private final List<Lamborghini> lamborghiniAccount;
     private final Random random = new Random();
 
     public MemeHandler() {
-        List<String> lamborghiniAccount;
+        List<Lamborghini> lamborghiniAccount;
 
         try (InputStream lamborghiniFile = Beancounter.class.getResourceAsStream("/lamborghinis.json")) {
             Gson lamborghiniDeserializer = new Gson();
-            Type lamborghiniAccountType = new TypeToken<List<String>>(){}.getType();
+            Type lamborghiniAccountType = new TypeToken<List<Lamborghini>>(){}.getType();
             InputStreamReader lamborghiniReader = new InputStreamReader(lamborghiniFile);
 
-            List<String> mutableLamborghinis = lamborghiniDeserializer.fromJson(lamborghiniReader, lamborghiniAccountType);
+            List<Lamborghini> mutableLamborghinis = lamborghiniDeserializer.fromJson(lamborghiniReader, lamborghiniAccountType);
             lamborghiniAccount = ImmutableList.copyOf(mutableLamborghinis);
         } catch (IOException | NullPointerException e) {
             System.err.println("Caught IOException or NullPointerException trying to read in lamborghinis: " + e.getMessage());
@@ -102,6 +105,15 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
     public Set<String> getSubCommands(final GenericMessageEvent<T> event, final List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
+        } else if (commands.size() == 1 && LAMBORGHINI.equals(commands.get(0))) {
+            if (!(event instanceof GenericChannelEvent)) {
+                return Collections.emptySet();
+            }
+
+            GenericChannelEvent gce = (GenericChannelEvent) event;
+            return gce.getChannel().getUsers().stream()
+                .map(User::getNick)
+                .collect(Collectors.toSet());
         }
         return Collections.emptySet();
     }
@@ -189,7 +201,11 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
                     event.respond("Someone withdrew all the lamborghinis from my lamborghini account!  D:");
                     // This shouldn't ever happen
                 } else {
-                    event.respond(lamborghiniAccount.get(random.nextInt(lamborghiniAccount.size())));
+                    if (commands.size() >= 2) {
+                        event.respond(lamborghiniAccount.get(random.nextInt(lamborghiniAccount.size())).getQuote(commands.get(1)));
+                    } else {
+                        event.respond(lamborghiniAccount.get(random.nextInt(lamborghiniAccount.size())).getQuote());
+                    }
                 }
                 break;
         }
