@@ -1,46 +1,191 @@
 [
-  "How many Beancounters do you have in your Beancounter account?",
+  {
+    "quote": "How many %1$ss do you have in your %1$s account?",
+    "default_replacement": "Beancounter"
+  },
 
-  "uh, here in my garage, just bought this, uh, new lamborghini here, fun to drive up here in the hollywood hills",
-  "DROP OUT OF COLLEGE",
-  "but you know what I like more than materialistic things? KNOWLEDGE",
-  "it's like the billionaire warren buffett says - \"the more you learn, the more you earn\"",
-  "it wasn’t that long ago that I was in a little town across the country sleeping on a couch in a mobile home with only forty seven dollars in my bank account",
-  "I bumped into a mentor. and another mentor. and a few more mentors. I found FIVE mentors.",
-  "you know, I read a book a day not to show off. it's, again, about the KNOWLEDGE",
-  "money, I don't call it money anymore, I call it FUEL UNITS. you must have enough fuel units to live out your dream and to live out your destiny",
-  "you know, like they say if things sound too good to be true they are too good to be true",
+  {
+    "quote": "uh, here in my garage, just bought this, uh, new %1$s here, fun to drive up here in the hollywood hills",
+    "default_replacement": "lamborghini"
+  },
+  {
+    "quote": "DROP%1$s OUT OF COLLEGE",
+    "default_replacement": "",
+    "transformers": ["all_caps", "pad_left"]
+  },
+  {
+    "quote": "but you know what I like more than %1$s? KNOWLEDGE",
+    "default_replacement": "materialistic things"
+  },
+  {
+    "quote": "it's like the billionaire %1$s says - \"the more you learn, the more you earn\"",
+    "default_replacement": "warren buffett"
+  },
+  {
+    "quote": "it wasn’t that long ago that I was in a little town across the country sleeping on a couch in a mobile home with only forty seven %1$ss in my bank account",
+    "default_replacement": "dollar"
+  },
+  {
+    "quote": "I bumped into a%2$s %1$s. and another %1$s. and a few more %1$ss. I found FIVE %1$ss.",
+    "default_replacement": "mentor"
+  },
+  {
+    "quote": "you know, I read a%2$s %1$s a day not to show off. it's, again, about the KNOWLEDGE",
+    "default_replacement": "book"
+  },
+  {
+    "quote": "Money, I don't call it money anymore, I call it %1$s UNITS. You must have enough %1$s UNITS to live out your dream and to live out your destiny",
+    "default_replacement": "FUEL",
+    "transformers": ["all_caps"]
+  },
+  {
+    "quote": "you know, like they say if %1$s too good to be true they are too good to be true",
+    "default_replacement": "things sound",
+    "additional": " sounds",
+    "transformers": ["additional_append"]
+  },
 
-  "enough to feed 2 Lamborghini's 5 buckets of knowledge",
-  "a small loan of a million Lamborghinis",
-  "But you know what I like a lot more than KNOWLEDGE? This uh, new Lamborghini here.",
-  "But you know what I like a lot more than the new Lamborghini here? My TEDx talk where I talk about this new Lamborghini here.",
-  "In fact, I'm a lot more proud of these seven new Hollywood hills that I had to get installed hold 2,000 new Lamborghinis",
-  "It's like the Buffet Warren billionaire says, 'The more you earn, the more you DRIVE UP HERE IN THE HOLLYWOOD HILLS'",
-  "in fact, the real reason I keep this Lamborghini here, is the real reason I keep this Lamborghini here, is that it's a reminder, a reminder that dreerds are still possible",
-  "it wasn’t that long ago that I was in a little Lamborghini sleeping on book shelves in the Hollywood hills",
-  "it wasn't that long ago that I was in a little Lamborghini sleepin' on book shelves in the Hollywood hills with only 47,000,000,000 dollars in my bank account, and only 47 Lamborghinis in my Lamborghini account, and only 47 hills in my Hollywood account, and only 47 TEDx talks where I talk about Warren Buffet in my TEDx talks where I talk about Warren Buffet account",
-  "But you know what? Something happened that changed my life. I bumped into a Lamborghini, and another Lamborghini. A few more Lamborghinis, I found five Lamborghinis.",
-  "I don't call it money anymore, I call it fuel units. You must have enough fuel units. You must have enough Lamborghinis. You must construct additional pylons.",
-  "I'll see you on my website, it's a quick video, and uh you'll see there absolutely NOTHING.",
-  "Sid Meyer said, in his famous work, Civilization V, and the reason this game is so important, he said, we move away from college, and we move towards lamborghinis",
-  "a thousand years ago they didn't have dollars, right they had something else I call it now FREEDOM UNITS",
-  "I know you have a lot of other things you could be doing with your time now instead of watching me stand here in my garage with my little lamborghini",
-  "look at the list, people way more successful than me, Bill Zuckerberg",
-  "you know people ask me why I bought it and it's definitely not to show off, it's not just because I like to show off, it's not just because I like fast cars",
-  "the real reason I bought this Lamborghini and the reason I've had a Ferrari before, and a Maserati before, and Lamborati before, and a Maserghini is because I wanted to remind myself of a dreerd because it wasn't too long ago that I was a pretty robotic virgin on an island down in the Bahamas with only 47 bank accounts in my account account",
-  "Remember what the Dalai Lama said though, three kinds of knowledge, Lamborghinis, Ferraris, and Maseratis, we don't need more book smart people",
-  "you want the reeaaal stuuuff, you want to have a Lamborghini in your Lamborghini account, you want to be healthy, you want to find love ( ͡° ͜ʖ ͡°)",
-  "more importantly I'm gonna share with you my lamborghini that I use as a bathroom. uh",
-  "And I was thinking, this person's a moron, man! They don't understand the most fundamental rule of memes",
-  "and there's that old school principle which is, 'do onto others, as you want them, unto to do unto others.' ...um",
-  "I saw someone getting shot in the dick when I was 5 years old. What I did was, I sent that dude a coffee table book",
-  "you know I've been a fish since I was 19 years old, I'm not a good fish at all so, you know, I don't have all my fish here, but I think I've 17,000 square fish",
-  "hey, here in my backyard, uh, people ask me to do a like MTV Cribs little tour, so I thought I'd show a bit of my mobile home, but more importantly I'mma share with you, uh, my bathroom I use as a library",
-  "You know, I was born in a Ferrari museum. My dad was a moron, and my mom was a Ferrari, and my dad was a Ferrari fucker",
-  "Hey Tai, can I come hang out and watch One Punch Man?",
-  "There's that old school principle, which is: Watch who you fuck",
-  "It's the old school formula. Step 1: Lamborghini. Step 2: Lamborghini. Step 3, old school Lamborghini",
+  {
+    "quote": "enough to feed 2 Lamborghini's 5 %1$ss of knowledge",
+    "default_replacement": "bucket"
+  },
+  {
+    "quote": "a small loan of a million %1$ss",
+    "default_replacement": "Lamborghini"
+  },
+  {
+    "quote": "But you know what I like a lot more than KNOWLEDGE? This uh, new %1$s here.",
+    "default_replacement": "Lamborghini"
+  },
+  {
+    "quote": "But you know what I like a lot more than the new %1$s here? My TEDx talk where I talk about this new %1$s here.",
+    "default_replacement": "Lamborghini"
+  },
+  {
+    "quote": "In fact, I'm a lot more proud of these seven new Hollywood hills that I had to get installed hold 2,000 new %1$ss",
+    "default_replacement": "Lamborghini"
+  },
+  {
+    "quote": "It's like the Buffet Warren billionaire says, 'The more you earn, the more you DRIVE UP HERE IN THE %1$s HILLS'",
+    "default_replacement": "HOLLYWOOD",
+    "transformers": ["all_caps"]
+  },
+  {
+    "quote": "in fact, the real reason I keep this Lamborghini here, is the real reason I keep this Lamborghini here, is that it's a reminder, a reminder that %1$ss are still possible",
+    "default_replacement": "dreerd"
+  },
+  {
+    "quote": "it wasn’t that long ago that I was in a little %1$s sleeping on book shelves in the Hollywood hills",
+    "default_replacement": "Lamborghini"
+  },
+  {
+    "quote": "it wasn't that long ago that I was in a little Lamborghini sleepin' on %1$s shelves in the Hollywood hills with only 47,000,000,000 dollars in my bank account, and only 47 Lamborghinis in my Lamborghini account, and only 47 hills in my Hollywood account, and only 47 TEDx talks where I talk about Warren Buffets in my TEDx talks where I talk about Warren Buffet account",
+    "default_replacement": "book"
+  },
+  {
+    "quote": "But you know what? Something happened that changed my life. I bumped into a%2$s %1$sghini, and another %1$sghini. A few more %1$sghinis, I found five %1$sghinis.",
+    "default_replacement": "Lambor"
+  },
+  {
+    "quote": "I don't call it money anymore, I call it %1$s units. You must have enough %1$s units. You must have enough Lamborghinis. You must construct additional pylons.",
+    "default_replacement": "fuel"
+  },
+  {
+    "quote": "I'll see you on my %1$s, it's a quick video, and uh you'll see there absolutely NOTHING.",
+    "default_replacement": "website"
+  },
+  {
+    "quote": "Sid Meier said, in his famous work, Civilization V, and the reason this game is so important, he said, we move away from %1$s, and we move towards lamborghinis",
+    "default_replacement": "college"
+  },
+  {
+    "quote": "a thousand years ago they didn't have dollars, right they had something else I call it now FREEDOM %1$sS",
+    "default_replacement": "UNIT",
+    "transformers": ["all_caps"]
+  },
+  {
+    "quote": "I know you have a lot of other things you could be doing with your time now instead of watching me stand here in my garage with my little %1$s",
+    "default_replacement": "lamborghini"
+  },
+  {
+    "quote": "look at the list, people way more successful than me, %1$s Zuckerberg... Zuckerberg....",
+    "default_replacement": "Bill"
+  },
+  {
+    "quote": "you know people ask me why I bought %1$s and it's definitely not to show off, it's not just because I like to show off, it's not just because I like fast cars",
+    "default_replacement": "it"
+  },
+  {
+    "quote": "the real reason I bought this Lamborghini and the reason I've had a Ferrari before, and a Maserati before, and Lamborati before, and a Maserghini is because I wanted to remind myself of a dreerd because it wasn't too long ago that I was a pretty robotic %1$s on an island down in the Bahamas with only 47 bank accounts in my account account",
+    "default_replacement": "virgin"
+  },
+  {
+    "quote": "Remember what the Dalai Lama said though, three kinds of knowledge, Lamborghinis, Ferraris, and Maseratis, we don't need more %1$s",
+    "default_replacement": "book smart people"
+  },
+  {
+    "quote": "you want the reeaaal stuuuff, you want to have a Lamborghini in your Lamborghini account, you want to be healthy, you want to find love%1$s ( ͡° ͜ʖ ͡°)",
+    "default_replacement": "",
+    "additional": " with ",
+    "transformers": ["additional_prepend"]
+  },
+  {
+    "quote": "more importantly I'm gonna share with you my lamborghini that I use as a%2$s %1$s. uh",
+    "default_replacement": "bathroom"
+  },
+  {
+    "quote": "And I was thinking, %1$s's a moron, man! They don't understand the most fundamental rule of memes",
+    "default_replacement": "this person"
+  },
+  {
+    "quote": "and there's that old school principle which is, 'do onto %1$s, as you want them, unto to do unto %1$s.' ...um",
+    "default_replacement": "others"
+  },
+  {
+    "quote": "I saw %1$s getting shot in the dick when I was 5 years old. What I did was, I sent that dude a coffee table book",
+    "default_replacement": "someone"
+  },
+  {
+    "quote": "you know I've been a%2$s %1$s since I was 19 years old, I'm not a good %1$s at all so, you know, I don't have all my %1$s here, but I think I've 17,000 square %1$s",
+    "default_replacement": "fish"
+  },
+  {
+    "quote": "hey, here in my backyard, uh, people ask me to do a like MTV Cribs little tour, so I thought I'd show a bit of my mobile home, but more importantly I'mma share with you, uh, my bathroom I use as a%2$s %1$s",
+    "default_replacement": "library"
+  },
+  {
+    "quote": "You know, I was born in a%2$s %1$s museum. My dad was a moron, and my mom was a%2$s %1$s, and my dad was a%2$s %1$s fucker",
+    "default_replacement": "Ferrari"
+  },
+  {
+    "quote": "Hey %1$s, can I come hang out and watch One Punch Man?",
+    "default_replacement": "Tai"
+  },
+  {
+    "quote": "There's that old school principle, which is: Watch who %1$s",
+    "default_replacement": "you fuck",
+    "additional": " fucks",
+    "transformers": ["additional_append"]
+  },
+  {
+    "quote": "It's the old school formula. Step 1: Lamborghini. Step 2: Lamborghini. Step 3, %1$s Lamborghini",
+    "default_replacement": "old school"
+  },
+  {
+    "quote": "%1$s tell you a secret, so that you can buy a Lamborghini too! ...No, I'm actually kidding. Don't, don't take me seriously. But listen!",
+    "default_replacement": "I'ma",
+    "additional": " will",
+    "transformers": ["additional_append"]
+  },
+  {
+    "quote": "This is three percent luck, forty percent skill, seven, Lamborghinis in the Hollywood Hills, five percent knowledge, fifty percent girls, and a hundred percent reason to INVEST IN %1$s.",
+    "default_replacement": "GOLD",
+    "transformers": ["all_caps"]
+  },
 
-  "\u0002\u00034YOU MUST CONSTRUCT FORTY-SEVEN ADDITIONAL PYLONS\u000F"
+  {
+    "quote": "\u0002\u00034%1$s MUST CONSTRUCT FORTY-SEVEN ADDITIONAL PYLONS\u000f",
+    "default_replacement": "YOU",
+    "transformers": ["all_caps"]
+  }
 ]
