@@ -1,4 +1,4 @@
-/**
+/*
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
@@ -76,18 +76,18 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
     //private static final String ALT = "68Ɫ95ᔭƐ210Z⅄XMᴧ∩⊥SᴚΌԀOᴎW⅂⋊ſIH⅁ℲƎ◖Ↄ𐐒∀zʎxʍʌnʇsɹbdouɯʃʞɾıɥƃɟǝpɔqɐ";
     // ^ some other mappings from other tools that might be helpful
 
-    private final List<String> lamborghiniAccount;
+    private final List<Lamborghini> lamborghiniAccount;
     private final Random random = new Random();
 
     public MemeHandler() {
-        List<String> lamborghiniAccount;
+        List<Lamborghini> lamborghiniAccount;
 
         try (InputStream lamborghiniFile = Beancounter.class.getResourceAsStream("/lamborghinis.json")) {
             Gson lamborghiniDeserializer = new Gson();
-            Type lamborghiniAccountType = new TypeToken<List<String>>(){}.getType();
+            Type lamborghiniAccountType = new TypeToken<List<Lamborghini>>(){}.getType();
             InputStreamReader lamborghiniReader = new InputStreamReader(lamborghiniFile);
 
-            List<String> mutableLamborghinis = lamborghiniDeserializer.fromJson(lamborghiniReader, lamborghiniAccountType);
+            List<Lamborghini> mutableLamborghinis = lamborghiniDeserializer.fromJson(lamborghiniReader, lamborghiniAccountType);
             lamborghiniAccount = ImmutableList.copyOf(mutableLamborghinis);
         } catch (IOException | NullPointerException e) {
             System.err.println("Caught IOException or NullPointerException trying to read in lamborghinis: " + e.getMessage());
@@ -103,6 +103,7 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
         if (commands.isEmpty()) {
             return COMMANDS;
         }
+
         return Collections.emptySet();
     }
 
@@ -189,7 +190,11 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
                     event.respond("Someone withdrew all the lamborghinis from my lamborghini account!  D:");
                     // This shouldn't ever happen
                 } else {
-                    event.respond(lamborghiniAccount.get(random.nextInt(lamborghiniAccount.size())));
+                    if (!remainder.isEmpty()) {
+                        event.respond(lamborghiniAccount.get(random.nextInt(lamborghiniAccount.size())).getQuote(remainder.trim()));
+                    } else {
+                        event.respond(lamborghiniAccount.get(random.nextInt(lamborghiniAccount.size())).getQuote());
+                    }
                 }
                 break;
         }
