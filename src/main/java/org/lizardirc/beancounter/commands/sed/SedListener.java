@@ -70,7 +70,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     // We match C again.
     // We match B. These are the options.
     private static final String REGEX_MODE = "([ys])";
-    private static final String REGEX_D = "(?:([^\\s]+): )?";
+    private static final String REGEX_D = "(?:([^\\s]+)[:,] )?";
     private static final String REGEX_B = "((?:\\\\.|[^\\\\])*)";
     private static final String REGEX_AB = "([^\\\\\\sA-Za-z0-9])" + REGEX_B;
     private static final String REGEX_CB = "\\3" + REGEX_B;
