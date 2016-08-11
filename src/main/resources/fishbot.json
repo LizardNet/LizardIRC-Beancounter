@@ -1,0 +1,345 @@
+{
+  "messages": [
+    {
+      "regularExpression": "hampster",
+      "response": "%n: There is no 'p' in hamster you retard."
+    },
+    {
+      "regularExpression": "vinegar.*aftershock",
+      "response": "Ah, a true connoisseur!"
+    },
+    {
+      "regularExpression": "aftershock.*vinegar",
+      "response": "Ah, a true connoisseur!"
+    },
+    {
+      "regularExpression": "^some people are being fangoriously devoured by a gelatinous monster$",
+      "response": "Hillary's legs are being digested."
+    },
+    {
+      "regularExpression": "^ag$",
+      "response": "Ag, ag ag ag ag ag AG AG AG!"
+    },
+    {
+      "regularExpression": "^(fishbot|%f) owns$",
+      "response": "Aye, I do."
+    },
+    {
+      "regularExpression": "vinegar",
+      "response": "Nope, too sober for vinegar.  Try later."
+    },
+    {
+      "regularExpression": "martian",
+      "response": "Don't run! We are your friends!"
+    },
+    {
+      "regularExpression": "^just then, he fell into the sea$",
+      "response": "Ooops!"
+    },
+    {
+      "regularExpression": "aftershock",
+      "response": "mmmm, Aftershock."
+    },
+    {
+      "regularExpression": "^why are you here\\?$",
+      "response": "Same reason.  I love candy."
+    },
+    {
+      "regularExpression": "^spoon$",
+      "response": "There is no spoon."
+    },
+    {
+      "regularExpression": "^(bounce|wertle)$",
+      "response": "moo"
+    },
+    {
+      "regularExpression": "^crack$",
+      "response": "Doh, there goes another bench!"
+    },
+    {
+      "regularExpression": "^you can't just pick people at random!$",
+      "response": "I can do anything I like, %n, I'm eccentric!  Rrarrrrrgh!  Go!"
+    },
+    {
+      "regularExpression": "^flibble$",
+      "response": "plob"
+    },
+    {
+      "regularExpression": "(the fishbot has created splidge|fishbot created splidge)",
+      "response": "omg no! Think I could show my face around here if I was responsible for THAT?"
+    },
+    {
+      "regularExpression": "^now there's more than one of them\\?$",
+      "response": "A lot more."
+    },
+    {
+      "regularExpression": "^i want everything$",
+      "response": "Would that include a bullet from this gun?"
+    },
+    {
+      "regularExpression": "we are getting aggravated",
+      "response": "Yes, we are."
+    },
+    {
+      "regularExpression": "^how old are you, (fishbot|%f)\\?$",
+      "response": "is older than time itself!",
+      "ctcp": "ACTION"
+    },
+    {
+      "regularExpression": "^atlantis$",
+      "response": "Beware the underwater headquarters of the trout and their bass henchmen. From there they plan their attacks on other continents."
+    },
+    {
+      "regularExpression": "^oh god$",
+      "response": "fishbot will suffice."
+    },
+    {
+      "regularExpression": "^(fishbot|%f)$",
+      "response": "Yes?"
+    },
+    {
+      "regularExpression": "^what is the matrix\\?$",
+      "response": "No-one can be told what the matrix is.  You have to see it for yourself."
+    },
+    {
+      "regularExpression": "^what do you need\\?$",
+      "response": "Guns. Lots of guns."
+    },
+    {
+      "regularExpression": "^i know kungfu$",
+      "response": "Show me."
+    },
+    {
+      "regularExpression": "^cake$",
+      "response": "fish"
+    },
+    {
+      "regularExpression": "^trout go m[o0][o0]$",
+      "response": "Aye, that's cos they're fish."
+    },
+    {
+      "regularExpression": "^kangaroo$",
+      "response": "The kangaroo is a four winged stinging insect."
+    },
+    {
+      "regularExpression": "^sea bass$",
+      "response": "Beware of the mutant sea bass and their laser cannons!"
+    },
+    {
+      "regularExpression": "^trout$",
+      "response": "Trout are freshwater fish and have underwater weapons."
+    },
+    {
+      "regularExpression": "has returned from playing counterstrike",
+      "response": "like we care fs :("
+    },
+    {
+      "regularExpression": "^where are we\\?$",
+      "response": "Last time I looked, we were in %c."
+    },
+    {
+      "regularExpression": "^where do you want to go today\\?$",
+      "response": "anywhere but redmond :(."
+    },
+    {
+      "regularExpression": "^fish go m[o0][o0]$",
+      "response": "notes that %n is truly enlightened.",
+      "ctcp": "ACTION"
+    },
+    {
+      "regularExpression": "^(.*) go m[o0][o0]$",
+      "response": "%n: only when they are impersonating fish."
+    },
+    {
+      "regularExpression": "^fish go (.+)$",
+      "response": "%n LIES! Fish don't go %1! fish go m00!"
+    },
+    {
+      "regularExpression": "^you know who else (.*)$",
+      "response": "%n: YA MUM!"
+    },
+    {
+      "regularExpression": "^if there's one thing i know for sure, it's that fish don't m00\\.?$",
+      "response": "%n: HERETIC! UNBELIEVER!"
+    },
+    {
+      "regularExpression": "^(fishbot|%f): muahahaha\\. ph33r the dark side\\. :\\)$",
+      "response": "%n: You smell :P"
+    },
+    {
+      "regularExpression": "^ammuu\\?$",
+      "response": "%n: fish go m00 oh yes they do!"
+    },
+    {
+      "regularExpression": "^fish$",
+      "response": "%n: fish go m00!"
+    },
+    {
+      "regularExpression": "^snake$",
+      "response": "Ah snake a snake! Snake, a snake! Ooooh, it's a snake!"
+    },
+    {
+      "regularExpression": "^carrots handbags cheese$",
+      "response": "toilets russians planets hamsters weddings poets stalin KUALA LUMPUR! pygmies budgies KUALA LUMPUR!"
+    },
+    {
+      "regularExpression": "sledgehammer",
+      "response": "sledgehammers go quack!"
+    },
+    {
+      "regularExpression": "^badger badger badger badger badger badger badger badger badger badger badger badger$",
+      "response": "mushroom mushroom!"
+    },
+    {
+      "regularExpression": "^moo\\?$",
+      "response": "To moo, or not to moo, that is the question. Whether 'tis nobler in the mind to suffer the slings and arrows of outrageous fish..."
+    },
+    {
+      "regularExpression": "^herring$",
+      "response": "herring(n): Useful device for chopping down tall trees. Also moos (see fish)."
+    },
+    {
+      "regularExpression": "www\\.outwar\\.com",
+      "response": "would you please GO AWAY with that outwar rubbish!"
+    },
+    {
+      "regularExpression": "^god$",
+      "response": "Sometimes the garbage disposal gods demand a spoon."
+    },
+    {
+      "regularExpression": "stupid bot[!?.]*$",
+      "response": "%n: Stupid human."
+    },
+    {
+      "regularExpression": "fail bot[!?.]*$",
+      "response": "%n: Fail human."
+    },
+    {
+      "regularExpression": "good bot[!?.]*$",
+      "response": "purrs at %n",
+      "ctcp": "ACTION"
+    },
+    {
+      "regularExpression": "^I am the Doctor,? and you are the Daleks!?$",
+      "response": "WE ARE THE DALEKS!! Exterminate! EXTEEERRRRMIIINAAAATE!"
+    },
+    {
+      "regularExpression": "^ping$",
+      "response": "pong"
+    },
+    {
+      "regularExpression": "^pong$",
+      "response": "pang"
+    },
+    {
+      "regularExpression": "^pang$",
+      "response": "pung"
+    },
+    {
+      "regularExpression": "^pung$",
+      "response": "derp"
+    }
+  ],
+  "actions":[
+    {
+      "regularExpression": "hampster",
+      "response": "%n: There is no 'p' in hamster you retard."
+    },
+    {
+      "regularExpression": "^feeds (fishbot|%f) hundreds and thousands$",
+      "response": "MEDI.. er.. FISHBOT"
+    },
+    {
+      "regularExpression": "(vinegar.*aftershock|aftershock.*vinegar)",
+      "response": "Ah, a true connoisseur!"
+    },
+    {
+      "regularExpression": "vinegar",
+      "response": "Nope, too sober for vinegar.  Try later."
+    },
+    {
+      "regularExpression": "martians",
+      "response": "Don't run! We are your friends!"
+    },
+    {
+      "regularExpression": "aftershock",
+      "response": "mmmm, Aftershock."
+    },
+    {
+      "regularExpression": "(the fishbot has created splidge|fishbot created splidge)",
+      "response": "omg no! Think I could show my face around here if I was responsible for THAT?"
+    },
+    {
+      "regularExpression": "we are getting aggravated",
+      "response": "Yes, we are."
+    },
+    {
+      "regularExpression": "^strokes (fishbot|%f)$",
+      "response": "m00s loudly at %n.",
+      "ctcp": "ACTION"
+    },
+    {
+      "regularExpression": "^slaps (.*) around a bit with a large trout$",
+      "response": "trouted!"
+    },
+    {
+      "regularExpression": "has returned from playing counterstrike",
+      "response": "like we care fs :("
+    },
+    {
+      "regularExpression": "^fish go m[o0][o0]$",
+      "response": "notes that %n is truly enlightened.",
+      "ctcp": "ACTION"
+    },
+    {
+      "regularExpression": "^(.*) go m[o0][o0]$",
+      "response": "%n: only when they are impersonating fish."
+    },
+    {
+      "regularExpression": "^fish go (.+)$",
+      "response": "%n LIES! Fish don't go %1! fish go m00!"
+    },
+    {
+      "regularExpression": "^you know who else (.*)$",
+      "response": "%n: YA MUM!"
+    },
+    {
+      "regularExpression": "^thinks happy thoughts about pretty (.*)$",
+      "response": "has plenty of pretty %1. Would you like one %n?",
+      "ctcp": "ACTION"
+    },
+    {
+      "regularExpression": "^snaffles a (.*) off (fishbot|%f).?$",
+      "response": ":("
+    },
+    {
+      "regularExpression": "stupid bot[!?.]*$",
+      "response": "%n: Stupid human."
+    },
+    {
+      "regularExpression": "fail bot[!?.]*$",
+      "response": "%n: Fail human."
+    },
+    {
+      "regularExpression": "good bot[!?.]*$",
+      "response": "purrs at %n",
+      "ctcp": "ACTION"
+    },
+    {
+      "regularExpression": "^ping$",
+      "response": "pong"
+    },
+    {
+      "regularExpression": "^pong$",
+      "response": "pang"
+    },
+    {
+      "regularExpression": "^pang$",
+      "response": "pung"
+    },
+    {
+      "regularExpression": "^pung$",
+      "response": "derp"
+    }
+  ]
+}
