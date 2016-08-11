@@ -54,9 +54,11 @@ import org.lizardirc.beancounter.commands.admin.AdminHandler;
 import org.lizardirc.beancounter.commands.dice.DiceHandler;
 import org.lizardirc.beancounter.commands.earthquake.EarthquakeListener;
 import org.lizardirc.beancounter.commands.entrymsg.EntryMessageListener;
-import org.lizardirc.beancounter.commands.memes.MemeHandler;
+import org.lizardirc.beancounter.commands.fishbot.FishbotListener;
+import org.lizardirc.beancounter.commands.fishbot.FishbotResponseRepository;
 import org.lizardirc.beancounter.commands.goat.GoatHandler;
 import org.lizardirc.beancounter.commands.help.HelpHandler;
+import org.lizardirc.beancounter.commands.memes.MemeHandler;
 import org.lizardirc.beancounter.commands.remind.ReminderListener;
 import org.lizardirc.beancounter.commands.roulette.RouletteHandler;
 import org.lizardirc.beancounter.commands.sed.SedListener;
@@ -135,6 +137,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
+        FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"));
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -152,6 +155,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(reminderListener.getCommandHandler());
         handlers.add(earthquakeListener.getCommandHandler());
         handlers.add(entryMessageListener.getCommandHandler());
+        handlers.add(fishbotHandler.getCommandHandler());
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -169,6 +173,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(reminderListener);
         ownListeners.add(earthquakeListener);
         ownListeners.add(entryMessageListener);
+        ownListeners.add(fishbotHandler);
 
         ownListeners.forEach(listenerManager::addListener);
     }
