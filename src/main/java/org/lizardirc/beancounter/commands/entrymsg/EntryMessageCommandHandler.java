@@ -23,7 +23,7 @@ class EntryMessageCommandHandler<T extends PircBotX> implements CommandHandler<T
 
     private final EntryMessageListener<T> parentListener;
 
-    public EntryMessageCommandHandler(EntryMessageListener<T> parentListener) {
+    EntryMessageCommandHandler(EntryMessageListener<T> parentListener) {
         this.parentListener = parentListener;
     }
 
