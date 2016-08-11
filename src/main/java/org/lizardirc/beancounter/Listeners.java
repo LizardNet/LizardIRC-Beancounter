@@ -1,4 +1,4 @@
-/**
+/*
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
@@ -65,6 +65,7 @@ import org.lizardirc.beancounter.commands.sed.SedListener;
 import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
 import org.lizardirc.beancounter.commands.slap.SlapHandler;
 import org.lizardirc.beancounter.commands.weather.WeatherHandler;
+import org.lizardirc.beancounter.gameframework.GameHandler;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
@@ -138,6 +139,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
+        GameHandler<T> gameHandler = new GameHandler<>(acl, pm.getNamespace("gameHandler"), scheduledExecutorService);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -156,6 +158,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(earthquakeListener.getCommandHandler());
         handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(fishbotHandler.getCommandHandler());
+        handlers.add(gameHandler);
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -174,6 +177,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(earthquakeListener);
         ownListeners.add(entryMessageListener);
         ownListeners.add(fishbotHandler);
+        ownListeners.add(gameHandler.getListener());
 
         ownListeners.forEach(listenerManager::addListener);
     }
