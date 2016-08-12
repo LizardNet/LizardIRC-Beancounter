@@ -62,6 +62,7 @@ import org.lizardirc.beancounter.commands.roulette.RouletteHandler;
 import org.lizardirc.beancounter.commands.sed.SedListener;
 import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
 import org.lizardirc.beancounter.commands.slap.SlapHandler;
+import org.lizardirc.beancounter.commands.url.UrlListener;
 import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
@@ -135,6 +136,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
+        UrlListener<T> urlListener = new UrlListener<>();
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -169,6 +171,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(reminderListener);
         ownListeners.add(earthquakeListener);
         ownListeners.add(entryMessageListener);
+        ownListeners.add(urlListener);
 
         ownListeners.forEach(listenerManager::addListener);
     }
