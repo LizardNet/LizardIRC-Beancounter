@@ -1,4 +1,4 @@
-/**
+/*
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
@@ -62,7 +62,9 @@ import org.lizardirc.beancounter.commands.roulette.RouletteHandler;
 import org.lizardirc.beancounter.commands.sed.SedListener;
 import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
 import org.lizardirc.beancounter.commands.slap.SlapHandler;
+import org.lizardirc.beancounter.commands.url.UrlListener;
 import org.lizardirc.beancounter.commands.weather.WeatherHandler;
+import org.lizardirc.beancounter.commands.wikipedia.WikipediaHandler;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
@@ -135,6 +137,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
+        UrlListener<T> urlListener = new UrlListener<>();
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -143,6 +146,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new GoatHandler<>(acl));
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
+        handlers.add(new WikipediaHandler<>());
         handlers.add(acl.getHandler());
         handlers.add(userLastSeenListener.getCommandHandler());
         if (enableWeatherHandler) {
@@ -169,6 +173,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(reminderListener);
         ownListeners.add(earthquakeListener);
         ownListeners.add(entryMessageListener);
+        ownListeners.add(urlListener);
 
         ownListeners.forEach(listenerManager::addListener);
     }
