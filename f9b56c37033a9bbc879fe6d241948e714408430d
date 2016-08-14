@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_e4951a89",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "What\u0027s with these \u003cp\u003e tags?  o_o",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_84b54633",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "You can remove this line break and just stuff everything on one line (looks a little cleaner, IMO)",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_64824a54",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "I would use HashSet\u003cString\u003e instead of ArrayList\u003cString\u003e for this, since we don\u0027t care about ordering of the channels in the collection.  Using a Set also has the benefit of automatically disallowing duplicate entries.\n\n(Also, as an aside, the field should be declared using the abstract type (Set\u003cString\u003e or List\u003cString\u003e) since we generally don\u0027t care what specific type of Set or List is being used when accessing the field, with the specific structure being used only declared when instantiated)",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_0481564a",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "Minor style gripe: Ensure there\u0027s a newline after each stream method call.  E.g.,\n\n    this.enabledChannels \u003d new ArrayList\u003c\u003e(enabledChannels.stream()\n        .map(String::toLowerCase)\n        .collect(Collectors.toList()));",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_247c5272",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "You don\u0027t need the `this` here - basically, you only need to use `this` in Java if you\u0027re passing an instance of the current class as a parameter or something, or you\u0027re accessing an instance field that is shaded by a local variable.  Method calls to a class\u0027s own methods, in particular, do not need the `this`.\n\nI\u0027d recommend just removing all the unnecessary `this`s in your code",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_44874e62",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "( ?º ?? ?º)\n\n(this is supposed to be a lenny face.  I blame mysql.)",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_848c2681",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "Should be channelName.toLowerCase() to ensure case insensitivity (also in the next two methods)",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_a48f2275",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotResponseRepository.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "The TypeToken workaround is only needed if you need to specify a generic type argument, like when directly serializing or deserializing a collection.  For this, you can remove the Type repositoryType \u003d... line entirely and just do \"fishbotDeserialiser.fromJson(repositoryReader, FishbotResponseRepository.class)\"",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_c4921e9f",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotResponseRepository.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "You can replace the for loops with two Streams API calls:\n\n    messages.forEach(r -\u003e r.compile(nickname));\n    actions.forEach(r -\u003e r.compile(nickname));\n\nI\u0027m also thinking there\u0027s a race condition potential here, so I\u0027d make this method synchronized.",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_64e92a1a",
+        "filename": "src/main/resources/fishbot.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-14T06:58:18Z",
+      "side": 1,
+      "message": "Minor consistency gripe: Add a newline at EOF.  :P",
+      "revId": "f9b56c37033a9bbc879fe6d241948e714408430d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
