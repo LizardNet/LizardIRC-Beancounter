@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_a4bde204",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-16T05:44:43Z",
+      "side": 1,
+      "message": "Oops, this is another thing I forgot to mention to change in IntelliJ\u0027s style settings.  * imports should be avoided, and you have to set IntellIJ in Editor \u003e Code Style \u003e Java \u003e \"Class count to use import with \u0027*\u0027\" to something ridiculously high like 9999.",
+      "revId": "705d886f97e7abcddcba584c3dca09bdb9e38460",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_84bae608",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotResponseRepository.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-16T05:44:43Z",
+      "side": 1,
+      "message": "wat",
+      "revId": "705d886f97e7abcddcba584c3dca09bdb9e38460",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
