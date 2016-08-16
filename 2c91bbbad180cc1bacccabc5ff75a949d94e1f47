@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_e41f5a08",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/ExecutiveActions.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-16T23:51:37Z",
+      "side": 1,
+      "message": "out of order import",
+      "revId": "2c91bbbad180cc1bacccabc5ff75a949d94e1f47",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_c41c5e16",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/ExecutiveActions.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-16T23:51:37Z",
+      "side": 1,
+      "message": "But I do need to set a player as investigated here!",
+      "revId": "2c91bbbad180cc1bacccabc5ff75a949d94e1f47",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
