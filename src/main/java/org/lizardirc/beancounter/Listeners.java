@@ -67,6 +67,9 @@ import org.lizardirc.beancounter.commands.sed.SedListener;
 import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
 import org.lizardirc.beancounter.commands.shakespeare.ShakespeareHandler;
 import org.lizardirc.beancounter.commands.slap.SlapHandler;
+import org.lizardirc.beancounter.commands.url.UrlListener;
+import org.lizardirc.beancounter.commands.url.UrlListenerCommandHandler;
+import org.lizardirc.beancounter.commands.url.UrlSummariserService;
 import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.commands.wikipedia.WikipediaHandler;
 import org.lizardirc.beancounter.commands.youtube.YouTubeHandler;
@@ -139,6 +142,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
 
         RedditService redditService = new RedditService();
         YouTubeService youTubeService = new YouTubeService(pm.getNamespace("youtube"));
+        UrlSummariserService urlSummariserService = new UrlSummariserService(youTubeService, redditService, pm.getNamespace("urlSummariser"));
 
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
         UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
@@ -146,6 +150,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
+        UrlListener<T> urlListener = new UrlListener<>(urlSummariserService);
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
         WikipediaHandler<T> wikipediaHandler = new WikipediaHandler<>(pm.getNamespace("wikipediaHandler"), acl);
 
@@ -161,6 +166,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new RedditHandler<>(redditService));
         handlers.add(acl.getHandler());
         handlers.add(new ShakespeareHandler<>());
+        handlers.add(new UrlListenerCommandHandler<T>(urlSummariserService, acl));
         handlers.add(userLastSeenListener.getCommandHandler());
         if (enableWeatherHandler) {
             handlers.add(new WeatherHandler<>(pm.getNamespace("weatherHandler"), acl));
@@ -187,6 +193,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(reminderListener);
         ownListeners.add(earthquakeListener);
         ownListeners.add(entryMessageListener);
+        ownListeners.add(urlListener);
         ownListeners.add(fishbotHandler);
         ownListeners.add(wikipediaHandler);
 
