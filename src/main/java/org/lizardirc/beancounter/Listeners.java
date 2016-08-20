@@ -66,6 +66,8 @@ import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
 import org.lizardirc.beancounter.commands.slap.SlapHandler;
 import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.commands.wikipedia.WikipediaHandler;
+import org.lizardirc.beancounter.commands.youtube.YouTubeHandler;
+import org.lizardirc.beancounter.commands.youtube.YouTubeService;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
@@ -140,6 +142,8 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
 
+        YouTubeService youTubeService = new YouTubeService(pm.getNamespace("youtube"));
+
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
         handlers.add(new DiceHandler<>());
@@ -148,6 +152,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(new WikipediaHandler<>());
+        handlers.add(new YouTubeHandler<>(acl, youTubeService));
         handlers.add(acl.getHandler());
         handlers.add(userLastSeenListener.getCommandHandler());
         if (enableWeatherHandler) {
