@@ -69,6 +69,8 @@ import org.lizardirc.beancounter.commands.shakespeare.ShakespeareHandler;
 import org.lizardirc.beancounter.commands.slap.SlapHandler;
 import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.commands.wikipedia.WikipediaHandler;
+import org.lizardirc.beancounter.commands.youtube.YouTubeHandler;
+import org.lizardirc.beancounter.commands.youtube.YouTubeService;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
@@ -136,6 +138,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         boolean enableWeatherHandler = Boolean.parseBoolean(properties.getProperty("weather.enable", "false"));
 
         RedditService redditService = new RedditService();
+        YouTubeService youTubeService = new YouTubeService(pm.getNamespace("youtube"));
 
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
         UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
@@ -154,6 +157,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(wikipediaHandler);
+        handlers.add(new YouTubeHandler<>(acl, youTubeService));
         handlers.add(new RedditHandler<>(redditService));
         handlers.add(acl.getHandler());
         handlers.add(new ShakespeareHandler<>());
