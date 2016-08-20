@@ -1,4 +1,4 @@
-/**
+/*
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
@@ -59,6 +59,7 @@ import org.lizardirc.beancounter.commands.fishbot.FishbotResponseRepository;
 import org.lizardirc.beancounter.commands.goat.GoatHandler;
 import org.lizardirc.beancounter.commands.help.HelpHandler;
 import org.lizardirc.beancounter.commands.memes.MemeHandler;
+import org.lizardirc.beancounter.commands.reddit.RedditHandler;
 import org.lizardirc.beancounter.commands.remind.ReminderListener;
 import org.lizardirc.beancounter.commands.roulette.RouletteHandler;
 import org.lizardirc.beancounter.commands.sed.SedListener;
@@ -148,6 +149,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(new WikipediaHandler<>());
+        handlers.add(new RedditHandler<>());
         handlers.add(acl.getHandler());
         handlers.add(userLastSeenListener.getCommandHandler());
         if (enableWeatherHandler) {
