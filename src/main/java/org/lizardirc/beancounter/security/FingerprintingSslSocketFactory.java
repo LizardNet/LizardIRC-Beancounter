@@ -1,4 +1,4 @@
-/**
+/*
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
