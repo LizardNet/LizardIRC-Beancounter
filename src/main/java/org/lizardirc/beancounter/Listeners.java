@@ -1,4 +1,4 @@
-/**
+/*
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
@@ -64,6 +64,7 @@ import org.lizardirc.beancounter.commands.roulette.RouletteHandler;
 import org.lizardirc.beancounter.commands.sed.SedListener;
 import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
 import org.lizardirc.beancounter.commands.slap.SlapHandler;
+import org.lizardirc.beancounter.commands.url.UrlListener;
 import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.commands.wikipedia.WikipediaHandler;
 import org.lizardirc.beancounter.commands.youtube.YouTubeHandler;
@@ -140,6 +141,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
+        UrlListener<T> urlListener = new UrlListener<>();
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
 
         YouTubeService youTubeService = new YouTubeService(pm.getNamespace("youtube"));
@@ -180,6 +182,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(reminderListener);
         ownListeners.add(earthquakeListener);
         ownListeners.add(entryMessageListener);
+        ownListeners.add(urlListener);
         ownListeners.add(fishbotHandler);
 
         ownListeners.forEach(listenerManager::addListener);
