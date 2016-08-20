@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -99,6 +100,7 @@ public final class Miscellaneous {
         HttpGet request = new HttpGet(url);
         request.addHeader("User-Agent", generateHttpUserAgent());
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+        httpClientBuilder.setSSLHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         HttpClient httpClient = httpClientBuilder.build();
         HttpResponse response = httpClient.execute(request);
 
