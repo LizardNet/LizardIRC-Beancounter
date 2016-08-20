@@ -1,4 +1,4 @@
-/**
+/*
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
@@ -59,6 +59,8 @@ import org.lizardirc.beancounter.commands.fishbot.FishbotResponseRepository;
 import org.lizardirc.beancounter.commands.goat.GoatHandler;
 import org.lizardirc.beancounter.commands.help.HelpHandler;
 import org.lizardirc.beancounter.commands.memes.MemeHandler;
+import org.lizardirc.beancounter.commands.reddit.RedditHandler;
+import org.lizardirc.beancounter.commands.reddit.RedditService;
 import org.lizardirc.beancounter.commands.remind.ReminderListener;
 import org.lizardirc.beancounter.commands.roulette.RouletteHandler;
 import org.lizardirc.beancounter.commands.sed.SedListener;
@@ -133,6 +135,8 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
 
         boolean enableWeatherHandler = Boolean.parseBoolean(properties.getProperty("weather.enable", "false"));
 
+        RedditService redditService = new RedditService();
+
         acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
         UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
         InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
@@ -149,6 +153,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(new WikipediaHandler<>());
+        handlers.add(new RedditHandler<>(redditService));
         handlers.add(acl.getHandler());
         handlers.add(new ShakespeareHandler<>());
         handlers.add(userLastSeenListener.getCommandHandler());
