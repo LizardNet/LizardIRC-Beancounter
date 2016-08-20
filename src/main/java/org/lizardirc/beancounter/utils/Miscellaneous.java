@@ -32,12 +32,19 @@
 
 package org.lizardirc.beancounter.utils;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.Beancounter;
@@ -86,5 +93,15 @@ public final class Miscellaneous {
         projectName = projectName.replace('/', '-');
 
         return projectName + artifactVersion + " (compatible; +" + Beancounter.PROJECT_URL + ")";
+    }
+
+    public static String getHttpData(URI url) throws IOException {
+        HttpGet request = new HttpGet(url);
+        request.addHeader("User-Agent", generateHttpUserAgent());
+        HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+        HttpClient httpClient = httpClientBuilder.build();
+        HttpResponse response = httpClient.execute(request);
+
+        return EntityUtils.toString(response.getEntity());
     }
 }
