@@ -63,6 +63,7 @@ import org.lizardirc.beancounter.commands.remind.ReminderListener;
 import org.lizardirc.beancounter.commands.roulette.RouletteHandler;
 import org.lizardirc.beancounter.commands.sed.SedListener;
 import org.lizardirc.beancounter.commands.seen.UserLastSeenListener;
+import org.lizardirc.beancounter.commands.shakespeare.ShakespeareHandler;
 import org.lizardirc.beancounter.commands.slap.SlapHandler;
 import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.commands.wikipedia.WikipediaHandler;
@@ -149,6 +150,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
         handlers.add(new WikipediaHandler<>());
         handlers.add(acl.getHandler());
+        handlers.add(new ShakespeareHandler<>());
         handlers.add(userLastSeenListener.getCommandHandler());
         if (enableWeatherHandler) {
             handlers.add(new WeatherHandler<>(pm.getNamespace("weatherHandler"), acl));
