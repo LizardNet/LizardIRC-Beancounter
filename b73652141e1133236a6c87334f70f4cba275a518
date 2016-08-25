@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_8719c87b",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/shakespeare/ShakespeareHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T05:35:30Z",
+      "side": 1,
+      "message": "Add a newline between header comments and package line.\n\n*pedants away*",
+      "revId": "b73652141e1133236a6c87334f70f4cba275a518",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_6726ccbc",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/shakespeare/ShakespeareHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T05:35:30Z",
+      "side": 1,
+      "message": "Maybe use event.respond() instead?  An issue is more likely to be quickly noticed that way than by just spitting something out to stderr.\n\nAlso, if stderr is what you want in the end, you want System.err.println() :P",
+      "revId": "b73652141e1133236a6c87334f70f4cba275a518",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_2720d49a",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/shakespeare/ShakespeareHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T05:35:30Z",
+      "side": 1,
+      "message": "Optional improvement suggestion: If command is being given in PM, don\u0027t bother highlighting the user in the response (since it\u0027s already in PM to them)",
+      "revId": "b73652141e1133236a6c87334f70f4cba275a518",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_472bd082",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/shakespeare/ShakespeareHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T05:35:30Z",
+      "side": 1,
+      "message": "Too bad emoji aren\u0027t yet valid identifiers in Java.  :\u003c",
+      "revId": "b73652141e1133236a6c87334f70f4cba275a518",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
