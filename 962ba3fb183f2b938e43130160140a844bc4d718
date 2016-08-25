@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_c736a0e7",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/reddit/RedditHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "\\n :P",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_a733a4f5",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/reddit/RedditPost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "\\n",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_8730a8e9",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/reddit/RedditPost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "I think using ZonedDateTime would be better than Date.  For one, Java 8 new date API, and two if you construct the ZonedDateTime with ZoneOffset.systemDefault() it allows for one to have the bot output the time in the bot\u0027s local timezone.",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_674dac72",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/reddit/RedditService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "\\n",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_a74a8453",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/reddit/RedditService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "Maybe we should hold on to a Gson reference as an instance field so we aren\u0027t constantly creating and destroying them here and in the next method?  Your call on that, it probably doesn\u0027t have much effect in the end anyway.",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_4752b014",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/reddit/RedditUser.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "\\n",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_2757b404",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/reddit/RedditUser.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "Does HAL implement this currently?  If so, maybe implement it here before merging so we have feature parity.",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_075cb824",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/reddit/RedditUser.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "Does \"mod\" in this sense mean subreddit moderator or Reddit administrator?  If the former, I\u0027d suggest changing the color to green to match with Reddit\u0027s UI - if the latter, I\u0027d change the word used from \"Mod\" to \"Admin\"\n\nAlso, I couldn\u0027t actually get the isMod bit to trigger, even on users known to be mods/admins.  Do you have any testcases where this works?",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_e7407c37",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/IrcColors.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "\\n",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_c73d80bd",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/IrcColors.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T07:06:17Z",
+      "side": 1,
+      "message": "Maybe, for completeness, add the other IRC formatting codes (bold, underline, reverse video)?  Also noteworthy that there is an actual \"reset\" formatting code that removes all formatting, \\017 I believe?",
+      "revId": "962ba3fb183f2b938e43130160140a844bc4d718",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
