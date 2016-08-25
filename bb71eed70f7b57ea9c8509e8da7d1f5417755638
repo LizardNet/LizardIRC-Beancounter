@@ -1,0 +1,531 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_e7dcfc76",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/RateLimitExceededException.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "\\pedant",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_67748c9c",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "\\pedant",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_c7d90085",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Ooooh, I see what you did there.  But maybe we want to instead print a friendly error to the user that the command isn\u0027t enabled, instead of just pretending it doesn\u0027t exist?  Up to you.",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_47799092",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "The bot should always give an error back to the user (a la event.respond) if a command is refused due to a permissions error.  Also, consider only requiring the permissions check for changing the setting, not for checking if it\u0027s enabled or not.",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_276e94ca",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Unnecessary `this`",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_077398b2",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Per https://webapps.stackexchange.com/questions/54443/format-for-id-of-youtube-video I\u0027d be wary of validating video IDs on these criteria.  The same URL offers a suggested alternative for your consideration.",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_a7e60443",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "You\u0027re assuming that the command was given in a channel without checking if (or enforcing that) this is the case",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_87e30833",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_c76460e7",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "As with a previous changeset, I\u0027d recommend doing something with event.respond() instead of just printing to stderr, and if you really only want to print something to stderr, use System.err.println()",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_a76164d5",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "\\pedant",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_07aa78d4",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "If possible, maybe convert this to using the Gson-based persistence I\u0027m using in some of the newer classes in Beancounter?  (We will eventually be converting over everything to using the Gson-based persistence, and eventually drop PropertyPersistenceManagare entirely in favor of a completely JSON-based solution)",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_875e6811",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Per IRC, I think what you want here is `ZoneId.of(\"America/Los_Angeles\")` instead of a hard-coded ZoneOffset, since the former will obey DST rules (which YouTube presumably will as well)",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_679b6cca",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this also be `ZoneId.of(\"America/Los_Angeles\")`?",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_67d00c54",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "I believe apiKey.isEmpty() is preferred here",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_27a57404",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Pedanting: I think IllegalStateException is more appropriate here. :P",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_a7b8442b",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "For this and other consumeQuota calls, maybe bring the hard-coded values out to class constants (private static final int) for ease of modification?",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_e7ae3ce7",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Since you already have a YouTubeVideo POJO, just use Gson instead of JsonParser (here and in the other methods in this class).  You may have to write a class representing an API response, but it\u0027s much nicer than passing JsonObjects around IMO.",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_c7ab40d5",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "...Yeah, definitely just use Gson and create classes to represent the different things we get back from the API as necessary.  :P",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_87b54833",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "For things like this, you can have the POJO you give to Gson represent the value internally as a String field, and then have a getDuration() method that converts from String to Duration on the fly.",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_47875062",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "This seems to have quite a bit in common with the quota setup code in the constructor.  Maybe there\u0027s an opportunity to clean up unneeded repetition here?",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_67824c54",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "ZoneId vs ZoneOffset, as with the constructor",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_277c5472",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "You must call pm.sync() or the values may not be saved!",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_0781584a",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "\\pedant",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_a78f2475",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "As noted elsewhere, I\u0027d recommend just converting this into a class you can pass to Gson directly",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_e7951c89",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Unneeded blank line",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_878c2881",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Suggest using ZonedDateTime (Java 8) instead of Date",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_c792209f",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Needs blank line (:P)",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_27f3340c",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "So, a couple general notes for this method:\n\nStylistically, avoid using `if` blocks without braces - even for single statements the braces (and the newlines that go with them) should be used\n\nCode wise, this equals() implementation may not be strictly correct in terms of following the equals() contract.  I don\u0027t blame you at all; writing correct equals() in Java is difficult af.  Here\u0027s what TLUL showed me as a guide to writing good equals() methods - if you want to skip the explanation of pitfalls and just see the recommended approach, skip down to the section \"The canEqual method\": http://www.artima.com/lejava/articles/equality.html (though I\u0027d recommend reading the whole thing, it\u0027s a good read)",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_67e92c1a",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Unnecessary blank line",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_47d51042",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Hmm, if you\u0027re doing this conversion manually, do we even need to convert the video duration into a Duration object?  Seems it might be easier just to parse it into a long directly",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_07f838e4",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/Miscellaneous.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-25T08:03:13Z",
+      "side": 1,
+      "message": "Unused import?",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
