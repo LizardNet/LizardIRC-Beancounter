@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_07cf18b2",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-08-25T18:02:47Z",
+      "side": 1,
+      "message": "wat.",
+      "revId": "e90779bab0240e3fd2dd193c4cbd402eeea41ded",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
