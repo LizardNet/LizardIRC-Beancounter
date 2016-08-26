@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_8772e847",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-26T06:25:18Z",
+      "side": 1,
+      "message": "This needs to be changed to IllegalStateException too :P",
+      "revId": "5526236c2abe41e5d5d20b1d8fc21a7a94d0a958",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_678fec24",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-26T06:25:18Z",
+      "side": 1,
+      "message": "There should be feedback for successful command execution here",
+      "revId": "5526236c2abe41e5d5d20b1d8fc21a7a94d0a958",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_4794f036",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-26T06:25:18Z",
+      "side": 1,
+      "message": "...and here (I thought the command wasn\u0027t working at first :P)",
+      "revId": "5526236c2abe41e5d5d20b1d8fc21a7a94d0a958",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_879b0872",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-26T06:25:18Z",
+      "side": 1,
+      "message": "oops, I missed this one :P",
+      "revId": "5526236c2abe41e5d5d20b1d8fc21a7a94d0a958",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_2799f46e",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-26T06:25:18Z",
+      "side": 1,
+      "message": "Upon an API error, got a NPE here:\n\n    java.lang.NullPointerException\n\tat org.lizardirc.beancounter.commands.youtube.YouTubeService.search(YouTubeService.java:226)\n\tat org.lizardirc.beancounter.commands.youtube.YouTubeHandler.handleCommand(YouTubeHandler.java:146)\n\tat org.lizardirc.beancounter.hooks.MultiCommandHandler.handleCommand(MultiCommandHandler.java:111)\n\tat org.lizardirc.beancounter.hooks.CommandListener.onGenericMessage(CommandListener.java:74)\n\tat org.pircbotx.hooks.ListenerAdapter.onEvent(ListenerAdapter.java:157)\n\tat org.lizardirc.beancounter.hooks.Decorator.onEvent(Decorator.java:49)\n\tat org.lizardirc.beancounter.hooks.Fantasy.onEvent(Fantasy.java:64)\n\tat org.lizardirc.beancounter.hooks.Decorator.onEvent(Decorator.java:49)\n\tat org.lizardirc.beancounter.hooks.Chainable.onEvent(Chainable.java:58)\n\tat org.pircbotx.hooks.managers.ThreadedListenerManager$1.call(ThreadedListenerManager.java:119)\n\tat org.pircbotx.hooks.managers.ThreadedListenerManager$1.call(ThreadedListenerManager.java:115)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\tat java.lang.Thread.run(Thread.java:745)\n\nI\u0027m thinking it\u0027s probably a good idea to add proper API error detection and handling here, too, so we can report API errors back to the user.  In particular, here\u0027s the error I got (httpData output):\n\n    {\n     \"error\": {\n      \"errors\": [\n       {\n        \"domain\": \"usageLimits\",\n        \"reason\": \"ipRefererBlocked\",\n        \"message\": \"The calling IP address 47.136.53.219 does not match the IP restrictions configured on the API key. Please use the API Console to update your key restrictions.\",\n        \"extendedHelp\": \"https://console.developers.google.com/apis/credentials?project\u003d727497477779\"\n       }\n      ],\n      \"code\": 403,\n      \"message\": \"The calling IP address 47.136.53.219 does not match the IP restrictions configured on the API key. Please use the API Console to update your key restrictions.\"\n     }\n    }\n\nIt would\u0027ve been nice to know why I was getting rejected without having to put the bot under a debugger :P",
+      "revId": "5526236c2abe41e5d5d20b1d8fc21a7a94d0a958",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
