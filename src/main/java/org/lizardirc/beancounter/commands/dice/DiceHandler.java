@@ -145,6 +145,11 @@ public class DiceHandler<T extends PircBotX> implements CommandHandler<T> {
                 dieCount = Integer.parseInt(m.group(1));
             }
 
+            // arbitrary limit
+            if(dieCount > 1000000) {
+                throw new IllegalArgumentException("I don't have enough dice to roll " + dieCount + " times!");
+            }
+
             for (int i = 0; i < dieCount; i++) {
                 ret.add(dieSize);
             }
