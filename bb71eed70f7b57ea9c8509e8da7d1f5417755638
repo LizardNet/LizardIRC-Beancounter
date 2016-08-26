@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "3a4b7175_473cf093",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-08-26T02:50:49Z",
+      "side": 1,
+      "message": "Yeah... that API no longer exists. :P\n\nMy aim with this was a) a lot of places on the internet tell me this is the format of an ID, despite there being no formal commitment to it. As such, if it fails that check it falls down to a fulltext search on the entire video snippet, including the ID - it\u0027s just more expensive, but it will still work. The alternative is to check for existence of each search term as an ID, at a cost of (at least) 1 API credit, followed by a fetch of 7, or a search and fetch of 7, for every single search (on top of the cost of 100 for the search). The whole thing is a trade-off between \"is this futurely valid ID missed by the regex and costing me an entire search\" and \"every search does an extra video lookup\".\n\nThe replacement API costs credits, which is why I\u0027m more reluctant to use it if something is unlikely to be a video ID in the short to mid term.\n\nWith this in mind, I\u0027m more tempted to keep my code as it is at the moment, what do you think?",
+      "parentUuid": "3a4b7175_077398b2",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4b7175_a7e60443",
         "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
         "patchSetId": 8
@@ -223,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "3a4b7175_2741f40b",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-08-26T02:50:49Z",
+      "side": 1,
+      "message": "Not sure.\n\nGiven I\u0027m reconstructing from an epoch, I\u0027d have thought I\u0027d have to specify UTC.\n\nI\u0027d also be pretty upset if Java couldn\u0027t figure out that 3pm UTC is before 2pm PDT when it knows the timezones of each.",
+      "parentUuid": "3a4b7175_679b6cca",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4b7175_67d00c54",
         "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
         "patchSetId": 8
@@ -234,6 +270,24 @@
       "writtenOn": "2016-08-25T08:03:13Z",
       "side": 1,
       "message": "I believe apiKey.isEmpty() is preferred here",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_0746f823",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-08-26T02:50:49Z",
+      "side": 1,
+      "message": "or just String.IsNullOrEmpty(apiKey)   ... oh, wait, that\u0027d be considered sugar, right? :P",
+      "parentUuid": "3a4b7175_67d00c54",
       "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -274,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "3a4b7175_c747c01c",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-08-26T02:50:49Z",
+      "side": 1,
+      "message": "Given the cost is exactly tied to the contents of the \"part\" parameter, I\u0027m hesitant to do one without the other. And given the structure of the JSON changes based on the \"part\" parameter, this doesn\u0027t sound like it would make it more maintainable.",
+      "parentUuid": "3a4b7175_a7b8442b",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4b7175_e7ae3ce7",
         "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
         "patchSetId": 8
@@ -285,6 +357,24 @@
       "writtenOn": "2016-08-25T08:03:13Z",
       "side": 1,
       "message": "Since you already have a YouTubeVideo POJO, just use Gson instead of JsonParser (here and in the other methods in this class).  You may have to write a class representing an API response, but it\u0027s much nicer than passing JsonObjects around IMO.",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_e74abc26",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-08-26T02:50:49Z",
+      "side": 1,
+      "message": "Urm.... by that you mean about five POJO classes representing the API response?\n\nI\u0027ve also got some crazy quota-optimising stuff in the search - this is where the getVideoInformationFromPartial is used - where I get half of the objects\u0027 fields from one API call, and the remainder from a bunch of second calls.\n\nSure, I can use Gson to construct the individual parts, then throw them together into one object, but this seems like it\u0027s still passing bits of Json around, and all I\u0027ve done is increased the complexity of the exposed object and coupled it tightly to the YouTube API.",
+      "parentUuid": "3a4b7175_e7ae3ce7",
       "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
@@ -478,6 +568,24 @@
     },
     {
       "key": {
+        "uuid": "3a4b7175_270fb4e3",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-08-26T02:50:49Z",
+      "side": 1,
+      "message": "Not defending this at all, but just a quick point that I know equals methods can be hard - Java has the exact same problems as C# - but I just wanted to note for the record that this was generated by IntelliJ directly.\n\nAdditionally, I was planning on writing a cache for these, but ended up not doing so - I\u0027m just gonna rip this out entirely.",
+      "parentUuid": "3a4b7175_27f3340c",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4b7175_67e92c1a",
         "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
         "patchSetId": 8
@@ -506,6 +614,24 @@
       "writtenOn": "2016-08-25T08:03:13Z",
       "side": 1,
       "message": "Hmm, if you\u0027re doing this conversion manually, do we even need to convert the video duration into a Duration object?  Seems it might be easier just to parse it into a long directly",
+      "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_0714b8f3",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-08-26T02:50:49Z",
+      "side": 1,
+      "message": "That sounds hard, unless you know of an easy way to do it?",
+      "parentUuid": "3a4b7175_47d51042",
       "revId": "bb71eed70f7b57ea9c8509e8da7d1f5417755638",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
