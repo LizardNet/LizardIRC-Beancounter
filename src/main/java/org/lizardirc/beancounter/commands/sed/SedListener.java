@@ -81,6 +81,8 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
 
     private static final Pattern PATTERN_OPTIONS = Pattern.compile("[gi]*");
 
+    private static final int IRC_MAX_LINE_LENGTH = 510; // per RFC 2812, minus 2 for the \r\n at the end-of-line
+
     private final LoadingCache<User, Queue<UserMessage>> windows;
     private final ExecutorService executorService;
 
@@ -137,7 +139,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
             String mode = m.group(2);
 
             Queue<UserMessage> window = windows.getUnchecked(speaker);
-            Callable<Optional<UserMessage>> callable = null;
+            Callable<Optional<UserMessage>> callable;
 
             switch (mode) {
                 case "s":
@@ -175,9 +177,8 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                 Optional<UserMessage> response = future.get(5, TimeUnit.SECONDS);
 
                 response.ifPresent(s -> {
-                    window.add(s);
-
                     StringBuilder sb = new StringBuilder();
+
                     switch (s.getType()) {
                         case MESSAGE:
                             sb.append(corrector.getNick());
@@ -196,6 +197,18 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
                             sb.append(speaker.getNick()).append(' ');
                             break;
                     }
+
+                    String predictedIrcMessageCommand = "PRIVMSG " + channel.getName() + " :";
+                    int maxOutputLength = IRC_MAX_LINE_LENGTH - predictedIrcMessageCommand.length() - sb.length();
+
+                    if (s.getMessage().length() > maxOutputLength) {
+                        UserMessage old = s;
+                        String trimmedMessage = old.getMessage().substring(0, maxOutputLength - 1);
+                        s = new UserMessage(old.getLeft(), trimmedMessage);
+                    }
+
+                    window.add(s);
+
                     channel.send().message(sb.append(s.getMessage()).toString());
                 });
             } catch (TimeoutException e) {
