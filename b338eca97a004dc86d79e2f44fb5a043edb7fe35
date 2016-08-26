@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_47bf50d1",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/shakespeare/ShakespeareHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-26T05:35:24Z",
+      "side": 1,
+      "message": "Hmm, just noticed this.  I\u0027m not going to hold this change back for it, but I\u0027ll probably fix it myself sometime - this should also be an event.respond() IMO (I generally prefer at least showing some error to the user so they don\u0027t think the bot is entirely broken)",
+      "revId": "b338eca97a004dc86d79e2f44fb5a043edb7fe35",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
