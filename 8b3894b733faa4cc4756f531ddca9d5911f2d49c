@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_c7f46089",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-27T12:08:48Z",
+      "side": 1,
+      "message": "TODO: Instead just call the method and re-print the instructions",
+      "revId": "8b3894b733faa4cc4756f531ddca9d5911f2d49c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
