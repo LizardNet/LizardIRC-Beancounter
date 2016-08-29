@@ -144,6 +144,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
+        WikipediaHandler<T> wikipediaHandler = new WikipediaHandler<>();
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -152,7 +153,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new GoatHandler<>(acl));
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
         handlers.add(new PerChannelCommand<>(RouletteHandler::new));
-        handlers.add(new WikipediaHandler<>());
+        handlers.add(wikipediaHandler);
         handlers.add(new RedditHandler<>(redditService));
         handlers.add(acl.getHandler());
         handlers.add(new ShakespeareHandler<>());
@@ -183,6 +184,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(earthquakeListener);
         ownListeners.add(entryMessageListener);
         ownListeners.add(fishbotHandler);
+        ownListeners.add(wikipediaHandler);
 
         ownListeners.forEach(listenerManager::addListener);
     }

@@ -37,15 +37,21 @@ import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.PircBotX;
+import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
+import org.lizardirc.beancounter.utils.MoreStrings;
 
-public class WikipediaHandler<T extends PircBotX> implements CommandHandler<T> {
-    private static final Set<String> COMMANDS = ImmutableSet.of("wikipedia");
+public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> implements CommandHandler<T> {
+    private static final Set<String> COMMANDS = ImmutableSet.of("WikiPedia");
+    private static final Pattern PATTERN_WIKILINK = Pattern.compile("\\[\\[([^\\[\\]]+)\\]\\]");
+
     private final WikipediaSummaryService wikipediaSummaryService = new WikipediaSummaryService();
 
     @Override
@@ -64,43 +70,53 @@ public class WikipediaHandler<T extends PircBotX> implements CommandHandler<T> {
         }
 
         if (commands.size() == 1 && COMMANDS.contains(commands.get(0))) {
-            try {
-                if (remainder == null || "".equals(remainder.trim())) {
-                    // apply ointment to burned area...
-                    event.respond("Wikipedia - well, it's kinda big. Please tell me what you want to look up.");
-                    return;
-                }
+            event.respond(summarizeWikiPage(remainder));
+        }
+    }
 
-                WikipediaPage page = wikipediaSummaryService.getSummary("en", remainder);
+    @Override
+    public void onGenericMessage(GenericMessageEvent<T> event) {
+        String message = event.getMessage();
+        Matcher m = PATTERN_WIKILINK.matcher(message);
 
-                if (page == null) {
-                    event.respond(String.format("Cannot find page with title: %1$s", remainder));
-                    return;
-                }
+        while (m.find()) {
+            event.respond(summarizeWikiPage(m.group(1)));
+        }
+    }
 
-                StringBuilder stringBuilder = new StringBuilder();
-
-                if (page.getSiteName() != null) {
-                    stringBuilder.append(page.getSiteName())
-                            .append(" | ");
-                }
-
-                stringBuilder.append(page.getDisplayTitle())
-                        .append(" | ");
-
-                if (page.getSummary() != null) {
-                    stringBuilder.append(page.getSummary())
-                            .append(" | ");
-                }
-
-                stringBuilder.append(page.getCanonicalUrl());
-                String response = stringBuilder.toString();
-
-                event.respond(response);
-            } catch (URISyntaxException | IOException e) {
-                event.respond(e.getMessage());
+    private String summarizeWikiPage(String pageName) {
+        try {
+            if (MoreStrings.isNullOrWhitespace(pageName)) {
+                // apply ointment to burned area...
+                return "Wikipedia - well, it's kinda big. Please tell me what you want to look up.";
             }
 
+            WikipediaPage page = wikipediaSummaryService.getSummary("en", pageName);
+
+            if (page == null) {
+                return String.format("Cannot find page with title: %1$s", pageName);
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            if (page.getSiteName() != null) {
+                stringBuilder.append(page.getSiteName())
+                    .append(" | ");
+            }
+
+            stringBuilder.append(page.getDisplayTitle())
+                .append(" | ");
+
+            if (page.getSummary() != null) {
+                stringBuilder.append(page.getSummary())
+                    .append(" | ");
+            }
+
+            stringBuilder.append(page.getCanonicalUrl());
+
+            return stringBuilder.toString();
+        } catch (URISyntaxException | IOException e) {
+            return e.getMessage();
         }
     }
 }
