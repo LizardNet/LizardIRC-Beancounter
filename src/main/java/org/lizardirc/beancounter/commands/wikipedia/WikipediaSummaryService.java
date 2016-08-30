@@ -113,11 +113,16 @@ public class WikipediaSummaryService {
         return constructWikipediaPageFromJson(page, siteName);
     }
 
-    private WikipediaPage constructWikipediaPageFromJson(JsonObject page, String siteName) {
+    private WikipediaPage constructWikipediaPageFromJson(JsonObject page, String siteName) throws MediaWikiApiError {
         // Check the page exists
         JsonElement missing = page.get("missing");
         if (missing != null) {
             return null;
+        }
+
+        JsonElement invalidreason = page.get("invalidreason");
+        if(invalidreason != null){
+            throw new MediaWikiApiError(invalidreason.getAsString());
         }
 
         JsonElement extractElement = page.get("extract");
@@ -145,6 +150,7 @@ public class WikipediaSummaryService {
             // Hrm. Old version of MW. Fall back to the full url
             canonicalUrlElement = page.get("fullurl");
         }
+
         canonicalUrl = canonicalUrlElement.getAsString();
 
         return new WikipediaPage(displayTitle, canonicalUrl, extract, siteName);
