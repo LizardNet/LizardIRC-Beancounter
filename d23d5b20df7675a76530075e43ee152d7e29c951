@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_477e30e6",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/MediaWikiApiError.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-30T23:03:47Z",
+      "side": 1,
+      "message": "Unnecessary blank line",
+      "revId": "d23d5b20df7675a76530075e43ee152d7e29c951",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_278334ce",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaSummaryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-08-30T23:03:47Z",
+      "side": 1,
+      "message": "Space after the `if` :P",
+      "revId": "d23d5b20df7675a76530075e43ee152d7e29c951",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
