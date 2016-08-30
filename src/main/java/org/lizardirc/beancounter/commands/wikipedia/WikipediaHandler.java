@@ -33,31 +33,78 @@
 package org.lizardirc.beancounter.commands.wikipedia;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
+import org.lizardirc.beancounter.persistence.PersistenceManager;
+import org.lizardirc.beancounter.security.AccessControl;
+import org.lizardirc.beancounter.utils.Miscellaneous;
 import org.lizardirc.beancounter.utils.MoreStrings;
 
 public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> implements CommandHandler<T> {
-    private static final Set<String> COMMANDS = ImmutableSet.of("WikiPedia");
+    private static final String CMD_WIKIPEDIA = "WikiPedia";
+    private static final String CMD_CFGWIKILINKS = "cfgwikilinks";
+    private static final Set<String> COMMANDS = ImmutableSet.of(CMD_WIKIPEDIA, CMD_CFGWIKILINKS);
+    private static final String CFG_DISABLE = "disable";
+    private static final String CFG_ENABLE = "enable";
+    private static final Set<String> CFG_OPTIONS = ImmutableSet.of(CFG_DISABLE, CFG_ENABLE);
+
     private static final Pattern PATTERN_WIKILINK = Pattern.compile("\\[\\[([^\\[\\]]+)\\]\\]");
 
     private final WikipediaSummaryService wikipediaSummaryService = new WikipediaSummaryService();
+
+    private final PersistenceManager pm;
+    private final Set<String> disabledWikilinkExpansionChannels;
+    private static final Type PERSISTENCE_TYPE_TOKEN = new TypeToken<Set<String>>(){}.getType();
+    private static final String PERSISTENCE_KEY = "disabledWikilinkExpansionChannels";
+
+    private final AccessControl<T> acl;
+    private static final String PERMISSION_CFGWIKILINKS = "cfgwikilinks";
+
+    public WikipediaHandler(PersistenceManager pm, AccessControl<T> acl) {
+        this.pm = pm;
+        this.acl = acl;
+
+        Gson gson = new Gson();
+        Optional<String> persistedState = pm.get(PERSISTENCE_KEY);
+        if (persistedState.isPresent()) {
+            Set<String> disabledWikilinkExpansionChannels = gson.fromJson(persistedState.get(), PERSISTENCE_TYPE_TOKEN);
+            // Normalize to lowercase
+            this.disabledWikilinkExpansionChannels = new HashSet<>(disabledWikilinkExpansionChannels.stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.toSet())
+            );
+        } else {
+            disabledWikilinkExpansionChannels = new HashSet<>();
+        }
+    }
 
     @Override
     public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
+        }
+
+        if (commands.size() == 1 && CMD_CFGWIKILINKS.equals(commands.get(0))) {
+            return CFG_OPTIONS;
         }
 
         return Collections.emptySet();
@@ -69,13 +116,54 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
             return;
         }
 
-        if (commands.size() == 1 && COMMANDS.contains(commands.get(0))) {
+        if (commands.size() == 1 && CMD_WIKIPEDIA.equals(commands.get(0))) {
             event.respond(summarizeWikiPage(remainder));
+        } else if (commands.size() >= 1 && CMD_CFGWIKILINKS.equals(commands.get(0))) {
+            if (event instanceof GenericChannelEvent) {
+                GenericChannelEvent gce = (GenericChannelEvent) event;
+
+                if (commands.size() == 1) {
+                    boolean disabled = disabledWikilinkExpansionChannels.contains(gce.getChannel().getName().toLowerCase());
+
+                    event.respond("Wikilink expansion is " + (disabled ? "disabled" : "enabled") + " in this channel.");
+
+                    if (acl.hasPermission(event, PERMISSION_CFGWIKILINKS) || gce.getChannel().isOp(event.getUser())) {
+                        event.respond("You can enable or disable wikilink expansion by using the command \"" +
+                            CMD_CFGWIKILINKS + " <" + Miscellaneous.getStringRepresentation(CFG_OPTIONS, "|") + ">\"");
+                    }
+                } else {
+                    if (acl.hasPermission(event, PERMISSION_CFGWIKILINKS) || gce.getChannel().isOp(event.getUser())) {
+                        switch (commands.get(1)) {
+                            case CFG_DISABLE:
+                                disabledWikilinkExpansionChannels.add(gce.getChannel().getName().toLowerCase());
+                                break;
+                            case CFG_ENABLE:
+                                disabledWikilinkExpansionChannels.remove(gce.getChannel().getName().toLowerCase());
+                                break;
+                        }
+
+                        sync();
+                        event.respond("Done");
+                    } else {
+                        event.respond("You don't have the necessary permissions to do this.  If you are a channel" +
+                            "operator, please op up first.");
+                    }
+                }
+            } else {
+                event.respond("This command may only be run in a channel.");
+            }
         }
     }
 
     @Override
     public void onGenericMessage(GenericMessageEvent<T> event) {
+        if (event instanceof GenericChannelEvent) {
+            Channel channel = ((GenericChannelEvent) event).getChannel();
+            if (channel != null && disabledWikilinkExpansionChannels.contains(channel.getName().toLowerCase())) {
+                return;
+            }
+        }
+
         String message = event.getMessage();
         Matcher m = PATTERN_WIKILINK.matcher(message);
 
@@ -118,5 +206,11 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
         } catch (URISyntaxException | IOException e) {
             return e.getMessage();
         }
+    }
+
+    private synchronized void sync() {
+        Gson gson = new Gson();
+        pm.set(PERSISTENCE_KEY, gson.toJson(disabledWikilinkExpansionChannels, PERSISTENCE_TYPE_TOKEN));
+        pm.sync();
     }
 }
