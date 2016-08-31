@@ -71,6 +71,7 @@ import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.commands.wikipedia.WikipediaHandler;
 import org.lizardirc.beancounter.commands.youtube.YouTubeHandler;
 import org.lizardirc.beancounter.commands.youtube.YouTubeService;
+import org.lizardirc.beancounter.gameframework.GameHandler;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
@@ -148,6 +149,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
         WikipediaHandler<T> wikipediaHandler = new WikipediaHandler<>(pm.getNamespace("wikipediaHandler"), acl);
+        GameHandler<T> gameHandler = new GameHandler<>(acl, pm.getNamespace("gameHandler"), scheduledExecutorService);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -170,6 +172,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(earthquakeListener.getCommandHandler());
         handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(fishbotHandler.getCommandHandler());
+        handlers.add(gameHandler);
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -189,6 +192,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(entryMessageListener);
         ownListeners.add(fishbotHandler);
         ownListeners.add(wikipediaHandler);
+        ownListeners.add(gameHandler.getListener());
 
         ownListeners.forEach(listenerManager::addListener);
     }
