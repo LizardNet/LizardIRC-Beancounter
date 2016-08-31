@@ -51,7 +51,7 @@ import org.lizardirc.beancounter.utils.Miscellaneous;
 public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String CMD_QUIT = "quit";
     private static final String CMD_NICK = "nick";
-    private static final String CMD_JOIN = "join";
+    private static final String CMD_JOIN = "JoinChannel";
     private static final String CMD_PART = "part";
     private static final String CMD_SAY = "say";
     private static final String CMD_ACT = "act";
