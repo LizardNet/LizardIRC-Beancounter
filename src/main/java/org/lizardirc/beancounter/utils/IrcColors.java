@@ -35,6 +35,7 @@ package org.lizardirc.beancounter.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("unused")
 public final class IrcColors {
     private IrcColors() {
         throw new IllegalStateException("Uninstantiatable class");
