@@ -32,7 +32,14 @@
 
 package org.lizardirc.beancounter.utils;
 
-public class IrcColors {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public final class IrcColors {
+    private IrcColors() {
+        throw new IllegalStateException("Uninstantiatable class");
+    }
+
     public static final String RESET = "\017";
     public static final String BOLD = "\002";
     public static final String ITALIC = "\035";
@@ -55,4 +62,23 @@ public class IrcColors {
     public static final String MAGENTA = "\00313";
     public static final String DARKGREY = "\00314";
     public static final String GREY = "\00315";
+
+    public static String stripFormatting(String input) {
+        String output = input;
+
+        // Start with the easy stuff - bold, italic, underline, reverse video.
+        output = output.replace(BOLD, "");
+        output = output.replace(ITALIC, "");
+        output = output.replace(UNDERLINE, "");
+        output = output.replace(REVERSEVIDEO, "");
+        output = output.replace(RESET, "");
+
+        // Now the harder colour matching.
+        String regex = "\003(?:[0-9]{1,2}(?:,[0-9]{1,2})?)?";
+        Pattern p = Pattern.compile(regex);
+        Matcher matcher = p.matcher(output);
+        output = matcher.replaceAll("");
+
+        return output;
+    }
 }
