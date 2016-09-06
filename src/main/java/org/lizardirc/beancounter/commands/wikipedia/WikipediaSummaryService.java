@@ -124,6 +124,11 @@ public class WikipediaSummaryService {
             return null;
         }
 
+        JsonElement special = page.get("special");
+        if(special != null) {
+            return null;
+        }
+
         JsonElement invalidreason = page.get("invalidreason");
         if (invalidreason != null) {
             throw new MediaWikiApiError(invalidreason.getAsString());

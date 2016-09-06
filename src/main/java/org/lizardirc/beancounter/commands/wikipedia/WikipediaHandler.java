@@ -56,6 +56,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
+import org.lizardirc.beancounter.utils.IrcColors;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 import org.lizardirc.beancounter.utils.MoreStrings;
 
@@ -164,7 +165,7 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
             }
         }
 
-        String message = event.getMessage();
+        String message = IrcColors.stripFormatting(event.getMessage());
         Matcher m = PATTERN_WIKILINK.matcher(message);
 
         while (m.find()) {
