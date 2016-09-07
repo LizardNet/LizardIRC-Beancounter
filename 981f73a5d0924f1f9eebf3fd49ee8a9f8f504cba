@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_c7ac6038",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaSummaryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-09-07T19:32:08Z",
+      "side": 1,
+      "message": "space after `if`\n\n:P",
+      "revId": "981f73a5d0924f1f9eebf3fd49ee8a9f8f504cba",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_a7a96426",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/IrcColors.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-09-07T19:32:08Z",
+      "side": 1,
+      "message": "dat regex",
+      "revId": "981f73a5d0924f1f9eebf3fd49ee8a9f8f504cba",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
