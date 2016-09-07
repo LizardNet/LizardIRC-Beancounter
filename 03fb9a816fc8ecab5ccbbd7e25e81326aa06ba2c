@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_c77340e6",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-09-07T20:15:03Z",
+      "side": 1,
+      "message": "Lizard Approved",
+      "revId": "03fb9a816fc8ecab5ccbbd7e25e81326aa06ba2c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_276d7405",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-09-07T20:15:03Z",
+      "side": 1,
+      "message": "spaaaaaaaaaaaace",
+      "revId": "03fb9a816fc8ecab5ccbbd7e25e81326aa06ba2c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_077278e5",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-09-07T20:15:03Z",
+      "side": 1,
+      "message": "Looks like the above code is repeated a few times in this file; maybe take an opportunity to DRY off and pull this out into a private method?",
+      "revId": "03fb9a816fc8ecab5ccbbd7e25e81326aa06ba2c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_476870f5",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-09-07T20:15:03Z",
+      "side": 1,
+      "message": "spaaaaaaaace",
+      "revId": "03fb9a816fc8ecab5ccbbd7e25e81326aa06ba2c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_67636c1b",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-09-07T20:15:03Z",
+      "side": 1,
+      "message": "spaaaaaaaaaaace",
+      "revId": "03fb9a816fc8ecab5ccbbd7e25e81326aa06ba2c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_e7763cd8",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/youtube/YouTubeVideo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-09-07T20:15:03Z",
+      "side": 1,
+      "message": "spaaaaaaaaaace",
+      "revId": "03fb9a816fc8ecab5ccbbd7e25e81326aa06ba2c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
