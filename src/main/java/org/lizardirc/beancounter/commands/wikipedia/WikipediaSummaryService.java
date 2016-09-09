@@ -96,7 +96,10 @@ public class WikipediaSummaryService {
 
             // trim off the interwiki prefix
             article = article.substring(firstInterwiki.get("iw").getAsString().length() + 1);
-            return handleReallySimpleDiscovery(article, url);
+
+            // get the API path
+            URI apiPath = handleReallySimpleDiscovery(url);
+            return getSummary(article, apiPath, true);
         }
 
         JsonObject pages = query.getAsJsonObject("pages");
@@ -172,13 +175,12 @@ public class WikipediaSummaryService {
      * <p>
      * Then, we just re-enter the code above and execute the request again on the new API.
      *
-     * @param article   The article name
      * @param targetUrl The URL of the interwiki-redirected article
-     * @return A Wikipedia page object, or null if not found
+     * @return A URI, or null if not found
      * @throws IOException
      * @throws URISyntaxException
      */
-    private WikipediaPage handleReallySimpleDiscovery(String article, String targetUrl) throws IOException, URISyntaxException {
+    URI handleReallySimpleDiscovery(String targetUrl) throws IOException, URISyntaxException {
 
         // Fetch and parse the HTML document, ignoring HTTP errors - we still want to parse the 404 (etc)!
         Document document = Jsoup.connect(targetUrl).ignoreHttpErrors(true)
@@ -242,6 +244,6 @@ public class WikipediaSummaryService {
             builder.setScheme("https");
         }
 
-        return getSummary(article, builder.build(), true);
+        return builder.build();
     }
 }
