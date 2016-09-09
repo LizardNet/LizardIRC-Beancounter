@@ -34,6 +34,7 @@ package org.lizardirc.beancounter.commands.wikipedia;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -47,6 +48,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.apache.http.client.utils.URIBuilder;
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -66,7 +68,9 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_WIKIPEDIA, CMD_CFGWIKILINKS);
     private static final String CFG_DISABLE = "disable";
     private static final String CFG_ENABLE = "enable";
-    private static final Set<String> CFG_OPTIONS = ImmutableSet.of(CFG_DISABLE, CFG_ENABLE);
+    private static final String CFG_API = "api";
+
+    private static final Set<String> CFG_OPTIONS = ImmutableSet.of(CFG_DISABLE, CFG_ENABLE, CFG_API);
 
     private static final Pattern PATTERN_WIKILINK = Pattern.compile("\\[\\[([^\\[\\]]+)\\]\\]");
 
@@ -118,7 +122,16 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
         }
 
         if (commands.size() == 1 && CMD_WIKIPEDIA.equals(commands.get(0))) {
-            event.respond(summarizeWikiPage(remainder));
+            String channel = null;
+            if (event instanceof GenericChannelEvent) {
+                GenericChannelEvent gce = (GenericChannelEvent) event;
+                channel = gce.getChannel().getName().toLowerCase();
+            }
+
+            // get the local MW URI, or the default if none set/not in channel/
+            URI localMediaWikiAPi = getLocalMediaWikiAPi(channel);
+
+            event.respond(summarizeWikiPage(remainder, localMediaWikiAPi));
         } else if (commands.size() >= 1 && CMD_CFGWIKILINKS.equals(commands.get(0))) {
             if (event instanceof GenericChannelEvent) {
                 GenericChannelEvent gce = (GenericChannelEvent) event;
@@ -134,17 +147,26 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
                     }
                 } else {
                     if (acl.hasPermission(event, PERMISSION_CFGWIKILINKS) || gce.getChannel().isOp(event.getUser())) {
-                        switch (commands.get(1)) {
-                            case CFG_DISABLE:
-                                disabledWikilinkExpansionChannels.add(gce.getChannel().getName().toLowerCase());
-                                break;
-                            case CFG_ENABLE:
-                                disabledWikilinkExpansionChannels.remove(gce.getChannel().getName().toLowerCase());
-                                break;
-                        }
+                        try {
+                            switch (commands.get(1)) {
+                                case CFG_DISABLE:
+                                    disabledWikilinkExpansionChannels.add(gce.getChannel().getName().toLowerCase());
+                                    break;
+                                case CFG_ENABLE:
+                                    disabledWikilinkExpansionChannels.remove(gce.getChannel().getName().toLowerCase());
+                                    break;
+                                case CFG_API:
+                                    setLocalMediaWikiApi(gce.getChannel().getName().toLowerCase(), remainder.trim());
+                                    break;
+                            }
 
-                        sync();
-                        event.respond("Done");
+                            sync();
+                            event.respond("Done");
+                        }
+                        catch (MediaWikiApiError e) {
+                            // oops
+                            event.respond(e.getMessage());
+                        }
                     } else {
                         event.respond("You don't have the necessary permissions to do this.  If you are a channel" +
                             "operator, please op up first.");
@@ -156,31 +178,101 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
         }
     }
 
+    private void setLocalMediaWikiApi(String channel, String apiPath) throws MediaWikiApiError {
+        // Let's be smart
+        if (apiPath.equals("default")) {
+            // TODO: short circuit and remove this config, forcing back to enwiki.
+
+        }
+
+        // OK, assuming we have a valid URL.
+        URIBuilder b;
+
+        try {
+            // Let's test that assumption.
+            b = new URIBuilder(apiPath);
+        } catch (URISyntaxException e) {
+            throw new MediaWikiApiError("Could not find API from URI provided (" + apiPath + ").");
+        }
+
+        // OK. It's a URL. Is it an API url?
+        if (b.getPath().endsWith("api.php")) {
+            // TODO: set config. SUCCESS!
+            return;
+        }
+
+        // Okay... not an API path. This is either because a) user is an idiot or b) user is an idiot.
+        // Taking case a) - user is an idiot and didn't specify the API path when requested. Let's do
+        // a fetch and use RSD to try and find the real API url (as it might not be where we expect.
+        URI rsdPath;
+        try {
+            rsdPath = wikipediaSummaryService.handleReallySimpleDiscovery(apiPath);
+        } catch (URISyntaxException | IOException e) {
+            // :'(
+            throw new MediaWikiApiError(e.getMessage(), e);
+        }
+
+        if (rsdPath == null) {
+            // case b) user is an idiot and tried this with a non-mediawiki wiki (probably)
+            throw new MediaWikiApiError("Couldn't find API from URL - is this a MediaWiki wiki?");
+        }
+
+        // TODO: set config. SUCCESS!
+    }
+
+    private URI getLocalMediaWikiAPi(String channel) {
+        if (channel != null) {
+            // TODO: get the needful
+        }
+
+        try {
+            // Yay defaults
+            return new URI("https://en.wikipedia.org/w/api.php");
+        } catch (URISyntaxException e) {
+            return null;
+            // <rant>
+            // wat... java why do I have to handle this hard-coded case and do silly catches for something
+            // which cannot fail at runtime? You could compile-time check this and ignore the throws clause, or you
+            // could just let me specify a sane default without going batshit insane and forcing me to handle an
+            // exception which quite literally cannot be thrown without a recompile or a java bug.
+            // </rant>
+            // TODO: remove rant after it's been... appreciated... by the needful.
+        }
+    }
+
     @Override
     public void onGenericMessage(GenericMessageEvent<T> event) {
+        String channelName = null;
+
         if (event instanceof GenericChannelEvent) {
             Channel channel = ((GenericChannelEvent) event).getChannel();
-            if (channel != null && disabledWikilinkExpansionChannels.contains(channel.getName().toLowerCase())) {
-                return;
+            if (channel != null) {
+                channelName = channel.getName().toLowerCase();
+
+                if (disabledWikilinkExpansionChannels.contains(channelName)) {
+                    return;
+                }
             }
         }
 
         String message = IrcColors.stripFormatting(event.getMessage());
         Matcher m = PATTERN_WIKILINK.matcher(message);
 
+        URI api = getLocalMediaWikiAPi(channelName);
+
         while (m.find()) {
-            event.respond(summarizeWikiPage(m.group(1)));
+            event.respond(summarizeWikiPage(m.group(1), api));
         }
     }
 
-    private String summarizeWikiPage(String pageName) {
+    private String summarizeWikiPage(String pageName, URI api) {
         try {
             if (MoreStrings.isNullOrWhitespace(pageName)) {
                 // apply ointment to burned area...
                 return "Wikipedia - well, it's kinda big. Please tell me what you want to look up.";
             }
 
-            WikipediaPage page = wikipediaSummaryService.getSummary("en", pageName);
+            WikipediaPage page = wikipediaSummaryService.getSummary(pageName, api);
 
             if (page == null) {
                 return String.format("Cannot find page with title: %1$s", pageName);

@@ -39,4 +39,8 @@ public class MediaWikiApiError extends IOException {
     public MediaWikiApiError(String message) {
         super(message);
     }
+
+    public MediaWikiApiError(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
