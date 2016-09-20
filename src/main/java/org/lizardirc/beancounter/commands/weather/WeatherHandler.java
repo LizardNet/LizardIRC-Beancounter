@@ -461,7 +461,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
 
             String line1 = "Conditions at %s (%s) at %s: %s, temperature %s, humidity %s (feels like %s), dewpoint %s. Winds out of the %s (bearing %s) at %s MPH (%s KPH) with gusts to %s MPH (%s KPH).";
             line1 = String.format(line1, obs.observationLocation.fullName, obs.stationId, obs.observationTime, obs.conditions, obs.temperatureString, obs.relativeHumidity, obs.feelsLikeString, obs.dewpointString, obs.windDirection, obs.windBearing, obs.windSpeedMph, obs.windSpeedKph, obs.windGustsMph, obs.windGustsKph);
-            String line2 = "Pressure was %s inHg (%s mb)%s. Visiblity was %s miles (%s km). Solar radiation was %s W/m^2 and the UV index was %s. Today's precipitation was %s; current precip rate is %s per hour.";
+            String line2 = "Pressure was %s inHg (%s mb)%s. Visibility was %s miles (%s km). Solar radiation was %s W/m^2 and the UV index was %s. Today's precipitation was %s; current precip rate is %s per hour.";
             line2 = String.format(line2, obs.pressureInHg, obs.pressureMillibars, obs.getPressureTrendText(), obs.visibilityMi, obs.visibilityKm, obs.getSolarRadiationText(), obs.uvIndex, obs.precipTodayString, obs.precipHourString);
             String line3 = "Active severe weather alerts: %s";
 
