@@ -64,8 +64,9 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String SUPERSCRIPT = "SuperScript";
     private static final String SWEAR_TO_GOD = "SwearToGod";
     private static final String LAMBORGHINI = "lamborghini";
+    private static final String IDUNKNOWLOL = "idunknowlol";
     private static final Set<String> COMMANDS = ImmutableSet.of(LOOK_OF_DISAPPROVAL, LENNY, ANGRY_LENNY, LOOK_OF_LENNY,
-        FLIP, FLIP2, RAISE, LOWER, SMALLCAPS, SUPERSCRIPT, SWEAR_TO_GOD, LAMBORGHINI);
+        FLIP, FLIP2, RAISE, LOWER, SMALLCAPS, SUPERSCRIPT, SWEAR_TO_GOD, LAMBORGHINI, IDUNKNOWLOL);
 
     private static final String ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[{(<>)}].!'\",&?";
     private static final String AHPLA = "ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz∀ᗺƆᗡƎℲפHIſʞ⅂WNOԀΌᴚS⊥∩ΛMX⅄Z0ƖᄅƐㄣϛ9ㄥ86]})><({[˙¡,„'⅋¿";
@@ -196,6 +197,9 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
                         event.respond(lamborghiniAccount.get(random.nextInt(lamborghiniAccount.size())).getQuote());
                     }
                 }
+                break;
+            case IDUNKNOWLOL:
+                event.respond("¯\\_(ツ)_/¯" + remainder);
                 break;
         }
     }
