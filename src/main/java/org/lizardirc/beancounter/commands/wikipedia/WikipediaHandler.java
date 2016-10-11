@@ -66,7 +66,21 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_WIKIPEDIA, CMD_CFGWIKILINKS);
     private static final String CFG_DISABLE = "disable";
     private static final String CFG_ENABLE = "enable";
-    private static final Set<String> CFG_OPTIONS = ImmutableSet.of(CFG_DISABLE, CFG_ENABLE);
+    private static final String CFG_IGNORE = "IGnore";
+    private static final String CFG_IGNORELIST = "IgnoreList";
+    private static final String CFG_UNIGNORE = "UnIgnore";
+    private static final Set<String> CFG_OPTIONS = ImmutableSet.of(
+        CFG_DISABLE,
+        CFG_ENABLE,
+        CFG_IGNORE,
+        CFG_UNIGNORE,
+        CFG_IGNORELIST);
+
+    // This set of commands is further restricted to permission-granted users only, since it
+    // affects the bot's global state, rather than being per-channel.
+    private static final Set<String> CFG_PERMONLY_OPTIONS = ImmutableSet.of(
+        CFG_IGNORE,
+        CFG_UNIGNORE);
 
     private static final Pattern PATTERN_WIKILINK = Pattern.compile("\\[\\[([^\\[\\]]+)\\]\\]");
 
@@ -74,8 +88,11 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
 
     private final PersistenceManager pm;
     private final Set<String> disabledWikilinkExpansionChannels;
+    private final Set<String> ignoredUsers;
     private static final Type PERSISTENCE_TYPE_TOKEN = new TypeToken<Set<String>>(){}.getType();
-    private static final String PERSISTENCE_KEY = "disabledWikilinkExpansionChannels";
+
+    private static final String PERSISTENCE_DISABLED_AUTOLINK_CHANNELS = "disabledWikilinkExpansionChannels";
+    private static final String PERSISTENCE_DISABLED_AUTOLINK_USERS = "ignoredWikilinkExpansionUsers";
 
     private final AccessControl<T> acl;
     private static final String PERMISSION_CFGWIKILINKS = "cfgwikilinks";
@@ -85,16 +102,31 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
         this.acl = acl;
 
         Gson gson = new Gson();
-        Optional<String> persistedState = pm.get(PERSISTENCE_KEY);
-        if (persistedState.isPresent()) {
-            Set<String> disabledWikilinkExpansionChannels = gson.fromJson(persistedState.get(), PERSISTENCE_TYPE_TOKEN);
+        Optional<String> persistedChannelState = pm.get(PERSISTENCE_DISABLED_AUTOLINK_CHANNELS);
+        if (persistedChannelState.isPresent()) {
+            Set<String> disabledWikilinkExpansionChannels = gson.fromJson(persistedChannelState.get(), PERSISTENCE_TYPE_TOKEN);
             // Normalize to lowercase
-            this.disabledWikilinkExpansionChannels = new HashSet<>(disabledWikilinkExpansionChannels.stream()
-                .map(String::toLowerCase)
-                .collect(Collectors.toSet())
+            this.disabledWikilinkExpansionChannels = new HashSet<>(
+                disabledWikilinkExpansionChannels
+                    .stream()
+                    .map(String::toLowerCase)
+                    .collect(Collectors.toSet())
             );
         } else {
             disabledWikilinkExpansionChannels = new HashSet<>();
+        }
+
+        Optional<String> persistedUserState = pm.get(PERSISTENCE_DISABLED_AUTOLINK_USERS);
+        if (persistedUserState.isPresent()) {
+            Set<String> ignoredUsers = gson.fromJson(persistedUserState.get(), PERSISTENCE_TYPE_TOKEN);
+            this.ignoredUsers = new HashSet<>(
+                ignoredUsers
+                    .stream()
+                    .map(String::toLowerCase)
+                    .collect(Collectors.toSet())
+            );
+        } else {
+            ignoredUsers = new HashSet<>();
         }
     }
 
@@ -124,7 +156,10 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
                 GenericChannelEvent gce = (GenericChannelEvent) event;
 
                 if (commands.size() == 1) {
-                    boolean disabled = disabledWikilinkExpansionChannels.contains(gce.getChannel().getName().toLowerCase());
+                    boolean disabled = disabledWikilinkExpansionChannels.contains(
+                        gce.getChannel()
+                            .getName()
+                            .toLowerCase());
 
                     event.respond("Wikilink expansion is " + (disabled ? "disabled" : "enabled") + " in this channel.");
 
@@ -133,21 +168,60 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
                             CMD_CFGWIKILINKS + " <" + Miscellaneous.getStringRepresentation(CFG_OPTIONS, "|") + ">\"");
                     }
                 } else {
-                    if (acl.hasPermission(event, PERMISSION_CFGWIKILINKS) || gce.getChannel().isOp(event.getUser())) {
+                    // if they have the permission, allowed to do anything.
+                    boolean allowed = acl.hasPermission(event, PERMISSION_CFGWIKILINKS);
+
+                    // if they are an op, then they're only allowed to access options not in the permonly set.
+                    allowed |= !CFG_PERMONLY_OPTIONS.contains(commands.get(1))
+                        && gce.getChannel().isOp(event.getUser());
+
+                    if (allowed) {
                         switch (commands.get(1)) {
                             case CFG_DISABLE:
                                 disabledWikilinkExpansionChannels.add(gce.getChannel().getName().toLowerCase());
+
+                                sync();
+                                event.respond("Done");
                                 break;
                             case CFG_ENABLE:
                                 disabledWikilinkExpansionChannels.remove(gce.getChannel().getName().toLowerCase());
+
+                                sync();
+                                event.respond("Done");
+                                break;
+                            case CFG_IGNORE:
+                                if (remainder.isEmpty()) {
+                                    event.respond("Please specify something to remove.");
+                                    break;
+                                }
+
+                                ignoredUsers.add(remainder.toLowerCase());
+
+                                sync();
+                                event.respond("Done");
+                                break;
+                            case CFG_UNIGNORE:
+                                if (remainder.isEmpty()) {
+                                    event.respond("Please specify something to remove.");
+                                    break;
+                                }
+
+                                ignoredUsers.remove(remainder.toLowerCase());
+
+                                sync();
+                                event.respond("Done");
+                                break;
+                            case CFG_IGNORELIST:
+                                event.respond("Ignored users: " + Miscellaneous.getStringRepresentation(ignoredUsers));
                                 break;
                         }
-
-                        sync();
-                        event.respond("Done");
                     } else {
-                        event.respond("You don't have the necessary permissions to do this.  If you are a channel" +
-                            "operator, please op up first.");
+                        if (CFG_PERMONLY_OPTIONS.contains(commands.get(1))) {
+                            event.respond("You don't have the necessary permissions to do this.");
+                        } else {
+                            event.respond("You don't have the necessary permissions to do this.  If you are a channel " +
+                                "operator, please op up first.");
+                        }
                     }
                 }
             } else {
@@ -163,6 +237,10 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
             if (channel != null && disabledWikilinkExpansionChannels.contains(channel.getName().toLowerCase())) {
                 return;
             }
+        }
+
+        if (ignoredUsers.contains(event.getUser().getNick().toLowerCase())) {
+            return;
         }
 
         String message = IrcColors.stripFormatting(event.getMessage());
@@ -211,7 +289,9 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
 
     private synchronized void sync() {
         Gson gson = new Gson();
-        pm.set(PERSISTENCE_KEY, gson.toJson(disabledWikilinkExpansionChannels, PERSISTENCE_TYPE_TOKEN));
+        pm.set(PERSISTENCE_DISABLED_AUTOLINK_CHANNELS,
+            gson.toJson(disabledWikilinkExpansionChannels, PERSISTENCE_TYPE_TOKEN));
+        pm.set(PERSISTENCE_DISABLED_AUTOLINK_USERS, gson.toJson(ignoredUsers, PERSISTENCE_TYPE_TOKEN));
         pm.sync();
     }
 }
