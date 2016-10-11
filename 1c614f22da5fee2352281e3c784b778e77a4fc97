@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_0a739fb2",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2016-10-11T22:49:30Z",
+      "side": 1,
+      "message": "[2016-09-10 01:56:08] \u003c~FastLizard4\u003e stwalkerster: Basically, what my plan is (and I can get the framework in place if you want) is to have a WikipediaListenerConfiguration class",
+      "revId": "1c614f22da5fee2352281e3c784b778e77a4fc97",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
