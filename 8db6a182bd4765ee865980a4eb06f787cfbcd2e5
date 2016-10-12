@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4b7175_4ad51742",
+        "filename": "src/main/java/org/lizardirc/beancounter/persistence/PropertiesPersistenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-10-12T03:29:33Z",
+      "side": 1,
+      "message": "We risk overwriting something unless we use\n\n    Files.newOutputStream(tempFile, CREATE_NEW, WRITE);",
+      "revId": "8db6a182bd4765ee865980a4eb06f787cfbcd2e5",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
