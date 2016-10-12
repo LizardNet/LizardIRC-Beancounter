@@ -162,7 +162,7 @@ public class FishbotListener<T extends PircBotX> extends ListenerAdapter<T> {
                 response = response.replace("%n", user.getNick());
                 response = response.replace("%c", channel.getName());
 
-                if (matcher.groupCount() > 1) {
+                if (matcher.groupCount() >= 1) {
                     response = response.replace("%1", matcher.group(1));
                 }
 
