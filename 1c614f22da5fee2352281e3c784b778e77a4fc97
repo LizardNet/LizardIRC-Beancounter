@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a4b7175_ea95e388",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-12T02:33:24Z",
+      "side": 1,
+      "message": "Excess indent here (looks like your continuation indenting is set to 8, not 4)",
+      "revId": "1c614f22da5fee2352281e3c784b778e77a4fc97",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4b7175_0a739fb2",
         "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
         "patchSetId": 1
@@ -13,6 +30,92 @@
       "writtenOn": "2016-10-11T22:49:30Z",
       "side": 1,
       "message": "[2016-09-10 01:56:08] \u003c~FastLizard4\u003e stwalkerster: Basically, what my plan is (and I can get the framework in place if you want) is to have a WikipediaListenerConfiguration class",
+      "revId": "1c614f22da5fee2352281e3c784b778e77a4fc97",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_6a821354",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-12T02:33:24Z",
+      "side": 1,
+      "message": "This is on hold for now anyway, because after looking into it, this seems like it could get really complex if not done right.  So go ahead and just use old persistence or whatever, and I\u0027ll just retrofit everything to the new persistence system when I have time to work on it.\n\nIn other words, don\u0027t wait for me to have the new persistence system ready for \"Allow channel-specific default MW APIs\" or any other things I asked you to wait for it on.",
+      "parentUuid": "3a4b7175_0a739fb2",
+      "revId": "1c614f22da5fee2352281e3c784b778e77a4fc97",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_4a875762",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-12T02:33:24Z",
+      "side": 1,
+      "message": "Excess indent here too",
+      "revId": "1c614f22da5fee2352281e3c784b778e77a4fc97",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_2a7c1b72",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-12T02:33:24Z",
+      "side": 1,
+      "message": "Excess indent here too",
+      "revId": "1c614f22da5fee2352281e3c784b778e77a4fc97",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_ca92279f",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-12T02:33:24Z",
+      "side": 1,
+      "message": "I\u0027d recommend using our own Miscellaneous.getStringRepresentation() instead of StringUtils; gSR() also has the benefit of outputting \"(none)\" automatically in the case of an empty set",
+      "revId": "1c614f22da5fee2352281e3c784b778e77a4fc97",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4b7175_0a815f4a",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-12T02:33:24Z",
+      "side": 1,
+      "message": "Excess indent here too",
       "revId": "1c614f22da5fee2352281e3c784b778e77a4fc97",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
