@@ -38,6 +38,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -130,11 +131,22 @@ public class PropertiesPersistenceManager implements PersistenceManager {
 
         public synchronized void save() {
             if (!dirty.isEmpty()) {
-                try (OutputStream os = Files.newOutputStream(path)) {
+                Path tempFile = path.resolveSibling(path.getFileName() + ".tmp");
+
+                // Write out to the tempfile
+                try (OutputStream os = Files.newOutputStream(tempFile)) {
                     properties.store(os, null);
                     dirty.clear();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.err.println("ERROR: IOException while writing bot state to temporary beanledger " + tempFile + ": " + e.getMessage());
+                    return;
+                }
+
+                // Attempt to move the tempfile over the old beanledger
+                try {
+                    Files.move(tempFile, path, StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    System.err.println("ERROR: IOException while moving temporary beanledger at " + tempFile + " to permanent location at " + path + ": " + e.getMessage());
                 }
             }
         }
