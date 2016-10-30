@@ -68,7 +68,7 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
     private static final String CFG_ENABLE = "enable";
     private static final Set<String> CFG_OPTIONS = ImmutableSet.of(CFG_DISABLE, CFG_ENABLE);
 
-    private static final Pattern PATTERN_WIKILINK = Pattern.compile("\\[\\[([^\\[\\]]+)\\]\\]");
+    private static final Pattern PATTERN_WIKILINK = Pattern.compile("\\[\\[([^\\[\\]|]+)(?:\\]\\]|\\|)|\\{\\{([^{\\}|]+)(?:\\}\\}|\\|)");
 
     private final WikipediaSummaryService wikipediaSummaryService = new WikipediaSummaryService();
 
@@ -166,11 +166,30 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
         }
 
         String message = IrcColors.stripFormatting(event.getMessage());
-        Matcher m = PATTERN_WIKILINK.matcher(message);
-
-        while (m.find()) {
-            event.respond(summarizeWikiPage(m.group(1)));
+        for (String page : parseForLinks(message)){
+            event.respond(summarizeWikiPage(page));
         }
+    }
+
+    // ported from Helpmebot (also GNU GPL3+)
+    private Set<String> parseForLinks (String input) {
+        Matcher m = PATTERN_WIKILINK.matcher(input);
+
+        Set<String> results = new HashSet<>();
+
+        while(m.find()){
+            String page = m.group(1);
+            if( page != null){
+                results.add(page);
+            }
+
+            String template = m.group(2);
+            if(template != null){
+                results.add("Template:" + template);
+            }
+        }
+
+        return results;
     }
 
     private String summarizeWikiPage(String pageName) {
