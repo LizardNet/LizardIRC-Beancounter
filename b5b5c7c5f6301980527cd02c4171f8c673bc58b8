@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_4352a614",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-31T05:50:07Z",
+      "side": 1,
+      "message": "Style: Should be no space after the method name",
+      "revId": "b5b5c7c5f6301980527cd02c4171f8c673bc58b8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_2357aa04",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-31T05:50:07Z",
+      "side": 1,
+      "message": "Style: Should be spaces after `while` and before the `{`",
+      "revId": "b5b5c7c5f6301980527cd02c4171f8c673bc58b8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_035cae24",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-31T05:50:07Z",
+      "side": 1,
+      "message": "Ditto, but also should not be a space after the `(`) :P",
+      "revId": "b5b5c7c5f6301980527cd02c4171f8c673bc58b8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_e3407237",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-31T05:50:07Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "b5b5c7c5f6301980527cd02c4171f8c673bc58b8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
