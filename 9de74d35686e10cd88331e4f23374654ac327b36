@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_c33696e7",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-31T05:43:53Z",
+      "side": 1,
+      "message": "Ooooh, fancy",
+      "revId": "9de74d35686e10cd88331e4f23374654ac327b36",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_a3339af5",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-31T05:43:53Z",
+      "side": 1,
+      "message": "For this case and the CFG_UNIGNORE case, we should verify that the remainder is not an empty string, and reject with an error message if it is",
+      "revId": "9de74d35686e10cd88331e4f23374654ac327b36",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_83309ee9",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/wikipedia/WikipediaHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2016-10-31T05:43:53Z",
+      "side": 1,
+      "message": "This one\u0027s my fault, but since you\u0027re modifying this bit anyway, could you add a space to the end of this string to fix my typo?",
+      "revId": "9de74d35686e10cd88331e4f23374654ac327b36",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
