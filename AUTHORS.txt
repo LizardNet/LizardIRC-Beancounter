@@ -20,7 +20,6 @@ LIZARDIRC/BEANCOUNTER AUTHORS
 **Email: datguysteam [at] gmail [dot] com
 **Freenode nickname: DatGuy (wikimedia/DatGuy)
 
-
 Anyone who commits to this project should be added to this list, even for a
 single minor commit!
 
