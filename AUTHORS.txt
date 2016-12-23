@@ -16,6 +16,11 @@ LIZARDIRC/BEANCOUNTER AUTHORS
 **PGP Key ID: 6EDA 5D87 60CC 091E 3B9F  6508 10DA 657D 9612 BE5C
 **LizardIRC nickname: stwalkerster (network staff)
 
+*John Smith (pseudonym)
+**Email: datguysteam [at] gmail [dot] com
+**Freenode nickname: DatGuy (wikimedia/DatGuy)
+
+
 Anyone who commits to this project should be added to this list, even for a
 single minor commit!
 
