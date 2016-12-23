@@ -97,7 +97,7 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
 
         switch (commands.get(0)) {
             case "poulette":
-                message.accept(target + " picks up a chicken, points it at eir head, pulls a feather, and...");
+                message.accept(target + " picks up a chicken, points it at their head, pulls a feather, and...");
                 message.accept("*BWACK*!");
                 break;
             case "reload":
@@ -115,7 +115,7 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
                     }
                 }
 
-                message.accept(target + " picks up the gun, points it at eir head, pulls the trigger, and...");
+                message.accept(target + " picks up the gun, points it at their head, pulls the trigger, and...");
 
                 loaded.add(false);
                 if (loaded.remove(0) || lastBullets == 0) {
