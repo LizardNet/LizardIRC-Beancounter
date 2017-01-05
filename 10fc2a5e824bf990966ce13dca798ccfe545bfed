@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_2220ce9a",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-01-05T03:20:35Z",
+      "side": 1,
+      "message": "Output policy counts after enactment",
+      "revId": "10fc2a5e824bf990966ce13dca798ccfe545bfed",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
