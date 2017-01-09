@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2017 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -49,11 +49,11 @@ class Reminder {
     protected final ZonedDateTime enteredTime;
 
     public Reminder(String from, String target, String message, String channel, ZonedDateTime enteredTime) {
-        this.from = from;
-        this.target = target.toLowerCase();
-        this.message = message;
-        this.channel = channel.toLowerCase();
-        this.enteredTime = enteredTime;
+        this.from = Objects.requireNonNull(from);
+        this.target = Objects.requireNonNull(target.toLowerCase());
+        this.message = Objects.requireNonNull(message);
+        this.channel = Objects.requireNonNull(channel.toLowerCase());
+        this.enteredTime = Objects.requireNonNull(enteredTime);
     }
 
     @Override

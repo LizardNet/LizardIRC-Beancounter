@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2017 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -42,7 +42,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
@@ -57,6 +56,7 @@ import org.pircbotx.hooks.types.GenericUserEvent;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
+import org.lizardirc.beancounter.utils.Miscellaneous;
 
 public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
     private final PersistenceManager pm;
@@ -134,24 +134,28 @@ public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
             // We now have a set of all users matching the target hostmask.  Check if any of them are in the channel the
             // reminder was given in, if it was given in a channel in the first place (i.e., not null), and only if we are
             // currently in that channel.
-            if (!r.getChannel().equals("")) {
+            if (!r.getChannel().isEmpty()) {
                 String targetChannel = r.getChannel();
 
                 if (bot.getUserBot().getChannels().stream()
                     .map(Channel::getName)
                     .anyMatch(targetChannel::equals)
                     ) {
-                    Stream<User> users2 = users.stream()
+                    Set<String> users2 = users.stream()
                         .filter(u -> u.getChannels().stream()
                             .map(Channel::getName)
-                            .anyMatch(targetChannel::equals));
+                            .anyMatch(targetChannel::equals))
+                        .map(User::getNick)
+                        .collect(Collectors.toSet());
 
-                    // users2 is now a list of users that match the target hostmask and are in the target channel
-                    bot.sendIRC().message(targetChannel,
-                        users2.map(User::getNick)
-                            .collect(Collectors.joining(", ")
-                            ) + ": " + r.toString());
-                    return true;
+                    // users2 is now a list of users that match the target hostmask and are in the target channel.  Of
+                    // course, this may not actually contain anyone....
+
+                    if (!users2.isEmpty()) {
+                        bot.sendIRC().message(targetChannel,
+                            Miscellaneous.getStringRepresentation(users2) + ": " + r.toString());
+                        return true;
+                    }
                 }
             }
 

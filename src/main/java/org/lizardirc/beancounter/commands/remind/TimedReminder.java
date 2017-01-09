@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2017 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -36,13 +36,14 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 class TimedReminder extends Reminder implements Comparable<TimedReminder> {
     private final ZonedDateTime deliverAt;
 
     public TimedReminder(String from, String target, String message, String channel, ZonedDateTime enteredTime, ZonedDateTime deliverAt) {
         super(from, target, message, channel, enteredTime);
-        this.deliverAt = deliverAt; // Deliver reminder at or after this time
+        this.deliverAt = Objects.requireNonNull(deliverAt); // Deliver reminder at or after this time
     }
 
     public TimedReminder(Reminder reminder, ZonedDateTime deliverAt) {
