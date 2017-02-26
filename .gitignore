@@ -3,7 +3,7 @@
 
 #Ignore IDEA configuration
 *.iml
-.idea/*
+.idea/
 
 #Ignore Eclipse configuration
 .classpath
@@ -16,3 +16,6 @@ dependency-reduced-pom.xml
 #Ignore files that beancounter creates at runtime
 *.props
 beanledger.xml
+
+#Don't ignore defaults
+!src/main/resources/default.config.props
