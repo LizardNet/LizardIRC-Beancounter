@@ -32,6 +32,8 @@
 
 package org.lizardirc.beancounter.gameframework;
 
+import org.lizardirc.beancounter.gameframework.playermanagement.Player;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -93,8 +95,8 @@ public @interface GameEntrypoint {
      * The minimum number of players required for the game to be played.  The player count will never be below this
      * number when the game is started, strongly enforced by the GameHandler.  However, GameHandler will do nothing if
      * the player count drops below this while the game is in progress; the onus is on the game's developer to handle
-     * this condition (see {@link Game#handlePlayerQuit(org.pircbotx.User)} (after all, some games involve removal of players
-     * through the course of normal gameplay).<p>
+     * this condition (see {@link Game#handlePlayerQuit(Player, boolean)} (after all, some games involve removal of
+     * players through the course of normal gameplay).<p>
      *
      * Contract: The value specified here must be greater than or equal to 1.
      *

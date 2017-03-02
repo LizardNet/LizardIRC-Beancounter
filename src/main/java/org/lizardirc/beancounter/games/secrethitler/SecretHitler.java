@@ -80,7 +80,6 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
-import org.pircbotx.User;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -919,8 +918,8 @@ public class SecretHitler<T extends PircBotX> implements Game<T> {
     }
 
     @Override
-    public void handlePlayerQuit(User user) {
-        channel.send().message('\002' + user.getNick() + "\002 has left the game.  Unfortunately, the game cannot continue and it must now end.  Nobody wins.");
+    public void handlePlayerQuit(Player player, boolean voteToContinue) {
+        channel.send().message('\002' + player.getNick() + "\002 has left the game.  Unfortunately, the game cannot continue and it must now end.  Nobody wins.");
         gameEndCleanupAndStatsOutput();
         gameHandler.signalGameStopped(this);
     }

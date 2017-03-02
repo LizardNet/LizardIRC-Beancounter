@@ -71,7 +71,7 @@ class GameListener<T extends PircBotX> extends ListenerAdapter<T> {
                         parent.handleLeaveDuringSetup(e.getKey(), user);
                         break;
                     case ACTIVE:
-                        e.getValue().getActiveGame().handlePlayerQuit(user);
+                        parent.handleLeaveDuringActive(e.getValue(), user);
                         break;
                 }
             });
@@ -85,7 +85,7 @@ class GameListener<T extends PircBotX> extends ListenerAdapter<T> {
                 parent.handleLeaveDuringSetup(channel, user);
             } else if (GamePhase.ACTIVE.equals(state.getGamePhase())) {
                 if (state.getPlayerManager().isPlaying(user)) {
-                    state.getActiveGame().handlePlayerQuit(user);
+                    parent.handleLeaveDuringActive(state, user);
                 }
             }
         }

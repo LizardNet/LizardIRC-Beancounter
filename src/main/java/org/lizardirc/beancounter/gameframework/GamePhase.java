@@ -35,5 +35,6 @@ package org.lizardirc.beancounter.gameframework;
 public enum GamePhase {
     INACTIVE,
     SETUP,
-    ACTIVE
+    ACTIVE,
+    VOTE_TO_CONTINUE
 }

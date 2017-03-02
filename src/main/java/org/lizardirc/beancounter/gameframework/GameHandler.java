@@ -78,6 +78,9 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String CMD_SUBSTITUTE = "SUBstitute";
     private static final String CMD_FORCESUBSTITUTE = "ForceSUBstitute";
     private static final String CMD_CFGGAMES = "cfggames";
+    private static final String CMD_CONTINUE = "continue";
+    private static final String VOTE_YES = "yes";
+    private static final String VOTE_NO = "no";
     private static final String CFGGAMES_ENABLE = "enable";
     private static final String CFGGAMES_DISABLE = "disable";
 
@@ -87,7 +90,9 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final Set<String> CMDS_PHASE_SETUP = ImmutableSet.of(CMD_JOIN, CMD_LEAVE, CMD_PLAYERS, CMD_START,
         CMD_PLAY);
     private static final Set<String> CMDS_PHASE_ACTIVE = ImmutableSet.of(CMD_PLAYERS, CMD_LEAVE);
+    private static final Set<String> CMDS_PHASE_VOTE_CONTINUE = ImmutableSet.of(CMD_PLAYERS, CMD_LEAVE, CMD_CONTINUE);
     private static final Set<String> CFGGAMES_OPTS = ImmutableSet.of(CFGGAMES_ENABLE, CFGGAMES_DISABLE);
+    private static final Set<String> VOTES = ImmutableSet.of(VOTE_YES, VOTE_NO);
     
     private static final String PERM_GAMEMASTER = "gamemaster";
 
@@ -208,7 +213,11 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
                         }
                         return retval;
                     } else {
-                        return perChannelState.get(gce.getChannel()).getActiveGame().getSetupPhaseCommands(event, commands);
+                        if (perChannelState.get(gce.getChannel()).getPlayerManager().isPlaying(event.getUser())) {
+                            return perChannelState.get(gce.getChannel()).getActiveGame().getSetupPhaseCommands(event, commands);
+                        } else {
+                            return Collections.emptySet();
+                        }
                     }
                 case ACTIVE:
                     if (commands.size() == 0) {
@@ -222,6 +231,25 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
                     } else {
                         if (perChannelState.get(gce.getChannel()).getPlayerManager().isPlaying(event.getUser())) {
                             return perChannelState.get(gce.getChannel()).getActiveGame().getActivePhaseCommands(event, commands);
+                        } else {
+                            return Collections.emptySet();
+                        }
+                    }
+                case VOTE_TO_CONTINUE:
+                    if (commands.size() == 0) {
+                        Set<String> retval = new HashSet<>();
+                        retval.addAll(CMDS_ALWAYS_AVAILABLE);
+                        retval.addAll(CMDS_PHASE_VOTE_CONTINUE);
+                        return retval;
+                    } else {
+                        if (perChannelState.get(gce.getChannel()).getPlayerManager().isPlaying(event.getUser())) {
+                            if (commands.size() == 1 && commands.get(0).equals(CMD_CONTINUE)) {
+                                return VOTES;
+                            } else {
+                                return Collections.emptySet();
+                            }
+                        } else {
+                            return Collections.emptySet();
                         }
                     }
                 default:
@@ -881,7 +909,11 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
         switch (commands.get(0)) {
             case CMD_LEAVE:
                 // We don't say anything here; we just delegate to the Game
-                channelState.getActiveGame().handlePlayerQuit(event.getUser());
+                if (!channelState.getPlayerManager().isPlaying(event.getUser())) {
+                    event.respond("You can't leave a game you aren't playing!");
+                } else {
+                    handleLeaveDuringActive(channelState, event.getUser());
+                }
                 break;
             case CMD_PLAYERS:
                 List<String> players = channelState.getAllPlayerNicks();
@@ -950,6 +982,17 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
             return acl.hasPermission(event, PERM_GAMEMASTER) || gce.getChannel().isOp(event.getUser());
         } else {
             return acl.hasPermission(event, PERM_GAMEMASTER);
+        }
+    }
+
+    void handleLeaveDuringActive(ChannelState<T> channelState, User user) {
+        Player player = channelState.getPlayerManager().getPlayerOfUser(user);
+
+        if (channelState.getActiveGame().doVoteToContinue(player)) {
+            channelState.setGameVoteToContinueStart();
+
+        } else {
+            channelState.getActiveGame().handlePlayerQuit(player, false);
         }
     }
 }

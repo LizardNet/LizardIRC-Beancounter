@@ -40,7 +40,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
-import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.gameframework.Game;
@@ -124,8 +123,8 @@ public class TestGame<T extends PircBotX> implements Game<T> {
     }
 
     @Override
-    public void handlePlayerQuit(User user) {
-        GameHandler.sendChannelMessage(channel, "Wow, r00d.  \002" + user.getNick() + "\002 somehow managed to lose the testing game.");
+    public void handlePlayerQuit(Player player, boolean voteToContinue) {
+        GameHandler.sendChannelMessage(channel, "Wow, r00d.  \002" + player.getNick() + "\002 somehow managed to lose the testing game.");
         gameHandler.signalGameStopped(this);
     }
 

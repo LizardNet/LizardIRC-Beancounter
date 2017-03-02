@@ -100,6 +100,23 @@ public class ChannelState<T extends PircBotX> {
         gamePhase = GamePhase.ACTIVE;
     }
 
+    public void setGameVoteToContinueStart() {
+        if (!GamePhase.ACTIVE.equals(gamePhase)) {
+            throw new IllegalStateException("A vote to continue may only be initiated from the ACTIVE phase.");
+        }
+
+        gamePhase = GamePhase.VOTE_TO_CONTINUE;
+    }
+
+    public void setGameVoteToContinueEnd(Player player, boolean result) {
+        if (!GamePhase.VOTE_TO_CONTINUE.equals(gamePhase)) {
+            throw new IllegalStateException("This method may only be called if a vote to continue is in progress.");
+        }
+
+        gamePhase = GamePhase.ACTIVE;
+        activeGame.handlePlayerQuit(player, result);
+    }
+
     public Map<ScheduledFutureType, ScheduledFuture> getScheduledFutureMap() {
         return scheduledFutureMap;
     }

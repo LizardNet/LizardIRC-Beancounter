@@ -38,7 +38,6 @@ import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 
 import org.pircbotx.PircBotX;
-import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.gameframework.playermanagement.Player;
@@ -139,9 +138,14 @@ public interface Game<T extends PircBotX> {
      * parameter; a reference to the GameHandler is also injected by GameHandler into the constructor required by the
      * {@code @GameEntrypoint} annotation.
      *
-     * @param user The user who left
+     * @param player A Player object representing the player who left
+     * @param voteToContinue The results of the vote to continue.  This will be {@code false} if {@link
+     *                       #doVoteToContinue(Player)} returned {@code false}, or if {@link #doVoteToContinue(Player)}
+     *                       returned {@code true} <i>and</i> a majority of players voted to end the game.  This will be
+     *                       {@code true} if {@link #doVoteToContinue(Player)} returned {@code true} <em>and</em> a
+     *                       majority of players voted to continue the game.
      */
-    void handlePlayerQuit(User user);
+    void handlePlayerQuit(Player player, boolean voteToContinue);
 
     /**
      * This method returns the commands (and subcommands) that are recognized by the game during the SETUP phase; i.e.,
@@ -265,5 +269,29 @@ public interface Game<T extends PircBotX> {
      */
     default void handlePlayerSubstitution(String newNickname, String oldNickname) {
         // Go nowhere, do nothing
+    }
+
+    /**
+     * This method is called whenever a player quits the game during the ACTIVE Phase, either by issuing the {@code
+     * leave} command in IRC or by parting the channel or quitting the server.  This method is not called during the
+     * SETUP phase.  If this method returns false, which it does by default unless overridden, the GameHandler
+     * immediately indicates to the game that a player has quit.  If this method returns true, the GameHandler suspends
+     * the game and calls the players to vote.  If a majority of active players vote to continue the game, {@link
+     * #handlePlayerQuit(Player, boolean)} is called with {@code true} as its second parameters, telling the Game to
+     * continue the game; otherwise, the {@code handleLeaveDuringActive()} method is called with {@code false} as its second
+     * parameter.  The method is also called with {@code false} as its second parameter unconditionally if this method
+     * returns {@code false}.<p>
+     *
+     * This method may also output information to the channel, if desired, to provide extra information to players
+     * before the vote begins.  However, this method must not alter the state of the game.<p>
+     *
+     * Note that this method should return {@code true} only if a vote should be called - if the game can be continued
+     * without a vote, it is unnecessary for this method to return {@code true}.
+     *
+     * @param player The player who is leaving the game and has triggered the check for the vote to continue.
+     * @return {@code true} if the GameHandler should call a vote for the game to continue, {@code false} false if not.
+     */
+    default boolean doVoteToContinue(Player player) {
+        return false;
     }
 }
