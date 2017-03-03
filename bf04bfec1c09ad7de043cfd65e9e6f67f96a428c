@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_227c4e72",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/ChannelState.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "requireNonNull",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_42815249",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/Game.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "sp: subcommanes",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_e2950689",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/Game.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "sp: hte",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_02934aa4",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/Game.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "no additional setup phase commands",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_a28ffe74",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/Game.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "not handle any additional SETUP phase commands",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_c28c8282",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameEntrypoint.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "Add lifecycle notes, specifically that if the game is ending of its own volition it must call the GameHandler.signalGameStopped() method.",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_22f3ee0b",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameEntrypoint.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "It must be in a subpackage of org.lizardirc.beancounter.games",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_62e9f619",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameEntrypoint.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "If this is false, it is guaranteed that all commands received by the Game will be channel events.",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_82ee7a21",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_42f872e5",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_e2dc2677",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_02da6a78",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/GameState.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "Rename",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_a2e61e43",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/GameState.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_c2e32232",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/GameState.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_e2c3c688",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "Break the cases in the uber-switch statement out into individual methods to make things like variable naming cleaner.",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_62d01654",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_82d51a45",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_22ca0ea2",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_42cf12b1",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_02c10a80",
+        "filename": "src/main/java/org/lizardirc/beancounter/games/secrethitler/SecretHitler.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-03-03T20:56:32Z",
+      "side": 1,
+      "message": "announceElectionPhase?",
+      "revId": "bf04bfec1c09ad7de043cfd65e9e6f67f96a428c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
