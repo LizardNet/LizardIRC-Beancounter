@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2017 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -36,11 +36,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum Feed {
-    FEED_ALL_EARTHQUAKES(1, "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", "USGS, All Earthquakes"),
-    FEED_MAGNITUDE_1_0(2, "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_day.geojson", "USGS, Earthquakes Magnitude 1.0+"),
-    FEED_MAGNITUDE_2_5(3, "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson", "USGS, Earthquakes Magnitude 2.5+"),
-    FEED_MAGNITUDE_4_5(4, "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson", "USGS, Earthquakes Magnitude 4.5+"),
-    FEED_SIGNIFICANT_EARTHQUAKES(5, "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson", "USGS, Significant Earthquakes");
+    FEED_ALL_EARTHQUAKES(1, "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", "USGS, All Earthquakes"),
+    FEED_MAGNITUDE_1_0(2, "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_day.geojson", "USGS, Earthquakes Magnitude 1.0+"),
+    FEED_MAGNITUDE_2_5(3, "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson", "USGS, Earthquakes Magnitude 2.5+"),
+    FEED_MAGNITUDE_4_5(4, "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson", "USGS, Earthquakes Magnitude 4.5+"),
+    FEED_SIGNIFICANT_EARTHQUAKES(5, "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson", "USGS, Significant Earthquakes");
 
     private final int intValue;
     private final String url;
