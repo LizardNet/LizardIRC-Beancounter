@@ -101,7 +101,7 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
                 message.accept("*BWACK*!");
                 break;
             case "reload":
-                reload(action, remainder.split(" "));
+                reload(action, false, remainder.split(" "));
                 break;
             case "roulette":
                 if (!loaded.contains(true)) {
@@ -109,7 +109,7 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
                         action.accept("notices the gun feels rather light. The chamber is empty!");
                     }
                     if (lastBullets > 0) {
-                        reload(action);
+                        reload(action, true);
                     } else {
                         message.accept("ಠ_ಠ " + target);
                     }
@@ -138,7 +138,7 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
         }
     }
 
-    private void reload(Consumer<String> action, String... args) {
+    private void reload(Consumer<String> action, boolean isAutomaticReload, String... args) {
         long removedBullets = loaded.stream().filter(Boolean::booleanValue).count();
         if (removedBullets > 0) {
             String pluralized = removedBullets == 1 ? " bullet falls out." : " bullets fall out.";
@@ -161,21 +161,29 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
             action.accept("looks for a gun with " + chambers + " chambers, but can't find one.");
             chambers = 6;
         }
-        action.accept((Strings.startsWithVowel(String.valueOf(chambers)) ? "grabs an " : "grabs a ") + chambers + "-chamber gun");
+
+        String gunDescription = "gun";
+
+        if (!isAutomaticReload) {
+            action.accept((Strings.startsWithVowel(String.valueOf(chambers)) ? "grabs an " : "grabs a ") + chambers + "-chamber gun");
+        }
+        else {
+            gunDescription = chambers + "-chamber gun";
+        }
 
         if (bullets < 0) {
             if (bullets == -1) {
-                action.accept("takes 1 bullet out of the empty gun and throws it away");
+                action.accept("takes 1 bullet out of the empty " + gunDescription + " and throws it away");
             } else {
-                action.accept("takes " + -bullets + " bullets out of the empty gun and throws them away");
+                action.accept("takes " + -bullets + " bullets out of the empty " + gunDescription + " and throws them away");
             }
             bullets = 0;
         } else if (bullets > chambers) {
-            action.accept("puts " + bullets + " bullets into the gun. " + (bullets - chambers) + " fall out.");
+            action.accept("puts " + bullets + " bullets into the " + gunDescription + ". " + (bullets - chambers) + " fall out.");
             bullets = chambers;
         } else if (bullets > 0) {
             String pluralized = bullets == 1 ? " bullet" : " bullets";
-            action.accept("puts " + bullets + pluralized + " into the gun");
+            action.accept("puts " + bullets + pluralized + " into the " + gunDescription);
         }
 
         lastBullets = bullets;
