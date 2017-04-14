@@ -105,11 +105,12 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
                 break;
             case "roulette":
                 if (!loaded.contains(true)) {
-                    if (!loaded.isEmpty()) { // don't say this the first time playing
+                    boolean isAutoReload = !loaded.isEmpty(); // first time playing isn't an auto-reload per se
+                    if (isAutoReload) {
                         action.accept("notices the gun feels rather light. The chamber is empty!");
                     }
                     if (lastBullets > 0) {
-                        reload(action, true);
+                        reload(action, isAutoReload);
                     } else {
                         message.accept("ಠ_ಠ " + target);
                     }
