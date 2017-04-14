@@ -178,7 +178,13 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
                 if (acl.hasPermission(event, PERM_SAY)) {
                     sendToChannel(event, "say", remainder);
                 } else {
-                    event.respond(E_PERMFAIL);
+                    // take that, smartass!
+                    if (E_PERMFAIL.equals(remainder) || (actor + ": " + E_PERMFAIL).equals(remainder)) {
+                        sendToChannel(event, "act", "throws sand in " + actor + "'s face");
+                    }
+                    else {
+                        event.respond(E_PERMFAIL);
+                    }
                 }
                 break;
             case CMD_ACT:
