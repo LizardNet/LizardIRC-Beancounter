@@ -980,4 +980,32 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
             channelState.getActiveGame().handlePlayerQuit(player);
         } // Ignore it if somehow we try to leave someone who isn't an active player
     }
+
+    /**
+     * Check if a game is active in a given channel
+     *
+     * @param channel The channel to check
+     * @return Returns {@code true} if a game is in progress, {@code false} otherwise
+     */
+    public boolean isGameInProgress(Channel channel) {
+        Objects.requireNonNull(channel);
+        ChannelState<T> channelState = perChannelState.get(channel);
+
+        return channelState != null && !GamePhase.INACTIVE.equals(channelState.getGamePhase());
+    }
+
+    /**
+     * Check if a given user is playing a game in the given channel
+     *
+     * @param channel The channel to be checked
+     * @param user The user to be checked
+     * @return Returns {@code true} if a {@linkplain #isGameInProgress(Channel) game is active in the given channel} and
+     *         the given user is playing in that game; {@code false} otherwise.
+     */
+    public boolean isUserInGame(Channel channel, User user) {
+        Objects.requireNonNull(channel);
+        Objects.requireNonNull(user);
+
+        return isGameInProgress(channel) && perChannelState.get(channel).getPlayerManager().isPlaying(user);
+    }
 }
