@@ -35,6 +35,7 @@ package org.lizardirc.beancounter.commands.roulette;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -47,6 +48,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.output.OutputChannel;
 import org.pircbotx.output.OutputIRC;
 
+import org.lizardirc.beancounter.gameframework.GameHandler;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.utils.Strings;
 
@@ -58,8 +60,14 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
 
     private static Random random = new Random();
 
+    private final GameHandler<T> gameHandler;
+
     private List<Boolean> loaded = new ArrayList<>();
     private int lastBullets = DEFAULT_BULLETS;
+
+    public RouletteHandler(GameHandler<T> gameHandler) {
+        this.gameHandler = Objects.requireNonNull(gameHandler);
+    }
 
     @Override
     public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
@@ -75,9 +83,10 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
             return;
         }
         String channel = event.getUser().getNick();
+        Channel chan = null;
         OutputChannel outChan = null;
         if (event instanceof GenericChannelEvent) {
-            Channel chan = ((GenericChannelEvent) event).getChannel();
+            chan = ((GenericChannelEvent) event).getChannel();
             channel = chan.getName();
             outChan = new OutputChannel(event.getBot(), chan);
         }
@@ -124,7 +133,8 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
                         message.accept("The suspense is killing " + target + "!");
                     }
 
-                    if (outChan != null) {
+                    if (chan != null && !gameHandler.isUserInGame(chan, event.getUser())) {
+                        // outChan will be non-null if chan is non-null
                         outChan.kick(event.getUser(), "*BANG*! You're dead, Jim!");
                     }
                     message.accept("*BANG*! You're dead, Jim!");

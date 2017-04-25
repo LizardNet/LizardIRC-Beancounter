@@ -157,7 +157,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(new MemeHandler<>());
         handlers.add(new GoatHandler<>(acl));
         handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
-        handlers.add(new PerChannelCommand<>(RouletteHandler::new));
+        handlers.add(new PerChannelCommand<>(() -> new RouletteHandler<>(gameHandler)));
         handlers.add(wikipediaHandler);
         handlers.add(new YouTubeHandler<>(acl, youTubeService));
         handlers.add(new RedditHandler<>(redditService));
