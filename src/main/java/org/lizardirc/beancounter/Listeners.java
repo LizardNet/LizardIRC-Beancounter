@@ -44,6 +44,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
 import com.google.common.collect.ImmutableSet;
+import org.lizardirc.beancounter.commands.airport.AirportHandler;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.managers.ListenerManager;
@@ -170,6 +171,11 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(earthquakeListener.getCommandHandler());
         handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(fishbotHandler.getCommandHandler());
+
+        if (Boolean.parseBoolean(properties.getProperty("airport.enable", "true"))) {
+            handlers.add(new AirportHandler<>());
+        }
+
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
