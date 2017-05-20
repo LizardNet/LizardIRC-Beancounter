@@ -55,6 +55,8 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String COMMAND_CLEAR_REMINDERS = "clearreminders";
     private static final Set<String> COMMANDS = ImmutableSet.of(COMMAND_REMIND, COMMAND_REMIND_ME, COMMAND_CLEAR_REMINDERS);
 
+    private static final String CONFIRM_STRING = "Yes, I want to delete all reminders";
+
     private static final String PERM_CLEAR_REMINDERS = "clearreminders";
 
     private final ReminderListener<T> reminderListener;
@@ -80,8 +82,14 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
 
         if (commands.get(0).equals(COMMAND_CLEAR_REMINDERS)) {
             if (reminderListener.getAcl().hasPermission(event, PERM_CLEAR_REMINDERS)) {
-                reminderListener.clearAllReminders();
-                event.respond("Done.  *All* reminders have been purged.");
+                if (remainder.trim().equalsIgnoreCase(CONFIRM_STRING)) {
+                    reminderListener.clearAllReminders();
+                    event.respond("Done.  *All* reminders have been purged.");
+                } else {
+                    event.respond("Error: Clearing all reminders requires confirmation.  To confirm, type \"" +
+                        CONFIRM_STRING + "\" (without the quotes) as the argument to the " + COMMAND_CLEAR_REMINDERS +
+                        " command.");
+                }
                 return;
             } else {
                 event.respond("No u! (You don't have the necessary permissions to do this.)");
