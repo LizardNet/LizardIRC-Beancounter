@@ -130,3 +130,12 @@ serverHost=
 # advised that setting this weather.enable option to "true" may constitute implicit agreement to the Weather Underground
 # API's Terms of Service at <http://www.wunderground.com/weather/api/d/terms.html>!
 #weather.enable=false
+
+# OPTIONAL AIRPORT COMMAND CONFIGURATION
+# airport.enable: Boolean - Whether to enable the airport lookup database.
+# By default, when the bot starts, it will download and save into memory a list of all airports in the world to power
+# the ?airport command.  Temporary files are only used during the parsing stage, but this does consume some bandwidth -
+# as of this writing, the entire dataset is approximately 10 MiB.  To disable this feature. set the below option to
+# "false". You may wish to do this on limited-bandwidth connections or connections with data caps, as each Beancounter
+# instance you run will download this data upon start and every 24 hours (at most) thereafter.
+#airport.enable=true
