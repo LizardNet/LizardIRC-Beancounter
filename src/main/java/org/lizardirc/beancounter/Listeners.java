@@ -52,6 +52,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import redis.clients.jedis.Jedis;
 
 import org.lizardirc.beancounter.commands.admin.AdminHandler;
+import org.lizardirc.beancounter.commands.airport.AirportHandler;
 import org.lizardirc.beancounter.commands.dice.DiceHandler;
 import org.lizardirc.beancounter.commands.earthquake.EarthquakeListener;
 import org.lizardirc.beancounter.commands.entrymsg.EntryMessageListener;
@@ -173,6 +174,11 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(fishbotHandler.getCommandHandler());
         handlers.add(morseHandler.getCommandHandler());
+
+        if (Boolean.parseBoolean(properties.getProperty("airport.enable", "true"))) {
+            handlers.add(new AirportHandler<>());
+        }
+
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
