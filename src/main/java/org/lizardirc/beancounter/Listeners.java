@@ -53,6 +53,8 @@ import redis.clients.jedis.Jedis;
 import org.lizardirc.beancounter.commands.admin.AdminHandler;
 import org.lizardirc.beancounter.commands.dice.DiceHandler;
 import org.lizardirc.beancounter.commands.earthquake.EarthquakeListener;
+import org.lizardirc.beancounter.commands.elite.DangerousCommandHandler;
+import org.lizardirc.beancounter.commands.elite.eddn.EddnStreamer;
 import org.lizardirc.beancounter.commands.entrymsg.EntryMessageListener;
 import org.lizardirc.beancounter.commands.fishbot.FishbotListener;
 import org.lizardirc.beancounter.commands.fishbot.FishbotResponseRepository;
@@ -136,6 +138,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         }
 
         boolean enableWeatherHandler = Boolean.parseBoolean(properties.getProperty("weather.enable", "false"));
+        boolean eddnEnabled = Boolean.parseBoolean(properties.getProperty("elite.eddn.enable", "false"));
 
         RedditService redditService = new RedditService();
         YouTubeService youTubeService = new YouTubeService(pm.getNamespace("youtube"));
@@ -170,6 +173,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(earthquakeListener.getCommandHandler());
         handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(fishbotHandler.getCommandHandler());
+        handlers.add(new DangerousCommandHandler<>(pm.getNamespace("elite"), acl, eddnEnabled ? new EddnStreamer() : null));
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
