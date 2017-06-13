@@ -53,6 +53,8 @@ import redis.clients.jedis.Jedis;
 import org.lizardirc.beancounter.commands.admin.AdminHandler;
 import org.lizardirc.beancounter.commands.dice.DiceHandler;
 import org.lizardirc.beancounter.commands.earthquake.EarthquakeListener;
+import org.lizardirc.beancounter.commands.elite.DangerousCommandHandler;
+import org.lizardirc.beancounter.commands.elite.eddn.EddnHandler;
 import org.lizardirc.beancounter.commands.entrymsg.EntryMessageListener;
 import org.lizardirc.beancounter.commands.fishbot.FishbotListener;
 import org.lizardirc.beancounter.commands.fishbot.FishbotResponseRepository;
@@ -136,6 +138,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         }
 
         boolean enableWeatherHandler = Boolean.parseBoolean(properties.getProperty("weather.enable", "false"));
+        boolean eddnEnabled = Boolean.parseBoolean(properties.getProperty("elite.eddn.enable", "false"));
 
         RedditService redditService = new RedditService();
         YouTubeService youTubeService = new YouTubeService(pm.getNamespace("youtube"));
@@ -148,6 +151,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
         WikipediaHandler<T> wikipediaHandler = new WikipediaHandler<>(pm.getNamespace("wikipediaHandler"), acl);
+        EddnHandler<T> eddnHandler = null;
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -170,6 +174,12 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(earthquakeListener.getCommandHandler());
         handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(fishbotHandler.getCommandHandler());
+        if (eddnEnabled) {
+            eddnHandler = new EddnHandler<>(scheduledExecutorService);
+            handlers.add(new DangerousCommandHandler<>(pm.getNamespace("elite"), acl, eddnHandler));
+        } else {
+            handlers.add(new DangerousCommandHandler<>(pm.getNamespace("elite"), acl, null));
+        }
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -189,6 +199,9 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(entryMessageListener);
         ownListeners.add(fishbotHandler);
         ownListeners.add(wikipediaHandler);
+        if (eddnEnabled) {
+            ownListeners.add(eddnHandler);
+        }
 
         ownListeners.forEach(listenerManager::addListener);
     }

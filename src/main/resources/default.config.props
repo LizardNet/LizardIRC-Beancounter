@@ -130,3 +130,19 @@ serverHost=
 # advised that setting this weather.enable option to "true" may constitute implicit agreement to the Weather Underground
 # API's Terms of Service at <http://www.wunderground.com/weather/api/d/terms.html>!
 #weather.enable=false
+
+# OPTIONAL ELITE DANGEROUS DATA NETWORK CONFIGURATION
+# If you don't know what Elite: Dangerous is or don't play the game, you can safely ignore this section.
+# elite.eddn.enable: Boolean - Whether to enable access to streamed EDDN data
+# Beancounter is capable of reading streamed data from the Elite: Dangerous Data Network (EDDN)
+# <https://github.com/AnthorNet/EDDN/wiki> and providing a live log of FSDJump, Docked, and Undocked events for the
+# players specified in the ?cfgeddn command.  This functionality is disabled by default; when enabled, the bot will
+# establish a connection to the EDDN ZeroMQ endpoint and relay FSDJump, Docked, and Undocked journal events for the
+# specified Commander(s) to the specified IRC channel(s).  Note that the configuration of who to follow and the channels
+# to report to is configured from IRC, but to perform that configuration, you must enable EDDN access here.  Note that
+# the EDDN stream is pretty active and will consume some bandwidth and CPU, since the bot has to receive the entire
+# firehose and do the filtering itself, so if you are concerned about bandwidth/CPU usage, disable EDDN access.
+# Finally, remember that EDDN data is provided by 3rd-party tools running on players' computers - this means that only
+# players on the PC version of Elite: Dangerous can be tracked, and only if they are running software and submitting
+# their data to EDDN!
+#elite.eddn.enable=false
