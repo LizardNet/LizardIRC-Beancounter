@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_412b9230",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/elite/Configuration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-06-14T12:49:31Z",
+      "side": 1,
+      "message": "If this is intended to force people to use the trackCommander() method (etc), would it be worth making this return an immutable set, or doing a clone so you *know* the underlying collection doesn\u0027t get changed?",
+      "revId": "7b8e8b6ea102510aa29eae7843b016a3835eee69",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_e11f4608",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/elite/Configuration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-06-14T12:49:31Z",
+      "side": 1,
+      "message": "Ditto from above - I don\u0027t know how this interacts with the serialisation storage though.",
+      "revId": "7b8e8b6ea102510aa29eae7843b016a3835eee69",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_011d8a0f",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/elite/DangerousCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-06-14T12:49:31Z",
+      "side": 1,
+      "message": "Eurgh, this looks horrible from a code-style view - I wonder if it\u0027d be better to split this out into sections, just for readability.",
+      "revId": "7b8e8b6ea102510aa29eae7843b016a3835eee69",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_a1193e24",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/elite/eddn/EddnHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-06-14T12:49:31Z",
+      "side": 1,
+      "message": "Is it worth logging an error to stderr if the schema changes?\n\nYou\u0027ve also got this defined as a constant in JournalEntry",
+      "revId": "7b8e8b6ea102510aa29eae7843b016a3835eee69",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_c116c2f1",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/elite/eddn/schema/journal/JournalEntry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-06-14T12:49:31Z",
+      "side": 1,
+      "message": "Noting that this can contain \"\" for government as the localisation thing for undefined, this might look weird",
+      "revId": "7b8e8b6ea102510aa29eae7843b016a3835eee69",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
