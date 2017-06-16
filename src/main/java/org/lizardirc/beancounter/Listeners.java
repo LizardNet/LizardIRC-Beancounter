@@ -150,9 +150,10 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
         WikipediaHandler<T> wikipediaHandler = new WikipediaHandler<>(pm.getNamespace("wikipediaHandler"), acl);
         GameHandler<T> gameHandler = new GameHandler<>(acl, pm.getNamespace("gameHandler"), scheduledExecutorService);
+        AdminHandler<T> adminHandler = new AdminHandler<>(acl, gameHandler);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
-        handlers.add(new AdminHandler<>(acl));
+        handlers.add(adminHandler);
         handlers.add(new DiceHandler<>());
         handlers.add(new MemeHandler<>());
         handlers.add(new GoatHandler<>(acl));
@@ -176,6 +177,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
+        ownListeners.add(adminHandler.getListener());
         ownListeners.add(new Chainable<>(new Fantasy<>(new CommandListener<>(commands), fantasyString), separator));
 
         ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistence")));

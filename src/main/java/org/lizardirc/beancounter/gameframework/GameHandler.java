@@ -47,6 +47,7 @@ import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
@@ -59,6 +60,7 @@ import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.reflections.Reflections;
 
+import org.lizardirc.beancounter.commands.admin.AdminHandler;
 import org.lizardirc.beancounter.gameframework.playermanagement.IlegelSubstitutionException;
 import org.lizardirc.beancounter.gameframework.playermanagement.Player;
 import org.lizardirc.beancounter.gameframework.playermanagement.PlayerManager;
@@ -104,6 +106,8 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
     private final Set<ChannelState<T>> activeGamesRequiringPmCommands = new HashSet<>();
 
     private Set<Class<?>> availableGames;
+    private String quitAfterAllGamesFinish = null;
+    private AdminHandler<T> adminHandler = null;
 
     public GameHandler(AccessControl<T> acl, PersistenceManager pm, ScheduledExecutorService ses) {
         this.acl = Objects.requireNonNull(acl);
@@ -346,6 +350,11 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
                     if (CMD_PLAY.equals(commands.get(0))) {
                         if (!gameEnabledChannels.contains(gce.getChannel().getName().toLowerCase())) {
                             event.respond("Games are disabled in this channel.");
+                            return;
+                        }
+
+                        if (quitAfterAllGamesFinish != null) {
+                            event.respond("Sorry, the bot is preparing to quit once all active games have finished.  No new games may be started at this time.");
                             return;
                         }
 
@@ -703,10 +712,18 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
             .forEach(entry -> {
                 entry.getValue().setGamePhaseInactive();
                 // oh god
-                sendChannelMessage(entry.getKey(), "Game has been stopped - use the \"" + CMD_PLAY + "\" command to start a new game!");
+                if (quitAfterAllGamesFinish == null) {
+                    sendChannelMessage(entry.getKey(), "Game has been stopped - use the \"" + CMD_PLAY + "\" command to start a new game!");
+                } else {
+                    sendChannelMessage(entry.getKey(), "Game has been stopped.  No new games may be started because the bot will be quitting soon.  Reason: " + quitAfterAllGamesFinish);
+                }
                 // I don't like this
                 activeGamesRequiringPmCommands.remove(entry.getValue());
             });
+
+        if (quitAfterAllGamesFinish != null && getAllInProgressGames().count() == 0L) {
+            adminHandler.dedify(quitAfterAllGamesFinish);
+        }
     }
 
     private void handleJoin(ChannelState<T> state, GenericMessageEvent<T> event) {
@@ -755,9 +772,21 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
                 sendChannelMessage(channel, IrcColors.BOLD + user.getNick() + IrcColors.BOLD + " has chikin'd out.  " +
                     state.getPlayerManager().getIngamePlayerCount() + " players remaining.");
             } else {
-                sendChannelMessage(channel, IrcColors.BOLD + user.getNick() + IrcColors.BOLD +
-                    " chikin'd out and no players are remaining.  The game has been stopped and a new game may now be selected.");
+                String message = IrcColors.BOLD + user.getNick() + IrcColors.BOLD +
+                    " chikin'd out and no players are remaining.  ";
+
+                if (quitAfterAllGamesFinish == null) {
+                    message += "The game has been stopped and a new game may now be selected.";
+                } else {
+                    message += "The bot has been scheduled to quit (reason: \"" + quitAfterAllGamesFinish + "\"); no new games may be started.";
+                }
+
+                sendChannelMessage(channel, message);
                 state.setGamePhaseInactive();
+
+                if (quitAfterAllGamesFinish != null && getAllInProgressGames().count() == 0L) {
+                    adminHandler.dedify(quitAfterAllGamesFinish);
+                }
             }
         }
     }
@@ -994,6 +1023,18 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
         return channelState != null && !GamePhase.INACTIVE.equals(channelState.getGamePhase());
     }
 
+    public Stream<Map.Entry<Channel, ChannelState<T>>> getAllInProgressGames() {
+        return perChannelState.entrySet().stream()
+            .filter(e -> e.getValue() != null && !GamePhase.INACTIVE.equals(e.getValue().getGamePhase()));
+    }
+
+    public Set<String> getAllInProgressGamesChannels() {
+        return getAllInProgressGames()
+            .map(Map.Entry::getKey)
+            .map(Channel::getName)
+            .collect(Collectors.toSet());
+    }
+
     /**
      * Check if a given user is playing a game in the given channel
      *
@@ -1007,5 +1048,43 @@ public class GameHandler<T extends PircBotX> implements CommandHandler<T> {
         Objects.requireNonNull(user);
 
         return isGameInProgress(channel) && perChannelState.get(channel).getPlayerManager().isPlaying(user);
+    }
+
+    /**
+     * Check if the given user is playing a game in *any* channel.  If you only want to check a specific channel, please
+     * use the cheaper method {@link #isUserInGame(Channel, User)}.
+     *
+     * @param user The user to be checked
+     * @return {@code true} if the user is in a game (or games) in any channel (or channels); {@code false} otherwise.
+     */
+    public boolean isUserInGame(User user) {
+        Objects.requireNonNull(user);
+
+        return getAllInProgressGames()
+            .anyMatch(e -> e.getValue().getPlayerManager().isPlaying(user));
+    }
+
+    public void quitAfterAllGamesFinish(String reason, AdminHandler<T> adminHandler) {
+        quitAfterAllGamesFinish = Objects.requireNonNull(reason);
+        this.adminHandler = Objects.requireNonNull(adminHandler);
+
+        getAllInProgressGames()
+            .forEach(e -> e.getKey().send().message("An admin has scheduled this bot to quit after all games end.  Reason: \"" + quitAfterAllGamesFinish + '"'));
+
+        // Just in case of race conditions - check if there are still any games in progress, and if not, go ahead and
+        // quit.
+        if (getAllInProgressGames().count() == 0L) {
+            adminHandler.dedify(quitAfterAllGamesFinish);
+        }
+    }
+
+    public void cancelQuitAfterAllGamesFinish() {
+        if (quitAfterAllGamesFinish != null) {
+            quitAfterAllGamesFinish = null;
+            adminHandler = null;
+
+            getAllInProgressGames()
+                .forEach(e -> e.getKey().send().message("An admin has cancelled the previously scheduled quit"));
+        }
     }
 }

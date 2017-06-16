@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2017 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -44,6 +44,7 @@ import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.output.OutputIRC;
 
+import org.lizardirc.beancounter.gameframework.GameHandler;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Miscellaneous;
@@ -68,31 +69,43 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String PERM_RAW = CMD_RAW;
     private static final String PERM_LIST = CMD_LIST;
 
+    private static final String QUIT_OPT_FORCE = "--force";
+    private static final String QUIT_OPT_LATER = "--later";
+    private static final String QUIT_OPT_CANCEL = "--cancel";
+    private static final Set<String> QUIT_OPTS = ImmutableSet.of(QUIT_OPT_FORCE, QUIT_OPT_CANCEL, QUIT_OPT_LATER);
+
     private static final String E_PERMFAIL = "No u! (You don't have the necessary permissions to do this.)";
 
     private final AccessControl<T> acl;
+    private final GameHandler<T> gameHandler;
+    private final AdminListener<T> adminListener = new AdminListener<>();
 
-    public AdminHandler(AccessControl<T> acl) {
+    private String murderer = null;
+
+    public AdminHandler(AccessControl<T> acl, GameHandler<T> gameHandler) {
         this.acl = acl;
+        this.gameHandler = gameHandler;
     }
 
     @Override
     public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
+        } else if (commands.size() == 1 && commands.get(0).equals(CMD_QUIT)) {
+            return QUIT_OPTS;
         }
         return Collections.emptySet();
     }
 
     @Override
     public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
-        String[] args;
-        OutputIRC outputIRC = event.getBot().sendIRC();
-        String actor = event.getUser().getNick();
-
         if (commands.size() == 0) {
             return;
         }
+
+        String[] args;
+        OutputIRC outputIRC = event.getBot().sendIRC();
+        String actor = event.getUser().getNick();
 
         if (remainder != null) {
             remainder = remainder.trim();
@@ -105,9 +118,36 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
                     quitMessage = remainder;
                 }
                 if (acl.hasPermission(event, PERM_QUIT)) {
-                    // Forcibly disable auto-reconnect, since we now want the bot to terminate cleanly
-                    event.getBot().stopBotReconnect();
-                    outputIRC.quitServer(quitMessage);
+                    if (commands.size() == 2) {
+                        switch (commands.get(1)) {
+                            case QUIT_OPT_FORCE:
+                                dedify(quitMessage);
+                                break;
+                            case QUIT_OPT_LATER:
+                                event.respond("Okay, I'll quit when all currently active games have finished, " +
+                                    "and prevent new games from starting until then.  If you change your mind and don't want me to quit after all, please use the \"" +
+                                    CMD_QUIT + ' ' + QUIT_OPT_CANCEL + "\" command.");
+                                event.respond("If you want me to quit immediately, at any time give the \"" +  CMD_QUIT + ' ' + QUIT_OPT_FORCE + "\" command.");
+                                murderer = event.getUser().getNick();
+                                gameHandler.quitAfterAllGamesFinish(quitMessage, this);
+                                break;
+                            case QUIT_OPT_CANCEL:
+                                gameHandler.cancelQuitAfterAllGamesFinish();
+                                murderer = null;
+                                event.respond("Okay, cancelled the scheduled quit.  New games may be started once again.");
+                                break;
+                        }
+                    } else {
+                        int activeGameChannels = gameHandler.getAllInProgressGamesChannels().size();
+
+                        if (activeGameChannels > 0) {
+                            event.respond("Refusing to quit - there are active games in " + activeGameChannels + " channels");
+                            event.respond("If you want the bot to quit right now anyway, please use the \"" +
+                                QUIT_OPT_FORCE + "\" option.  If you want the bot to quit after all games finish (and prevent new games from starting), use the \"" + QUIT_OPT_LATER + "\" option.");
+                        } else {
+                            dedify(quitMessage);
+                        }
+                    }
                 } else {
                     event.respond(E_PERMFAIL);
                 }
@@ -259,5 +299,18 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
                 }
             }
         }
+    }
+
+    public void dedify(String quitMessage) {
+        if (murderer != null) {
+            adminListener.getBot().sendIRC().message(murderer, "Bot is now quitting per your request.");
+        }
+
+        adminListener.getBot().stopBotReconnect();
+        adminListener.getBot().sendIRC().quitServer(quitMessage);
+    }
+
+    public AdminListener<T> getListener() {
+        return adminListener;
     }
 }
