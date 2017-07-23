@@ -147,7 +147,7 @@
       "ctcp": "ACTION"
     },
     {
-      "regularExpression": "^(.*) go m[o0][o0]$",
+      "regularExpression": "^(.*) go(es)? m[o0][o0]$",
       "response": "%n: only when they are impersonating fish."
     },
     {
