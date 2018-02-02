@@ -48,12 +48,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String COMMAND_REMIND = "remind";
     private static final String COMMAND_REMIND_ME = "remindme";
     private static final String COMMAND_CLEAR_REMINDERS = "clearreminders";
-    private static final Set<String> COMMANDS = ImmutableSet.of(COMMAND_REMIND, COMMAND_REMIND_ME, COMMAND_CLEAR_REMINDERS);
+    private static final String COMMAND_LIST_REMINDERS = "ListReminders";
+
+    private static final String CMD_LISTREM_INBOUND = "inbound";
+
+    private static final Set<String> COMMANDS = ImmutableSet.of(COMMAND_REMIND, COMMAND_REMIND_ME, COMMAND_CLEAR_REMINDERS, COMMAND_LIST_REMINDERS);
+    private static final Set<String> CMD_LISTREM_SUBCOMMANDS = ImmutableSet.of(CMD_LISTREM_INBOUND, "");
 
     private static final String CONFIRM_STRING = "Yes, I want to delete all reminders";
 
@@ -69,6 +76,10 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
     public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
+        }
+
+        if (COMMAND_LIST_REMINDERS.equals(commands.get(0)) && commands.size() == 1) {
+            return CMD_LISTREM_SUBCOMMANDS;
         }
 
         return Collections.emptySet();
@@ -95,6 +106,10 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
                 event.respond("No u! (You don't have the necessary permissions to do this.)");
                 return;
             }
+        }
+
+        if (commands.get(0).equals(COMMAND_LIST_REMINDERS)) {
+            handleListReminders(event, commands);
         }
 
         String target;
@@ -170,6 +185,42 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
                 reminderListener.sync();
                 event.respond("Reminder successfully recorded; will be delivered as soon as I see the target user talk in or join a channel I'm in (note: reminders may be delivered by private message).");
             }
+        }
+    }
+
+    private void handleListReminders(GenericMessageEvent<T> event, List<String> commands) {
+        String reminderType;
+        Predicate<TimedReminder> filterFunc;
+
+        switch (commands.get(1)) {
+            case CMD_LISTREM_INBOUND:
+                reminderType = "inbound";
+                filterFunc = x ->
+                    x.target.equalsIgnoreCase(event.getUser().getNick())
+                        || x.target.equalsIgnoreCase(event.getUser().getLogin() + "@" + event.getUser().getHostmask());
+                break;
+            default:
+                event.respond(
+                    String.format("Please choose one of these list types: %s",
+                        CMD_LISTREM_SUBCOMMANDS.stream().collect(Collectors.joining(", "))));
+                return;
+        }
+
+        // fetch this user's timed reminders
+        List<String> timedReminders = reminderListener.getTimedReminders()
+            .stream()
+            .filter(filterFunc)
+            .map(x -> x.getResponseMessagePrefix(false, true)
+                .append(": ")
+                .append(x.message)
+                .toString())
+            .collect(Collectors.toList());
+
+        if (timedReminders.size() == 0) {
+            event.respond(String.format("I have no %s reminders queued up for you.", reminderType));
+        } else {
+            event.respond(String.format("I have the following %d %s reminders queued up for you:", timedReminders.size(), reminderType));
+            timedReminders.forEach(event::respond);
         }
     }
 
