@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_3e2549ab",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/remind/ReminderCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2018-02-04T03:55:03Z",
+      "side": 1,
+      "message": "This .equals needs to be .equalsIgnoreCase since nick is not case-sensitive",
+      "revId": "428af86177bb52e8029d3ae255630e5fad5115f3",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_de39c5d9",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/remind/ReminderCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2018-02-04T03:55:03Z",
+      "side": 1,
+      "message": "^ same here, but with login and host",
+      "revId": "428af86177bb52e8029d3ae255630e5fad5115f3",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
