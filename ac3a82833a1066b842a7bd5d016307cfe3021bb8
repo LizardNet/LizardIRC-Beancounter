@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_be4ab9aa",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/Airport.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "pls",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_de53056b",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/AirportHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "Would it be worth doing an early return here, instead of letting the DataNotReadyException be thrown later?",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_fe504160",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/AirportHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "Consider unnesting the if blocks, and possibly introducing a List\u003cAirport\u003e findAirport(string remainder) method\n\nIt would also make it clearer that the AIRPORT_NOT_FOUND case is protecting the outputAirportInformation method",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_9e4d7dc7",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/AirportHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "feetToMetres is more clear",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_be739914",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/DataAcquirer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "Rename to tempFiles?",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_5e605535",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/DataAcquirer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "Would this be better as a finally block?",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_7e651144",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/DataAcquirer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "Does this follow HTTP 30x?",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_3e5f8974",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/DataHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "This method had me confused for a little while. I\u0027d recommend a comment with something along the lines of \"store the thrown exception from the data download so we can present it on request later\"",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_1e5acd83",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/DataHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T21:42:51Z",
+      "side": 1,
+      "message": "I feel there\u0027s a NullReferenceException here - if an airport is requested after the download is completed, but before the indexes have been built - checkDataReady() will be a no-op because isDone() will return true as the download is complete.",
+      "revId": "ac3a82833a1066b842a7bd5d016307cfe3021bb8",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
