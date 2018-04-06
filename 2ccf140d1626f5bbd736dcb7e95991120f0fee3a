@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_fe692126",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/remind/ReminderCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-04-06T20:33:41Z",
+      "side": 1,
+      "message": "Just a thought, do we want to make this case insensitive? It\u0027s one of those things I feel probably should be exact.",
+      "revId": "2ccf140d1626f5bbd736dcb7e95991120f0fee3a",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    }
+  ]
+}
