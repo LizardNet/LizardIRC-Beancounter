@@ -44,6 +44,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
 import com.google.common.collect.ImmutableSet;
+import org.lizardirc.beancounter.commands.morse.MorseListener;
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.managers.ListenerManager;
@@ -148,6 +149,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
         FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
         WikipediaHandler<T> wikipediaHandler = new WikipediaHandler<>(pm.getNamespace("wikipediaHandler"), acl);
+        MorseListener<T> morseHandler = new MorseListener<>(pm.getNamespace("morse"), acl);
 
         List<CommandHandler<T>> handlers = new ArrayList<>();
         handlers.add(new AdminHandler<>(acl));
@@ -170,6 +172,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(earthquakeListener.getCommandHandler());
         handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(fishbotHandler.getCommandHandler());
+        handlers.add(morseHandler.getCommandHandler());
         handlers.add(this);
         MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
         commands.add(new HelpHandler<>(commands));
@@ -189,6 +192,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         ownListeners.add(entryMessageListener);
         ownListeners.add(fishbotHandler);
         ownListeners.add(wikipediaHandler);
+        ownListeners.add(morseHandler);
 
         ownListeners.forEach(listenerManager::addListener);
     }
