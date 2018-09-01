@@ -71,6 +71,7 @@ import org.lizardirc.beancounter.commands.weather.WeatherHandler;
 import org.lizardirc.beancounter.commands.wikipedia.WikipediaHandler;
 import org.lizardirc.beancounter.commands.youtube.YouTubeHandler;
 import org.lizardirc.beancounter.commands.youtube.YouTubeService;
+import org.lizardirc.beancounter.gameframework.GameHandler;
 import org.lizardirc.beancounter.hooks.Chainable;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.CommandListener;
@@ -152,6 +153,7 @@ public class Listeners implements CommandHandler {
         FishbotListener fishbotHandler = new FishbotListener(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
         WikipediaHandler wikipediaHandler = new WikipediaHandler(pm.getNamespace("wikipediaHandler"), acl);
         MorseListener morseHandler = new MorseListener(pm.getNamespace("morse"), acl);
+        GameHandler gameHandler = new GameHandler(acl, pm.getNamespace("gameHandler"), scheduledExecutorService);
 
         List<CommandHandler> handlers = new ArrayList<>();
         handlers.add(new AdminHandler(acl));
@@ -175,6 +177,7 @@ public class Listeners implements CommandHandler {
         handlers.add(entryMessageListener.getCommandHandler());
         handlers.add(fishbotHandler.getCommandHandler());
         handlers.add(morseHandler.getCommandHandler());
+        handlers.add(gameHandler);
         handlers.add(this);
         MultiCommandHandler commands = new MultiCommandHandler(handlers);
         commands.add(new HelpHandler(commands));
@@ -195,6 +198,7 @@ public class Listeners implements CommandHandler {
         ownListeners.add(fishbotHandler);
         ownListeners.add(wikipediaHandler);
         ownListeners.add(morseHandler);
+        ownListeners.add(gameHandler.getListener());
 
         ownListeners.forEach(listenerManager::addListener);
     }
