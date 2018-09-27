@@ -32,17 +32,25 @@
 
 package org.lizardirc.beancounter.commands.morse;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class MorseDecoder {
 
-    private Map<String, String> morseMap;
-    private final Pattern regexMessage;
+    private final Map<String, String> morseMap;
+    private final Pattern regexMatchesMorseWord;
+
+    /**
+     * Morse letters which are commonly used in non-morse text.
+     */
+    private final ImmutableList<String> ambiguousMorse;
 
     public MorseDecoder(Map<String, String> map) {
         this.morseMap = map;
-        regexMessage = Pattern.compile("^[-./]+$");
+        regexMatchesMorseWord = Pattern.compile("^[-./]+$");
+        this.ambiguousMorse = ImmutableList.of("...", ".", "-");
     }
 
     public class DecodeResult {
@@ -55,23 +63,41 @@ public class MorseDecoder {
         }
     }
 
+    /**
+     * Converts a string containing morse into a non-morse string
+     *
+     * @param message The message containing morse to decode
+     * @return DecodeResult
+     */
     public DecodeResult decodeMorse(String message) {
         String[] strings = message.split(" ");
         int characters = 0;
 
         StringBuilder sb = new StringBuilder();
         boolean lastWasMorse = false;
+        String ambiguousMorseInstance = null;
 
+        // We've taken a text string, and split it into what humans call words.
+        // We iterate over those words, and see if they are actually morse sequences which are actually letters.
+        // We keep track of whether or not the last "word" was a morse character so we can properly pad things
         for (String morseChar : strings) {
+            // insert a space, but only if we think we're in a morse sequence
             if ("/".equals(morseChar) && lastWasMorse) {
                 sb.append(" ");
                 continue;
             }
 
-            if (!regexMessage.matcher(morseChar).matches()) {
-                // isn't a regex sequence
-                if(lastWasMorse){
+            if (!regexMatchesMorseWord.matcher(morseChar).matches()) {
+                // this one isn't a morse sequence, so just pass it through
+                if (lastWasMorse && ambiguousMorseInstance == null) {
+                    // oh, and we're transitioning from morse to non-morse, so add a space
                     sb.append(" ");
+                }
+
+                if (ambiguousMorseInstance != null) {
+                    sb.append(ambiguousMorseInstance);
+                    sb.append(" ");
+                    ambiguousMorseInstance = null;
                 }
 
                 sb.append(morseChar);
@@ -80,7 +106,19 @@ public class MorseDecoder {
                 continue;
             }
 
+            // OK, so we've verified that morseChar is actually morse.
+            // Thus, at this point, it can contain only a dot, a dash, or a slash.
+
+            // Deal with a slash as a word separator
             if (morseChar.contains("/")) {
+                // definitely morse.
+                if (ambiguousMorseInstance != null) {
+                    // last character was ambiguous, so allow it as this is morse.
+                    sb.append(this.morseMap.getOrDefault(ambiguousMorseInstance, "█"));
+                    characters++;
+                    ambiguousMorseInstance = null;
+                }
+
                 String[] wordSep = morseChar.split("/");
                 boolean first = true;
                 for (String morseSubword : wordSep) {
@@ -98,10 +136,31 @@ public class MorseDecoder {
                 continue;
             }
 
+            // if this character is possibly ambiguous as to whether it's morse or not (such as a ... or a -), then
+            // treat it as morse, but keep a note of it and add it to the list later.
+            if (this.ambiguousMorse.contains(morseChar) && ambiguousMorseInstance == null && !lastWasMorse) {
+                ambiguousMorseInstance = morseChar;
+                lastWasMorse = true;
+                continue;
+            }
+
+            // this character is now definitely morse
+            if (ambiguousMorseInstance != null) {
+                // last character was ambiguous, so allow it as this is morse.
+                sb.append(this.morseMap.getOrDefault(ambiguousMorseInstance, "█"));
+                characters++;
+                ambiguousMorseInstance = null;
+            }
+
             String realChar = this.morseMap.getOrDefault(morseChar, "█");
             characters++;
             sb.append(realChar);
             lastWasMorse = true;
+        }
+
+        // end of buffer. Was the last character ambiguous?
+        if (ambiguousMorseInstance != null) {
+            sb.append(ambiguousMorseInstance);
         }
 
         return new DecodeResult(sb.toString().trim(), characters);

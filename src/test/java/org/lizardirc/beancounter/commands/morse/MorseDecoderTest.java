@@ -33,17 +33,31 @@
 package org.lizardirc.beancounter.commands.morse;
 
 import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
+@RunWith(Parameterized.class)
 public class MorseDecoderTest extends TestCase {
-
-
     private HashMap<String, String> map;
 
+    private final String expected;
+    private final String actual;
+
+    public MorseDecoderTest(@SuppressWarnings("unused") String type, String expected, String actual) {
+        this.expected = expected;
+        this.actual = actual;
+    }
+
+    @Before
     public void setUp() {
         map = new HashMap<>();
         map.put(".", "e");
+        map.put("..", "i");
         map.put("...", "s");
         map.put("-", "t");
         map.put("---", "o");
@@ -51,72 +65,34 @@ public class MorseDecoderTest extends TestCase {
         map.put(".--.-.", "@");
     }
 
-    public void testBulkMorseBasicNone() {
-        MorseDecoder decoder = new MorseDecoder(map);
-
-        assertEquals("test", decoder.decodeMorse("test").result);
-        assertEquals("please no.", decoder.decodeMorse("please no.").result);
-        assertEquals("no...", decoder.decodeMorse("no...").result);
-        assertEquals("...really?", decoder.decodeMorse("...really?").result);
+    @Parameterized.Parameters(name = "{index}: Test {0}, input: \"{2}\", output: \"{1}\"")
+    public static Iterable<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+            {"no-op", "test", "test"},
+            {"no-op", "please no.", "please no."},
+            {"no-op", "no...", "no..."},
+            {"no-op", "no ...", "no ..."},
+            {"no-op", "...really?", "...really?"},
+            {"no-op", "... really?", "... really?"},
+            {"no-op", "No - don't do this - either - really no", "No - don't do this - either - really no"},
+            {"basic", "sos", "... --- ..."},
+            {"basic", "test", "- . ... -"},
+            {"intermixed", "test se", "test ... ."},
+            {"intermixed", "otot yay otot", "--- - --- - yay --- - --- - "},
+            {"intermixed", "ot multi word sts eee", "--- - multi word ... - ... / . . ."},
+            {"intermixed", "no but sote", "no but ... --- - ."},
+            {"intermixed", "Test a so hi", "Test a ... --- hi"},
+            {"intermixed", "Test a so to hi", "Test a ... --- / - --- hi"},
+            {"intermixed", "Old MacDonald had a farm, e i e i o And on this farm he had a pig...", "Old MacDonald had a farm, . / .. / . / .. / --- And on this farm he had a pig..."},
+            {"multi-word", "so @t", "... --- / .--.-. -"},
+            {"multi-word", "s s t o", "... / ... / - / ---"},
+            {"condensed space", "so to", "... ---/- ---"},
+        });
     }
 
-    public void testBulkMorseIntermixed() {
+    @Test
+    public void testMorseDecode() {
         MorseDecoder decoder = new MorseDecoder(map);
-
-        assertEquals("test se", decoder.decodeMorse("test ... .").result);
-        assertEquals("otot yay otot", decoder.decodeMorse("--- - --- - yay --- - --- - ").result);
-        assertEquals("ot multi word sts eee", decoder.decodeMorse("--- - multi word ... - ... / . . .").result);
-        assertEquals("no but sote", decoder.decodeMorse("no but ... --- - .").result);
+        assertEquals(this.expected, decoder.decodeMorse(this.actual).result);
     }
-
-    public void testDecodesMorseBasic() {
-        MorseDecoder decoder = new MorseDecoder(map);
-
-        String input = "... --- ...";
-        String expected = "sos";
-        String actual = decoder.decodeMorse(input).result;
-
-        assertEquals(expected, actual);
-    }
-
-    public void testDecodesMorseMultiWord() {
-        MorseDecoder decoder = new MorseDecoder(map);
-
-        String input = "... --- / .--.-. -";
-        String expected = "so @t";
-        String actual = decoder.decodeMorse(input).result;
-
-        assertEquals(expected, actual);
-    }
-
-    public void testDecodesMorseIntermixed() {
-        MorseDecoder decoder = new MorseDecoder(map);
-
-        String input = "Test a ... --- hi";
-        String expected = "Test a so hi";
-        String actual = decoder.decodeMorse(input).result;
-
-        assertEquals(expected, actual);
-    }
-
-    public void testDecodesMorseIntermixedMultiword() {
-        MorseDecoder decoder = new MorseDecoder(map);
-
-        String input = "Test a ... --- / - --- hi";
-        String expected = "Test a so to hi";
-        String actual = decoder.decodeMorse(input).result;
-
-        assertEquals(expected, actual);
-    }
-
-    public void testDecodesMorseCondensedSpace() {
-        MorseDecoder decoder = new MorseDecoder(map);
-
-        String input = "... ---/- ---";
-        String expected = "so to";
-        String actual = decoder.decodeMorse(input).result;
-
-        assertEquals(expected, actual);
-    }
-
 }
