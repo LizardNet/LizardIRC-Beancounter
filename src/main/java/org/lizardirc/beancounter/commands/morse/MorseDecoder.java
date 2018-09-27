@@ -38,11 +38,11 @@ import java.util.regex.Pattern;
 public class MorseDecoder {
 
     private Map<String, String> morseMap;
-    private final Pattern regexMessage;
+    private final Pattern regexMatchesMorseWord;
 
     public MorseDecoder(Map<String, String> map) {
         this.morseMap = map;
-        regexMessage = Pattern.compile("^[-./]+$");
+        regexMatchesMorseWord = Pattern.compile("^[-./]+$");
     }
 
     public class DecodeResult {
@@ -55,6 +55,12 @@ public class MorseDecoder {
         }
     }
 
+    /**
+     * Converts a string containing morse into a non-morse string
+     *
+     * @param message
+     * @return
+     */
     public DecodeResult decodeMorse(String message) {
         String[] strings = message.split(" ");
         int characters = 0;
@@ -62,15 +68,20 @@ public class MorseDecoder {
         StringBuilder sb = new StringBuilder();
         boolean lastWasMorse = false;
 
+        // We've taken a text string, and split it into what humans call words.
+        // We iterate over those words, and see if they are actually morse sequences which are actually letters.
+        // We keep track of whether or not the last "word" was a morse character so we can properly pad things
         for (String morseChar : strings) {
+            // insert a space, but only if we think we're in a morse sequence
             if ("/".equals(morseChar) && lastWasMorse) {
                 sb.append(" ");
                 continue;
             }
 
-            if (!regexMessage.matcher(morseChar).matches()) {
-                // isn't a regex sequence
-                if(lastWasMorse){
+            if (!regexMatchesMorseWord.matcher(morseChar).matches()) {
+                // this one isn't a morse sequence, so just pass it through
+                if (lastWasMorse) {
+                    // oh, and we're transitioning from morse to non-morse, so add a space
                     sb.append(" ");
                 }
 
@@ -80,6 +91,8 @@ public class MorseDecoder {
                 continue;
             }
 
+            // OK, so we've verified that morseChar is actually morse.
+            // Thus, at this point, it can contain only a dot, a dash, or a slash.
             if (morseChar.contains("/")) {
                 String[] wordSep = morseChar.split("/");
                 boolean first = true;
@@ -95,6 +108,12 @@ public class MorseDecoder {
 
                 lastWasMorse = true;
 
+                continue;
+            }
+
+            // Turns out "-" is used commonly as a separator.
+            if(morseChar.equals("-") && !lastWasMorse) {
+                sb.append("- ");
                 continue;
             }
 

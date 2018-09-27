@@ -58,6 +58,7 @@ public class MorseDecoderTest extends TestCase {
         assertEquals("please no.", decoder.decodeMorse("please no.").result);
         assertEquals("no...", decoder.decodeMorse("no...").result);
         assertEquals("...really?", decoder.decodeMorse("...really?").result);
+        assertEquals("No - don't do this - either - really no", decoder.decodeMorse("No - don't do this - either - really no").result);
     }
 
     public void testBulkMorseIntermixed() {
