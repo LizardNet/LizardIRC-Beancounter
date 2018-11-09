@@ -53,7 +53,7 @@ class Reminder {
         this.from = Miscellaneous.requireNonEmpty(from);
         this.target = Miscellaneous.requireNonEmpty(target).toLowerCase();
         this.message = Miscellaneous.requireNonEmpty(message);
-        this.channel = Miscellaneous.requireNonEmpty(channel).toLowerCase();
+        this.channel = Objects.requireNonNull(channel).toLowerCase(); // Allowed to be empty, just can't be null
         this.enteredTime = Objects.requireNonNull(enteredTime);
 
         if (this.from.endsWith("!@")) {
