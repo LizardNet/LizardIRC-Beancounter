@@ -32,14 +32,15 @@
 
 package org.lizardirc.beancounter.commands.remind;
 
-import org.lizardirc.beancounter.utils.Bases;
-
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
+import org.lizardirc.beancounter.utils.Bases;
+import org.lizardirc.beancounter.utils.Miscellaneous;
 
 class Reminder {
     protected final String from; // Full nick@user@host mask of the sending user
@@ -49,11 +50,19 @@ class Reminder {
     protected final ZonedDateTime enteredTime;
 
     public Reminder(String from, String target, String message, String channel, ZonedDateTime enteredTime) {
-        this.from = Objects.requireNonNull(from);
-        this.target = Objects.requireNonNull(target.toLowerCase());
-        this.message = Objects.requireNonNull(message);
-        this.channel = Objects.requireNonNull(channel.toLowerCase());
+        this.from = Miscellaneous.requireNonEmpty(from);
+        this.target = Miscellaneous.requireNonEmpty(target).toLowerCase();
+        this.message = Miscellaneous.requireNonEmpty(message);
+        this.channel = Miscellaneous.requireNonEmpty(channel).toLowerCase();
         this.enteredTime = Objects.requireNonNull(enteredTime);
+
+        if (this.from.endsWith("!@")) {
+            throw new IllegalArgumentException("Failure constructing reminder: Could not set sender information.  Please restart the bot.");
+        }
+
+        if (this.target.equals("@")) {
+            throw new IllegalArgumentException("Failure constructing reminder: Could not get target information.  Please restart the bot.");
+        }
     }
 
     @Override

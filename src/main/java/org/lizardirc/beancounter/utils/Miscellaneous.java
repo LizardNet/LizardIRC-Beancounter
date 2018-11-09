@@ -104,4 +104,12 @@ public final class Miscellaneous {
 
         return EntityUtils.toString(response.getEntity());
     }
+
+    public static String requireNonEmpty(String arg) {
+        if (arg == null || arg.isEmpty()) {
+            throw new IllegalArgumentException("Argument must be non-null and not empty");
+        }
+
+        return arg;
+    }
 }

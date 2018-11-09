@@ -143,24 +143,39 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
                     showNoMessageError(event, commands);
                     return;
                 }
-                TimedReminder tr = new TimedReminder(from, target, message, channel, enteredTime, timedReminderDeliveryTime);
-                reminderListener.getTimedReminders().add(tr);
-                reminderListener.sortTimedReminders();
-                reminderListener.sync();
-                if (reminderListener.getScheduledFuture() != null) {
-                    reminderListener.getScheduledFuture().cancel(false);
+                try {
+                    TimedReminder tr = new TimedReminder(from, target, message, channel, enteredTime,
+                            timedReminderDeliveryTime);
+                    reminderListener.getTimedReminders().add(tr);
+                    reminderListener.sortTimedReminders();
+                    reminderListener.sync();
+                    if (reminderListener.getScheduledFuture() != null) {
+                        reminderListener.getScheduledFuture().cancel(false);
+                    }
+                    reminderListener.setScheduledFuture(reminderListener.getSes()
+                            .schedule(new TimedReminderProcessor<>(reminderListener), ZonedDateTime.now()
+                                    .until(reminderListener.getTimedReminders().get(0).getDeliveryTime(),
+                                            ChronoUnit.SECONDS) + 1, TimeUnit.SECONDS));
+                    event.respond("Reminder successfully scheduled; will be delivered at or after "
+                            + timedReminderDeliveryTime.format(DateTimeFormatter.RFC_1123_DATE_TIME)
+                            + " when the target user is online (note: reminders may be delivered by private message).");
+                } catch (Exception e) {
+                    event.respond("Failed to set reminder: " + e.toString());
                 }
-                reminderListener.setScheduledFuture(reminderListener.getSes().schedule(new TimedReminderProcessor<>(reminderListener), ZonedDateTime.now().until(reminderListener.getTimedReminders().get(0).getDeliveryTime(), ChronoUnit.SECONDS) + 1, TimeUnit.SECONDS));
-                event.respond("Reminder successfully scheduled; will be delivered at or after " + timedReminderDeliveryTime.format(DateTimeFormatter.RFC_1123_DATE_TIME) + " when the target user is online (note: reminders may be delivered by private message).");
             } else {
                 if (remainder.isEmpty()) {
                     showNoMessageError(event, commands);
                     return;
                 }
-                Reminder r = new Reminder(from, target, remainder, channel, enteredTime);
-                reminderListener.getReminders().add(r);
-                reminderListener.sync();
-                event.respond("Reminder successfully recorded; will be delivered as soon as I see the target user talk in or join a channel I'm in (note: reminders may be delivered by private message).");
+                try {
+                    Reminder r = new Reminder(from, target, remainder, channel, enteredTime);
+                    reminderListener.getReminders().add(r);
+                    reminderListener.sync();
+                    event.respond(
+                            "Reminder successfully recorded; will be delivered as soon as I see the target user talk in or join a channel I'm in (note: reminders may be delivered by private message).");
+                } catch (Exception e) {
+                    event.respond("Failed to set reminder: " + e.toString());
+                }
             }
         }
     }

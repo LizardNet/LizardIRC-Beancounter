@@ -114,13 +114,21 @@ public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
     }
 
     boolean deliverReminder(Reminder r) {
+        System.out.println("ReminderListener: Delivering reminder: " + r.toString() + "; target is " + r.getTarget());
         // IMPORTANT: THIS METHOD DOES NOT REMOVE THE REMINDER FROM THE LIST OF REMINDERS!
         // You must do this in whatever methods call this one!
 
         // First, is our target a user@host (target user was online at time of reminder request), or just a nickname
         // (target user was offline at time of reminder request)?
         String target = r.getTarget();
+
+        if (target.isEmpty() || target.equalsIgnoreCase("@")) {
+            System.err.println("ReminderListener: Reminder has empty target and cannot be delivered; returning true so it is deleted");
+            return true;
+        }
+
         if (target.contains("@")) {
+            System.out.println("ReminderListener: Target is a hostmask");
             // Yes, we have a user@host
             // Check if the target user is online.  Do nothing if they aren't.
             List<User> users = bot.getUserChannelDao().getAllUsers().stream()
@@ -165,6 +173,7 @@ public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
                 .forEach(n -> bot.sendIRC().message(n, r.toString()));
             return true;
         } else {
+            System.out.println("ReminderListener: Target is a nickname");
             // We only have a nickname, which makes the matching logic a lot easier
             // Check if the target nickname is online
             if (bot.getUserChannelDao().userExists(target)) {
