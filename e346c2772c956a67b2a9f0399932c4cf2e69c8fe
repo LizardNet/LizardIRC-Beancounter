@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74e422cf_55d1265f",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/Airport.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-08-22T12:47:06Z",
+      "side": 1,
+      "message": "Airports can occasionally change names. Is that an issue we need to consider here?",
+      "revId": "e346c2772c956a67b2a9f0399932c4cf2e69c8fe",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300f3e04_929dc8d3",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/airport/Airport.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-08-22T12:47:06Z",
+      "side": 1,
+      "message": "Is it worth doing a short-circuit return here to reduce the cyclomatic complexity of the method?",
+      "revId": "e346c2772c956a67b2a9f0399932c4cf2e69c8fe",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    }
+  ]
+}
