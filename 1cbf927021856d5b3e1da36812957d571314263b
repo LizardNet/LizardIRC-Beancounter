@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a36b4b5a_e50058a6",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/admin/AdminListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2020-08-22T03:44:16Z",
+      "side": 1,
+      "message": "I don\u0027t remember enough about the listener model to know why we need to add this - refresh my memory?",
+      "revId": "1cbf927021856d5b3e1da36812957d571314263b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5e1dc1_3502e528",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2020-08-22T03:44:16Z",
+      "side": 1,
+      "message": "Nit: .isEmpty()",
+      "range": {
+        "startLine": 724,
+        "startChar": 70,
+        "endLine": 724,
+        "endChar": 84
+      },
+      "revId": "1cbf927021856d5b3e1da36812957d571314263b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c117a8_3d61cdfc",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2020-08-22T03:44:16Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1076,
+        "startChar": 35,
+        "endLine": 1076,
+        "endChar": 49
+      },
+      "revId": "1cbf927021856d5b3e1da36812957d571314263b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    }
+  ]
+}
