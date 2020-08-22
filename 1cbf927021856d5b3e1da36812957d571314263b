@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0730b2cd_23cde9e0",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/admin/AdminListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-08-22T04:19:42Z",
+      "side": 1,
+      "message": "The type parameters or this listener in general? The type parameters are just PircBotX weirdness since the API I guess is designed to allow for drop-in replacements that subclass PircBotX. This listener in general is because there\u0027s no other reliable way I\u0027ve found to get a fully constructed PircBotX instance except to populate it when the bot connects to IRC by hooking the onConnect event.",
+      "parentUuid": "a36b4b5a_e50058a6",
+      "revId": "1cbf927021856d5b3e1da36812957d571314263b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db5e1dc1_3502e528",
         "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
         "patchSetId": 1
