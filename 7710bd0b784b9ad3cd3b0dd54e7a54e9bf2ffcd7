@@ -22,6 +22,30 @@
       "revId": "7710bd0b784b9ad3cd3b0dd54e7a54e9bf2ffcd7",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d758e5a0_abcba5f4",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/morse/MorseDecoder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-08-22T11:40:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65bda8b5_b7ff4429",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 18
+      },
+      "revId": "7710bd0b784b9ad3cd3b0dd54e7a54e9bf2ffcd7",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
