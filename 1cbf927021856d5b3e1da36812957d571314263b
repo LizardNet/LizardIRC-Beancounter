@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6fe9d212_7d992450",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-08-22T08:40:43Z",
+      "side": 1,
+      "message": "Ahh, `getAllInProgressGames()` actually returns a Stream, not a Collection, so there is no `isEmpty()` method that I can use.",
+      "parentUuid": "db5e1dc1_3502e528",
+      "range": {
+        "startLine": 724,
+        "startChar": 70,
+        "endLine": 724,
+        "endChar": 84
+      },
+      "revId": "1cbf927021856d5b3e1da36812957d571314263b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01c117a8_3d61cdfc",
         "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
         "patchSetId": 1
@@ -80,6 +104,30 @@
       "revId": "1cbf927021856d5b3e1da36812957d571314263b",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4d3228_d33d2a9f",
+        "filename": "src/main/java/org/lizardirc/beancounter/gameframework/GameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-08-22T08:40:43Z",
+      "side": 1,
+      "message": "Same here, also a Stream",
+      "parentUuid": "01c117a8_3d61cdfc",
+      "range": {
+        "startLine": 1076,
+        "startChar": 35,
+        "endLine": 1076,
+        "endChar": 49
+      },
+      "revId": "1cbf927021856d5b3e1da36812957d571314263b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
