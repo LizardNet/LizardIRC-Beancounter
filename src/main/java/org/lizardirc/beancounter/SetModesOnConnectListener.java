@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -32,18 +32,17 @@
 
 package org.lizardirc.beancounter;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
 
-public class SetModesOnConnectListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class SetModesOnConnectListener extends ListenerAdapter {
     private final String modesToSet;
 
     public SetModesOnConnectListener(String modesToSet) {
         this.modesToSet = modesToSet;
     }
 
-    public void onConnect(ConnectEvent<T> event) throws Exception {
+    public void onConnect(ConnectEvent event) throws Exception {
         event.getBot().sendIRC().mode(event.getBot().getNick(), modesToSet);
     }
 }

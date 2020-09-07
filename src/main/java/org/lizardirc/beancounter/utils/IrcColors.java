@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -35,6 +35,7 @@ package org.lizardirc.beancounter.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public final class IrcColors {
     private IrcColors() {
         throw new IllegalStateException("Uninstantiatable class");

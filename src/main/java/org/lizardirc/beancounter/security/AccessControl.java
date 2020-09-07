@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -34,15 +34,14 @@ package org.lizardirc.beancounter.security;
 
 import java.util.Set;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericUserEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-public interface AccessControl<T extends PircBotX> {
-    boolean hasPermission(GenericUserEvent<?> event, String permission);
+public interface AccessControl {
+    boolean hasPermission(GenericUserEvent event, String permission);
 
-    Set<String> getPermissions(GenericUserEvent<?> event);
+    Set<String> getPermissions(GenericUserEvent event);
 
-    CommandHandler<T> getHandler();
+    CommandHandler getHandler();
 }

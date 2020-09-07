@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -39,7 +39,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -49,7 +48,7 @@ import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Strings;
 
-public class SlapHandler<T extends PircBotX> implements CommandHandler<T> {
+public class SlapHandler implements CommandHandler {
     private static final String CMD_SLAP = "slap";
     private static final String CMD_CFG = "cfgslap";
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_SLAP, CMD_CFG);
@@ -75,14 +74,14 @@ public class SlapHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final Random random = new Random();
 
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
 
     private final List<String> actions;
     private final List<String> modifiers;
     private final List<String> items;
     private final List<String> item_mods;
 
-    public SlapHandler(PersistenceManager pm, AccessControl<T> acl) {
+    public SlapHandler(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
         this.acl = acl;
 
@@ -122,7 +121,7 @@ public class SlapHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -148,7 +147,7 @@ public class SlapHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() == 0) {
             return;
         }
@@ -186,7 +185,7 @@ public class SlapHandler<T extends PircBotX> implements CommandHandler<T> {
         pm.sync();
     }
 
-    private synchronized void handleCfgCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    private synchronized void handleCfgCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (!acl.hasPermission(event, PRIV_CFG)) {
             event.respond("No u!  (You don't have the necessary permissions to use this command.)");
             return;

@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -41,7 +41,6 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.output.OutputChannel;
@@ -50,19 +49,19 @@ import org.pircbotx.output.OutputIRC;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.utils.Strings;
 
-public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
+public class RouletteHandler implements CommandHandler {
     private static final Set<String> COMMANDS = ImmutableSet.of("poulette", "reload", "roulette", "spin");
     private static final int MAX_CHAMBERS = 64;
     private static final int DEFAULT_BULLETS = 1;
     private static final int DEFAULT_CHAMBERS = 6;
 
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
-    private List<Boolean> loaded = new ArrayList<>();
+    private final List<Boolean> loaded = new ArrayList<>();
     private int lastBullets = DEFAULT_BULLETS;
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -70,7 +69,7 @@ public class RouletteHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public synchronized void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public synchronized void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() == 0) {
             return;
         }

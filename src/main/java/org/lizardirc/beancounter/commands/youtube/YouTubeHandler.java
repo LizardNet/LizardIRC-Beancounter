@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -41,14 +41,13 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.security.AccessControl;
 
-public class YouTubeHandler<T extends PircBotX> implements CommandHandler<T> {
+public class YouTubeHandler implements CommandHandler {
     private static final String PERM_CFGYOUTUBE = "configureYouTube";
 
     private static final String COMMAND_YOUTUBE = "YouTube";
@@ -65,18 +64,18 @@ public class YouTubeHandler<T extends PircBotX> implements CommandHandler<T> {
 
     private static final List<String> VIDEO_IDS = ImmutableList.of("9bZkp7q19f0", "jofNR_WkoCE", "kfVsfOSbJY0", "dQw4w9WgXcQ", "0GIwTG8V-Ko", "gXB84fpWzg8", "z9Uz1icjwrM");
 
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
     private final YouTubeService youTubeService;
 
     private final Random random = new Random();
 
-    public YouTubeHandler(AccessControl<T> acl, YouTubeService youTubeService) {
+    public YouTubeHandler(AccessControl acl, YouTubeService youTubeService) {
         this.acl = acl;
         this.youTubeService = youTubeService;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -89,7 +88,7 @@ public class YouTubeHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() < 1) {
             return;
         }

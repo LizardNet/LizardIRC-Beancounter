@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -38,27 +38,27 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 
-public class PerChannel<T extends PircBotX> extends ListenerAdapter<T> {
-    private final LoadingCache<Channel, ? extends Listener<T>> childListeners;
+@SuppressWarnings("Guava")
+public class PerChannel extends ListenerAdapter {
+    private final LoadingCache<Channel, ? extends Listener> childListeners;
 
-    public PerChannel(Function<Channel, ? extends Listener<T>> childFunction) {
+    public PerChannel(Function<Channel, ? extends Listener> childFunction) {
         childListeners = CacheBuilder.newBuilder()
             .build(CacheLoader.from(childFunction));
     }
 
-    public PerChannel(Supplier<? extends Listener<T>> childSupplier) {
+    public PerChannel(Supplier<? extends Listener> childSupplier) {
         childListeners = CacheBuilder.newBuilder()
             .build(CacheLoader.from(childSupplier));
     }
 
     @Override
-    public void onEvent(Event<T> event) throws Exception {
+    public void onEvent(Event event) throws Exception {
         if (event instanceof GenericChannelEvent) {
             GenericChannelEvent gce = (GenericChannelEvent) event;
             Channel channel = gce.getChannel();

@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -44,8 +44,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
 import com.google.common.collect.ImmutableSet;
-import org.lizardirc.beancounter.commands.morse.MorseListener;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.managers.ListenerManager;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -60,6 +58,7 @@ import org.lizardirc.beancounter.commands.fishbot.FishbotResponseRepository;
 import org.lizardirc.beancounter.commands.goat.GoatHandler;
 import org.lizardirc.beancounter.commands.help.HelpHandler;
 import org.lizardirc.beancounter.commands.memes.MemeHandler;
+import org.lizardirc.beancounter.commands.morse.MorseListener;
 import org.lizardirc.beancounter.commands.reddit.RedditHandler;
 import org.lizardirc.beancounter.commands.reddit.RedditService;
 import org.lizardirc.beancounter.commands.remind.ReminderListener;
@@ -85,19 +84,19 @@ import org.lizardirc.beancounter.persistence.RedisPersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.security.BreadBasedAccessControl;
 
-public class Listeners<T extends PircBotX> implements CommandHandler<T> {
+public class Listeners implements CommandHandler {
     private static final Set<String> COMMANDS = ImmutableSet.of("rehash");
 
-    private final Set<Listener<T>> ownListeners = new HashSet<>();
+    private final Set<Listener> ownListeners = new HashSet<>();
 
     private final ExecutorService executorService;
     private final ScheduledExecutorService scheduledExecutorService;
-    private final ListenerManager<T> listenerManager;
+    private final ListenerManager listenerManager;
     private final Properties properties;
 
-    private AccessControl<T> acl;
+    private AccessControl acl;
 
-    public Listeners(ExecutorService executorService, ScheduledExecutorService scheduledExecutorService, ListenerManager<T> listenerManager, Properties properties) {
+    public Listeners(ExecutorService executorService, ScheduledExecutorService scheduledExecutorService, ListenerManager listenerManager, Properties properties) {
         this.executorService = executorService;
         this.scheduledExecutorService = scheduledExecutorService;
         this.listenerManager = listenerManager;
@@ -141,31 +140,34 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         RedditService redditService = new RedditService();
         YouTubeService youTubeService = new YouTubeService(pm.getNamespace("youtube"));
 
-        acl = new BreadBasedAccessControl<>(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
-        UserLastSeenListener<T> userLastSeenListener = new UserLastSeenListener<>(pm.getNamespace("userLastSeenConfig"), acl);
-        InviteAcceptor<T> inviteAcceptor = new InviteAcceptor<>(pm.getNamespace("inviteAcceptor"), acl);
-        ReminderListener<T> reminderListener = new ReminderListener<>(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
-        EarthquakeListener<T> earthquakeListener = new EarthquakeListener<>(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
-        EntryMessageListener<T> entryMessageListener = new EntryMessageListener<>(pm.getNamespace("entryMessage"), acl);
-        FishbotListener<T> fishbotHandler = new FishbotListener<>(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
-        WikipediaHandler<T> wikipediaHandler = new WikipediaHandler<>(pm.getNamespace("wikipediaHandler"), acl);
-        MorseListener<T> morseHandler = new MorseListener<>(pm.getNamespace("morse"), acl);
+        // Late 2020: Well, COVID-19 is out in the world, but at least we were able to vaccinate this code against a
+        // type parameter infection.
 
-        List<CommandHandler<T>> handlers = new ArrayList<>();
-        handlers.add(new AdminHandler<>(acl));
-        handlers.add(new DiceHandler<>());
-        handlers.add(new MemeHandler<>());
-        handlers.add(new GoatHandler<>(acl));
-        handlers.add(new SlapHandler<>(pm.getNamespace("customSlaps"), acl));
-        handlers.add(new PerChannelCommand<>(RouletteHandler::new));
+        acl = new BreadBasedAccessControl(ownerHostmask, pm.getNamespace("breadBasedAccessControl"));
+        UserLastSeenListener userLastSeenListener = new UserLastSeenListener(pm.getNamespace("userLastSeenConfig"), acl);
+        InviteAcceptor inviteAcceptor = new InviteAcceptor(pm.getNamespace("inviteAcceptor"), acl);
+        ReminderListener reminderListener = new ReminderListener(pm.getNamespace("reminderHandler"), acl, scheduledExecutorService);
+        EarthquakeListener earthquakeListener = new EarthquakeListener(pm.getNamespace("earthquakeListener"), acl, scheduledExecutorService);
+        EntryMessageListener entryMessageListener = new EntryMessageListener(pm.getNamespace("entryMessage"), acl);
+        FishbotListener fishbotHandler = new FishbotListener(FishbotResponseRepository.initialise(), pm.getNamespace("fishbot"), acl);
+        WikipediaHandler wikipediaHandler = new WikipediaHandler(pm.getNamespace("wikipediaHandler"), acl);
+        MorseListener morseHandler = new MorseListener(pm.getNamespace("morse"), acl);
+
+        List<CommandHandler> handlers = new ArrayList<>();
+        handlers.add(new AdminHandler(acl));
+        handlers.add(new DiceHandler());
+        handlers.add(new MemeHandler());
+        handlers.add(new GoatHandler(acl));
+        handlers.add(new SlapHandler(pm.getNamespace("customSlaps"), acl));
+        handlers.add(new PerChannelCommand(RouletteHandler::new));
         handlers.add(wikipediaHandler);
-        handlers.add(new YouTubeHandler<>(acl, youTubeService));
-        handlers.add(new RedditHandler<>(redditService));
+        handlers.add(new YouTubeHandler(acl, youTubeService));
+        handlers.add(new RedditHandler(redditService));
         handlers.add(acl.getHandler());
-        handlers.add(new ShakespeareHandler<>());
+        handlers.add(new ShakespeareHandler());
         handlers.add(userLastSeenListener.getCommandHandler());
         if (enableWeatherHandler) {
-            handlers.add(new WeatherHandler<>(pm.getNamespace("weatherHandler"), acl));
+            handlers.add(new WeatherHandler(pm.getNamespace("weatherHandler"), acl));
         }
         handlers.add(inviteAcceptor.getCommandHandler());
         handlers.add(reminderListener.getCommandHandler());
@@ -174,17 +176,17 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
         handlers.add(fishbotHandler.getCommandHandler());
         handlers.add(morseHandler.getCommandHandler());
         handlers.add(this);
-        MultiCommandHandler<T> commands = new MultiCommandHandler<>(handlers);
-        commands.add(new HelpHandler<>(commands));
-        ownListeners.add(new Chainable<>(new Fantasy<>(new CommandListener<>(commands), fantasyString), separator));
+        MultiCommandHandler commands = new MultiCommandHandler(handlers);
+        commands.add(new HelpHandler(commands));
+        ownListeners.add(new Chainable(new Fantasy(new CommandListener(commands), fantasyString), separator));
 
-        ownListeners.add(new ChannelPersistor<>(pm.getNamespace("channelPersistence")));
+        ownListeners.add(new ChannelPersistor(pm.getNamespace("channelPersistence")));
 
         if (!modesOnConnect.isEmpty()) {
-            ownListeners.add(new SetModesOnConnectListener<>(modesOnConnect));
+            ownListeners.add(new SetModesOnConnectListener(modesOnConnect));
         }
 
-        ownListeners.add(new PerChannel<>(() -> new SedListener<>(executorService, 5)));
+        ownListeners.add(new PerChannel(() -> new SedListener(executorService, 5)));
         ownListeners.add(inviteAcceptor);
         ownListeners.add(userLastSeenListener);
         ownListeners.add(reminderListener);
@@ -198,7 +200,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -206,7 +208,7 @@ public class Listeners<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() == 0) {
             return;
         }

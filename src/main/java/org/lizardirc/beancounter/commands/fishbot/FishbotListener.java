@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -43,7 +43,6 @@ import java.util.stream.Collectors;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ActionEvent;
@@ -57,52 +56,52 @@ import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 
-public class FishbotListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class FishbotListener extends ListenerAdapter {
 
     private static final Type PERSISTENCE_TYPE_TOKEN = new TypeToken<Set<String>>(){}.getType();
     private static final String PERSISTENCE_KEY = "fishbotEnabled";
 
     private final FishbotResponseRepository responseRepository;
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
 
-    private final FishbotCommandHandler<T> commandHandler;
+    private final FishbotCommandHandler commandHandler;
 
     private final Set<String> enabledChannels;
 
     private String currentNickname = null;
 
-    public FishbotListener(FishbotResponseRepository responseRepository, PersistenceManager pm, AccessControl<T> acl) {
+    public FishbotListener(FishbotResponseRepository responseRepository, PersistenceManager pm, AccessControl acl) {
         this.responseRepository = responseRepository;
         this.pm = pm;
         this.acl = acl;
-        this.commandHandler = new FishbotCommandHandler<>(this);
+        this.commandHandler = new FishbotCommandHandler(this);
 
         Gson gson = new Gson();
         Optional<String> serialisedFishbotChannels = pm.get(PERSISTENCE_KEY);
         if (serialisedFishbotChannels.isPresent()) {
             Set<String> persistedEnabledChannels = gson.fromJson(serialisedFishbotChannels.get(), PERSISTENCE_TYPE_TOKEN);
 
-            enabledChannels = new HashSet<>(persistedEnabledChannels.stream()
+            enabledChannels = persistedEnabledChannels.stream()
                     .map(String::toLowerCase)
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toSet());
         } else {
             enabledChannels = new HashSet<>();
         }
     }
 
     @Override
-    public void onConnect(ConnectEvent<T> event) throws Exception {
+    public void onConnect(ConnectEvent event) {
         recompile(event.getBot().getNick());
     }
 
     @Override
-    public void onNickChange(NickChangeEvent<T> event) throws Exception {
+    public void onNickChange(NickChangeEvent event) {
         recompile(event.getBot().getNick());
     }
 
     @Override
-    public void onGenericChannel(GenericChannelEvent<T> event) throws Exception {
+    public void onGenericChannel(GenericChannelEvent event) {
         if (!(event instanceof GenericMessageEvent)) {
             return;
         }
@@ -132,7 +131,7 @@ public class FishbotListener<T extends PircBotX> extends ListenerAdapter<T> {
         }
     }
 
-    public CommandHandler<T> getCommandHandler() {
+    public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
@@ -180,9 +179,7 @@ public class FishbotListener<T extends PircBotX> extends ListenerAdapter<T> {
     synchronized void disable(String channelName) {
         String lowerChannelName = channelName.toLowerCase();
 
-        if (enabledChannels.contains(lowerChannelName)) {
-            enabledChannels.remove(lowerChannelName);
-        }
+        enabledChannels.remove(lowerChannelName);
 
         sync();
     }
@@ -190,14 +187,12 @@ public class FishbotListener<T extends PircBotX> extends ListenerAdapter<T> {
     synchronized void enable(String channelName) {
         String lowerChannelName = channelName.toLowerCase();
 
-        if (!enabledChannels.contains(lowerChannelName)) {
-            enabledChannels.add(lowerChannelName);
-        }
+        enabledChannels.add(lowerChannelName);
 
         sync();
     }
 
-    AccessControl<T> getAccessControl() {
+    AccessControl getAccessControl() {
         return acl;
     }
 }

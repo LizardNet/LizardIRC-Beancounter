@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -34,7 +34,6 @@ package org.lizardirc.beancounter.commands.earthquake;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -45,14 +44,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.pircbotx.PircBotX;
+class FeedChecker implements Runnable {
+    private final EarthquakeListener earthquakeListener;
+    private final Map<Feed, Long> lastReportedEvent = new HashMap<>();
+    private final Map<Feed, Map<String, GeoJsonFeature>> seenEvents = new HashMap<>();
 
-class FeedChecker<T extends PircBotX> implements Runnable {
-    private EarthquakeListener<T> earthquakeListener;
-    private Map<Feed, Long> lastReportedEvent = new HashMap<>();
-    private Map<Feed, Map<String, GeoJsonFeature>> seenEvents = new HashMap<>();
-
-    public FeedChecker(EarthquakeListener<T> earthquakeListener) {
+    public FeedChecker(EarthquakeListener earthquakeListener) {
         this.earthquakeListener = earthquakeListener;
     }
 
@@ -92,10 +89,10 @@ class FeedChecker<T extends PircBotX> implements Runnable {
 
                 // Get a list of events that have been updated since the last check
                 long lastReportedTime = lastReportedEvent.get(f);
-                List<GeoJsonFeature> updatedEvents = new ArrayList<>(data.features.stream()
-                    .filter(i -> i.properties.updated > lastReportedTime)
-                    .collect(Collectors.toList())
-                );
+
+                List<GeoJsonFeature> updatedEvents = data.features.stream()
+                        .filter(i -> i.properties.updated > lastReportedTime)
+                        .collect(Collectors.toList());
 
                 long lastEventTime = -1L;
                 // Iterate over these events
@@ -158,7 +155,7 @@ class FeedChecker<T extends PircBotX> implements Runnable {
                 // so we'll know in the future what events are new, and which ones are just updates.  Also set up
                 // the multimap here.
                 seenEvents.put(f, new HashMap<>());
-                data.features.stream()
+                data.features
                     .forEach(feature -> EarthquakeListener.addOrUpdateEvent(seenEvents.get(f), feature));
 
                 // Unfortunately, the top item in the feed is not guaranteed to be the most recently updated, so
@@ -166,7 +163,7 @@ class FeedChecker<T extends PircBotX> implements Runnable {
                 long lastUpdate = data.features.stream()
                     .mapToLong(e -> e.properties.updated)
                     .max()
-                    .orElseGet(() -> 0L);
+                    .orElse(0L);
                 lastReportedEvent.put(f, lastUpdate);
             }
         }

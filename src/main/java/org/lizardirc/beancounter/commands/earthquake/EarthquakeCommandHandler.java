@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -35,7 +35,6 @@ package org.lizardirc.beancounter.commands.earthquake;
 import com.google.common.collect.ImmutableSet;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.utils.Miscellaneous;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -49,33 +48,34 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-class EarthquakeCommandHandler<T extends PircBotX> implements CommandHandler<T> {
-    private final EarthquakeListener<T> earthquakeListener;
-    private final String COMMAND_CFGQUAKES = "cfgquakes";
-    private final String COMMAND_LASTQUAKE = "lastquake";
-    private final Set<String> COMMANDS = ImmutableSet.of(COMMAND_CFGQUAKES, COMMAND_LASTQUAKE);
+class EarthquakeCommandHandler implements CommandHandler {
+    private static final String COMMAND_CFGQUAKES = "cfgquakes";
+    private static final String COMMAND_LASTQUAKE = "lastquake";
+    private static final Set<String> COMMANDS = ImmutableSet.of(COMMAND_CFGQUAKES, COMMAND_LASTQUAKE);
 
-    private final String CFG_OP_GET = "get";
-    private final String CFG_OP_GETALL = "getall";
-    private final String CFG_OP_SETCHAN = "setchan";
-    private final String CFG_OP_DELCHAN = "delchan";
-    private final Set<String> CFG_OPERATIONS = ImmutableSet.of(CFG_OP_GET, CFG_OP_GETALL, CFG_OP_SETCHAN, CFG_OP_DELCHAN);
+    private static final String CFG_OP_GET = "get";
+    private static final String CFG_OP_GETALL = "getall";
+    private static final String CFG_OP_SETCHAN = "setchan";
+    private static final String CFG_OP_DELCHAN = "delchan";
+    private static final Set<String> CFG_OPERATIONS = ImmutableSet.of(CFG_OP_GET, CFG_OP_GETALL, CFG_OP_SETCHAN, CFG_OP_DELCHAN);
 
-    private final String FEED_ALL = "all";
-    private final String FEED_M1_0 = "M1.0";
-    private final String FEED_M2_5 = "M2.5";
-    private final String FEED_M4_5 = "M4.5";
-    private final String FEED_SIGNIFICANT = "significant";
-    private final Set<String> AVAILABLE_FEEDS = ImmutableSet.of(FEED_ALL, FEED_M1_0, FEED_M2_5, FEED_M4_5, FEED_SIGNIFICANT);
+    private static final String FEED_ALL = "all";
+    private static final String FEED_M1_0 = "M1.0";
+    private static final String FEED_M2_5 = "M2.5";
+    private static final String FEED_M4_5 = "M4.5";
+    private static final String FEED_SIGNIFICANT = "significant";
+    private static final Set<String> AVAILABLE_FEEDS = ImmutableSet.of(FEED_ALL, FEED_M1_0, FEED_M2_5, FEED_M4_5, FEED_SIGNIFICANT);
 
-    private final String PERM_CFGQUAKES = "cfgquakes";
+    private static final String PERM_CFGQUAKES = "cfgquakes";
 
-    public EarthquakeCommandHandler(EarthquakeListener<T> earthquakeListener) {
+    private final EarthquakeListener earthquakeListener;
+
+    public EarthquakeCommandHandler(EarthquakeListener earthquakeListener) {
         this.earthquakeListener = earthquakeListener;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         }
@@ -98,7 +98,7 @@ class EarthquakeCommandHandler<T extends PircBotX> implements CommandHandler<T> 
     }
 
     @Override
-    public synchronized void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public synchronized void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() >= 1) {
             switch (commands.get(0)) {
                 case COMMAND_CFGQUAKES:
@@ -119,11 +119,11 @@ class EarthquakeCommandHandler<T extends PircBotX> implements CommandHandler<T> 
                                 outputMap(earthquakeListener.getFeedMap(), message);
                                 message.accept("------ END ------");
                                 message.accept("The FeedChecker job is: " + ((earthquakeListener.getFuture() == null) ? "NOT scheduled" : "scheduled"));
-                                return;
                             } else {
                                 event.respond("No u! (You don't have the necessary permissions to do this.)");
-                                return;
                             }
+
+                            return;
                         }
 
                         remainder = remainder.trim();
@@ -261,7 +261,7 @@ class EarthquakeCommandHandler<T extends PircBotX> implements CommandHandler<T> 
         }
     }
 
-    private void showLastQuake(GenericMessageEvent<T> event, Feed f) {
+    private void showLastQuake(GenericMessageEvent event, Feed f) {
         GeoJson apiData;
 
         try {

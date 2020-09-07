@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -53,7 +53,7 @@ public class MorseDecoder {
         this.ambiguousMorse = ImmutableList.of("...", ".", "-");
     }
 
-    public class DecodeResult {
+    public static class DecodeResult {
         public final String result;
         public final int detectedCharacters;
 

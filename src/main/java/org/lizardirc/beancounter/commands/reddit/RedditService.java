@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -57,7 +57,7 @@ public class RedditService {
 
         String pageContent = Miscellaneous.getHttpData(url);
 
-        JsonObject element = new JsonParser().parse(pageContent).getAsJsonObject();
+        JsonObject element = JsonParser.parseString(pageContent).getAsJsonObject();
         return gson.fromJson(element.get("data"), RedditUser.class);
     }
 
@@ -71,7 +71,7 @@ public class RedditService {
 
         String pageContent = Miscellaneous.getHttpData(url);
 
-        JsonArray document = new JsonParser().parse(pageContent).getAsJsonArray();
+        JsonArray document = JsonParser.parseString(pageContent).getAsJsonArray();
         JsonObject element = document.get(0).getAsJsonObject();
         JsonArray children = element.get("data").getAsJsonObject().getAsJsonArray("children");
         JsonElement data = children.get(0).getAsJsonObject().getAsJsonObject("data");

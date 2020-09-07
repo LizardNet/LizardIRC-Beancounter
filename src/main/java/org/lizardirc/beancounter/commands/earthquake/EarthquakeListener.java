@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -56,21 +57,21 @@ import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
-public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class EarthquakeListener extends ListenerAdapter {
     private static final String[] romans = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"};
 
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
     private final ScheduledExecutorService ses;
-    private final CommandHandler<T> commandHandler = new EarthquakeCommandHandler<>(this);
+    private final CommandHandler commandHandler = new EarthquakeCommandHandler(this);
 
     private final String httpUserAgent;
     private final Map<String, Feed> feedMap;
 
     private PircBotX bot;
-    private ScheduledFuture future = null;
+    private ScheduledFuture<?> future = null;
 
-    public EarthquakeListener(PersistenceManager pm, AccessControl<T> acl, ScheduledExecutorService ses) {
+    public EarthquakeListener(PersistenceManager pm, AccessControl acl, ScheduledExecutorService ses) {
         this.pm = pm;
         this.acl = acl;
         this.ses = ses;
@@ -82,12 +83,12 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
         httpUserAgent = Miscellaneous.generateHttpUserAgent();
     }
 
-    public CommandHandler<T> getCommandHandler() {
+    public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
     @Override
-    public void onConnect(ConnectEvent<T> event) {
+    public void onConnect(ConnectEvent event) {
         bot = event.getBot();
 
         /* TODO: A better solution for preventing the multiple-scheduling-on-reconnect problem will be needed when
@@ -105,8 +106,8 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
         pm.sync();
     }
 
-    ScheduledFuture scheduleFeedChecker() {
-        FeedChecker<T> fc = new FeedChecker<>(this);
+    ScheduledFuture<?> scheduleFeedChecker() {
+        FeedChecker fc = new FeedChecker(this);
         fc.run(); // Force a run of the feed checker immediately
         return ses.scheduleWithFixedDelay(fc, 5L, 5L, TimeUnit.MINUTES);
     }
@@ -121,7 +122,8 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
             throw new IOException("Error interacting with API: Got return status " + httpURLConnection.getResponseCode());
         }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader((InputStream) httpURLConnection.getContent(), "UTF-8"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader((InputStream) httpURLConnection.getContent(),
+                StandardCharsets.UTF_8));
 
         Gson gson = new Gson();
         return gson.fromJson(reader, GeoJson.class);
@@ -145,15 +147,15 @@ public class EarthquakeListener<T extends PircBotX> extends ListenerAdapter<T> {
         return bot;
     }
 
-    AccessControl<T> getAcl() {
+    AccessControl getAcl() {
         return acl;
     }
 
-    ScheduledFuture getFuture() {
+    ScheduledFuture<?> getFuture() {
         return future;
     }
 
-    void setFuture(ScheduledFuture future) {
+    void setFuture(ScheduledFuture<?> future) {
         this.future = future;
     }
 

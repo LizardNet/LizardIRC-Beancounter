@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -54,13 +53,13 @@ public final class Miscellaneous {
         throw new IllegalStateException("Cannot instantiate this class");
     }
 
-    public static boolean isChannelLike(GenericMessageEvent<?> event, String arg) {
+    public static boolean isChannelLike(GenericMessageEvent event, String arg) {
         // Determine if the argument string appears to be a channel - i.e., does it start with a character the network
         // recognizes as a channel name (usually # and &)?
-        Integer firstChar = arg.codePointAt(0);
+        int firstChar = arg.codePointAt(0);
 
         return event.getBot().getServerInfo().getChannelTypes().chars()
-            .anyMatch(firstChar::equals);
+            .anyMatch(c -> firstChar == c);
     }
 
     public static String getStringRepresentation(Collection<String> set) {
@@ -71,7 +70,7 @@ public final class Miscellaneous {
         if (set.isEmpty()) {
             return "(none)";
         } else {
-            return set.stream().collect(Collectors.joining(separator));
+            return String.join(separator, set);
         }
     }
 

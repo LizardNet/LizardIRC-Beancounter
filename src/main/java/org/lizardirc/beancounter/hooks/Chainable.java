@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -32,7 +32,6 @@
 
 package org.lizardirc.beancounter.hooks;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -41,27 +40,27 @@ import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.lizardirc.beancounter.events.MessageEventView;
 import org.lizardirc.beancounter.events.PrivateMessageEventView;
 
-public class Chainable<T extends PircBotX> extends Decorator<T> {
+public class Chainable extends Decorator {
     private final String separator;
 
-    public Chainable(Listener<T> childListener, String separator) {
+    public Chainable(Listener childListener, String separator) {
         super(childListener);
         this.separator = separator;
     }
 
     @Override
-    public void onEvent(Event<T> event) throws Exception {
+    public void onEvent(Event event) throws Exception {
         if (event instanceof MessageEvent) {
-            MessageEvent<T> me = (MessageEvent<T>) event;
+            MessageEvent me = (MessageEvent) event;
             String[] messages = me.getMessage().split(separator);
             for (String newMessage : messages) {
-                super.onEvent(new MessageEventView<>(me, newMessage));
+                super.onEvent(new MessageEventView(me, newMessage));
             }
         } else if (event instanceof PrivateMessageEvent) {
-            PrivateMessageEvent<T> me = (PrivateMessageEvent<T>) event;
+            PrivateMessageEvent me = (PrivateMessageEvent) event;
             String[] messages = me.getMessage().split(separator);
             for (String newMessage : messages) {
-                super.onEvent(new PrivateMessageEventView<>(me, newMessage));
+                super.onEvent(new PrivateMessageEventView(me, newMessage));
             }
         }
     }

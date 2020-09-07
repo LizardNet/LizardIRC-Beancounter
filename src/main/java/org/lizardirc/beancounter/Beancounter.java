@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -82,19 +82,19 @@ public class Beancounter {
         String serverPassword = properties.getProperty("serverPassword", "");
 
         ExecutorService executorService = constructExecutorService();
-        ListenerManager<PircBotX> listenerManager = new ThreadedListenerManager<>(executorService);
+        ListenerManager listenerManager = new ThreadedListenerManager(executorService);
 
-        Configuration.Builder<PircBotX> confBuilder = new Configuration.Builder<>()
-            .setAutoReconnect(autoReconnect)
-            .setName(botName)
-            .setLogin(botUsername)
-            .setServerHostname(serverHost)
-            .setServerPort(serverPort)
-            .setListenerManager(listenerManager)
-            .setCapEnabled(true) // Of course, the PircBotX documentation doesn't indicate this is necessary....
-            .setAutoNickChange(true);
+        Configuration.Builder confBuilder = new Configuration.Builder()
+                .setAutoReconnect(autoReconnect)
+                .setName(botName)
+                .setLogin(botUsername)
+                .addServer(serverHost, serverPort)
+                .setListenerManager(listenerManager)
+                .setCapEnabled(true) // Of course, the PircBotX documentation doesn't indicate this is necessary....
+                .setAutoNickChange(true);
 
-        Listeners<PircBotX> listeners = new Listeners<>(executorService, constructScheduledExecutorService(), confBuilder.getListenerManager(), properties);
+        Listeners listeners = new Listeners(executorService, constructScheduledExecutorService(),
+                confBuilder.getListenerManager(), properties);
         listeners.register();
 
         if (useTls) {
@@ -103,8 +103,8 @@ public class Beancounter {
                 socketFactory = new VerifyingSslSocketFactory(serverHost, socketFactory);
             }
             List<String> fingerprints = Arrays.stream(allowedCertificates.split(","))
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.toList());
+                    .filter(s -> !s.isEmpty())
+                    .collect(Collectors.toList());
             if (fingerprints.size() > 0) {
                 socketFactory = new FingerprintingSslSocketFactory(fingerprints, socketFactory);
             }
@@ -150,7 +150,8 @@ public class Beancounter {
         try (InputStream is = Files.newInputStream(configurationFile)) {
             properties.load(is);
         } catch (NoSuchFileException e) {
-            System.err.println("Error: Could not find configuration file " + configurationFile + " (NoSuchFileException). A default configuration file has been created for you at that location.");
+            System.err.println("Error: Could not find configuration file " + configurationFile
+                    + " (NoSuchFileException). A default configuration file has been created for you at that location.");
             System.err.println("The bot will now terminate to give you an opportunity to edit the configuration file.");
             try (InputStream defaultConfig = Beancounter.class.getResourceAsStream("/default.config.props")) {
                 Files.copy(defaultConfig, configurationFile);
@@ -160,7 +161,8 @@ public class Beancounter {
             }
             System.exit(3);
         } catch (IOException e) {
-            System.err.println("Error: Could not read configuration file " + configurationFile + ".  A stack trace follows.  The bot will now terminate.");
+            System.err.println("Error: Could not read configuration file " + configurationFile
+                    + ".  A stack trace follows.  The bot will now terminate.");
             e.printStackTrace();
             System.exit(3);
         }
@@ -205,19 +207,21 @@ public class Beancounter {
 
     private ExecutorService constructExecutorService() {
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
-            .namingPattern("primaryListenerPool-thread%d")
-            .daemon(true)
-            .build();
-        ThreadPoolExecutor ret = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<>(), factory);
+                .namingPattern("primaryListenerPool-thread%d")
+                .daemon(true)
+                .build();
+        ThreadPoolExecutor ret = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS,
+                new SynchronousQueue<>(), factory);
         ret.allowCoreThreadTimeOut(true);
         return ret;
     }
 
     private ScheduledExecutorService constructScheduledExecutorService() {
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
-            .namingPattern("scheduledExecutorPool-thread%d")
-            .daemon(true)
-            .build();
-        return Executors.newScheduledThreadPool(5, factory); // This seems like it should be enough for the reasonable future
+                .namingPattern("scheduledExecutorPool-thread%d")
+                .daemon(true)
+                .build();
+        return Executors
+                .newScheduledThreadPool(5, factory); // This seems like it should be enough for the reasonable future
     }
 }
