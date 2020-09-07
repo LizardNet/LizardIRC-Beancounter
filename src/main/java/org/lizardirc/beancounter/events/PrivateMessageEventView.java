@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -34,20 +34,16 @@ package org.lizardirc.beancounter.events;
 
 import java.util.Objects;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 
-public class PrivateMessageEventView<T extends PircBotX> extends PrivateMessageEvent<T> {
-    private final PrivateMessageEvent<T> childEvent;
+public class PrivateMessageEventView extends PrivateMessageEvent {
+    private final PrivateMessageEvent childEvent;
     private final String newMessage;
 
-    public PrivateMessageEventView(PrivateMessageEvent<T> childEvent, String newMessage) {
-        super(childEvent.getBot(), childEvent.getUser(), newMessage);
+    public PrivateMessageEventView(PrivateMessageEvent childEvent, String newMessage) {
+        super(childEvent.getBot(), childEvent.getUserHostmask(), childEvent.getUser(),  newMessage, childEvent.getTags());
         this.childEvent = childEvent;
         this.newMessage = newMessage;
-        if (newMessage == null) {
-            throw new IllegalArgumentException("newMessage cannot be null");
-        }
     }
 
     @Override
@@ -58,7 +54,7 @@ public class PrivateMessageEventView<T extends PircBotX> extends PrivateMessageE
     @Override
     public boolean equals(Object o) {
         if (o instanceof PrivateMessageEventView) {
-            PrivateMessageEventView<?> that = (PrivateMessageEventView<?>) o;
+            PrivateMessageEventView that = (PrivateMessageEventView) o;
             return that.canEqual(this)
                 && newMessage.equals(that.newMessage)
                 && super.equals(that);

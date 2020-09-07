@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015-2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -36,7 +36,6 @@ import com.google.common.collect.ImmutableSet;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -51,7 +50,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 // ˢᵉʳᶦᵒᵘˢ ᵗʳᵒᵘᵇᶫᵉ
-class UserLastSeenCommandHandler<SeriouslyIHaveToDoThisT extends PircBotX> implements CommandHandler<SeriouslyIHaveToDoThisT> {
+// The above comment was made when PircBotX still required type parameters in all the places, and this was starting
+// to get a bit annoying at the time.
+class UserLastSeenCommandHandler implements CommandHandler {
     private static final String COMMAND_SEEN = "seen";
     private static final String COMMAND_SEEN_CONFIG = "cfgseen";
     private static final Set<String> COMMANDS = ImmutableSet.of(COMMAND_SEEN, COMMAND_SEEN_CONFIG);
@@ -67,14 +68,14 @@ class UserLastSeenCommandHandler<SeriouslyIHaveToDoThisT extends PircBotX> imple
     private static final String PERM_SEEN_CONFIG = "cfgseen";
 
     private final Random random = new Random();
-    private final UserLastSeenListener<SeriouslyIHaveToDoThisT> userLastSeenListener;
+    private final UserLastSeenListener userLastSeenListener;
 
-    public UserLastSeenCommandHandler(UserLastSeenListener<SeriouslyIHaveToDoThisT> userLastSeenListener) {
+    public UserLastSeenCommandHandler(UserLastSeenListener userLastSeenListener) {
         this.userLastSeenListener = userLastSeenListener;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<SeriouslyIHaveToDoThisT> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -87,7 +88,7 @@ class UserLastSeenCommandHandler<SeriouslyIHaveToDoThisT extends PircBotX> imple
     }
 
     @Override
-    public synchronized void handleCommand(GenericMessageEvent<SeriouslyIHaveToDoThisT> event, List<String> commands, String remainder) {
+    public synchronized void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() < 1) {
             return;
         }
@@ -150,7 +151,7 @@ class UserLastSeenCommandHandler<SeriouslyIHaveToDoThisT extends PircBotX> imple
                 // If the user is online, get their user@host and look it up in the lastSeen map
                 // Otherwise, look for the nick as a key in the lastUsedUserHosts map to get the last user user@host,
                 // and use that for the lastSeen map lookup.
-                if (event.getBot().getUserChannelDao().userExists(args[0])) {
+                if (event.getBot().getUserChannelDao().containsUser(args[0])) {
                     User user = event.getBot().getUserChannelDao().getUser(args[0]);
                     userHost = (user.getLogin() + "@" + user.getHostmask()).toLowerCase();
 

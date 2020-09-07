@@ -1,3 +1,35 @@
+/*
+ * LIZARDIRC/BEANCOUNTER
+ * By the LizardIRC Development Team (see AUTHORS.txt file)
+ *
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
+ *
+ * License GPLv3+: GNU General Public License version 3 or later (at your choice):
+ * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
+ * change and redistribute it at your will provided that your redistribution, with
+ * or without modifications, is also licensed under the GNU GPL. (Although not
+ * required by the license, we also ask that you attribute us!) There is NO
+ * WARRANTY FOR THIS SOFTWARE to the extent permitted by law.
+ *
+ * Note that this is an official project of the LizardIRC IRC network.  For more
+ * information about LizardIRC, please visit our website at
+ * <https://www.lizardirc.org>.
+ *
+ * This is an open source project. The source Git repositories, which you are
+ * welcome to contribute to, can be found here:
+ * <https://gerrit.fastlizard4.org/r/gitweb?p=LizardIRC%2FBeancounter.git;a=summary>
+ * <https://git.fastlizard4.org/gitblit/summary/?r=LizardIRC/Beancounter.git>
+ *
+ * Gerrit Code Review for the project:
+ * <https://gerrit.fastlizard4.org/r/#/q/project:LizardIRC/Beancounter,n,z>
+ *
+ * Alternatively, the project source code can be found on the PUBLISH-ONLY mirror
+ * on GitHub: <https://github.com/LizardNet/LizardIRC-Beancounter>
+ *
+ * Note: Pull requests and patches submitted to GitHub will be transferred by a
+ * developer to Gerrit before they are acted upon.
+ */
+
 package org.lizardirc.beancounter.commands.entrymsg;
 
 import java.lang.reflect.Type;
@@ -9,7 +41,6 @@ import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.JoinEvent;
 import org.pircbotx.hooks.types.GenericChannelEvent;
@@ -18,18 +49,18 @@ import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 
-public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class EntryMessageListener extends ListenerAdapter {
     /** This must match the type of the {@link #entryMessages} field */
     private static final Type PERSISTENCE_TYPE_TOKEN = new TypeToken<Map<String, EntryMessage>>(){}.getType();
 
     private static final String MESSAGE_OUTPUT_FORMAT = "%s (Set by %s (%s) at %s)";
 
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
     private final Map<String, EntryMessage> entryMessages;
-    private final EntryMessageCommandHandler<T> commandHandler;
+    private final EntryMessageCommandHandler commandHandler;
 
-    public EntryMessageListener(PersistenceManager pm, AccessControl<T> acl) {
+    public EntryMessageListener(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
         this.acl = acl;
 
@@ -46,7 +77,7 @@ public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T>
             entryMessages = new HashMap<>();
         }
 
-        this.commandHandler = new EntryMessageCommandHandler<>(this);
+        this.commandHandler = new EntryMessageCommandHandler(this);
     }
 
     private synchronized void sync() {
@@ -55,11 +86,11 @@ public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T>
         pm.sync();
     }
 
-    public CommandHandler<T> getCommandHandler() {
+    public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
-    AccessControl<T> getAccessControl() {
+    AccessControl getAccessControl() {
         return acl;
     }
 
@@ -77,7 +108,7 @@ public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T>
         sync();
     }
 
-    String generateMessageString(GenericChannelEvent<?> event) {
+    String generateMessageString(GenericChannelEvent event) {
         EntryMessage message = getEntryMessage(event.getChannel().getName());
         if (message != null) {
             String[] settingUser = message.getSettingUser().split("!");
@@ -89,8 +120,8 @@ public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T>
     }
 
     @Override
-    public void onJoin(JoinEvent<T> event) {
-        if (event.getUser().equals(event.getBot().getUserBot())) {
+    public void onJoin(JoinEvent event) {
+        if (event.getBot().getUserBot().equals(event.getUser())) {
             return;
         }
 

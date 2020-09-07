@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -42,8 +42,8 @@ import com.google.gson.Gson;
 import org.lizardirc.beancounter.Beancounter;
 
 public class FishbotResponseRepository {
-    private List<FishbotResponse> messages;
-    private List<FishbotResponse> actions;
+    private final List<FishbotResponse> messages;
+    private final List<FishbotResponse> actions;
 
     private FishbotResponseRepository(List<FishbotResponse> messages, List<FishbotResponse> actions) {
         this.messages = messages;

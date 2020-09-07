@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -36,7 +36,6 @@ import com.google.common.collect.ImmutableSet;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 import org.lizardirc.beancounter.hooks.CommandHandler;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -49,7 +48,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
+class ReminderCommandHandler implements CommandHandler {
     private static final String COMMAND_REMIND = "remind";
     private static final String COMMAND_REMIND_ME = "remindme";
     private static final String COMMAND_CLEAR_REMINDERS = "clearreminders";
@@ -57,14 +56,14 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
 
     private static final String PERM_CLEAR_REMINDERS = "clearreminders";
 
-    private final ReminderListener<T> reminderListener;
+    private final ReminderListener reminderListener;
 
-    public ReminderCommandHandler(ReminderListener<T> reminderListener) {
+    public ReminderCommandHandler(ReminderListener reminderListener) {
         this.reminderListener = reminderListener;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         }
@@ -73,7 +72,7 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() < 1) {
             return;
         }
@@ -82,11 +81,11 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
             if (reminderListener.getAcl().hasPermission(event, PERM_CLEAR_REMINDERS)) {
                 reminderListener.clearAllReminders();
                 event.respond("Done.  *All* reminders have been purged.");
-                return;
             } else {
                 event.respond("No u! (You don't have the necessary permissions to do this.)");
-                return;
             }
+
+            return;
         }
 
         String target;
@@ -106,7 +105,7 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
             }
 
             if (commands.get(0).equals(COMMAND_REMIND)) {
-                if (event.getBot().getUserChannelDao().userExists(args[0])) {
+                if (event.getBot().getUserChannelDao().containsUser(args[0])) {
                     User targetUser = event.getBot().getUserChannelDao().getUser(args[0]);
                     target = (targetUser.getLogin() + '@' + targetUser.getHostmask()).toLowerCase();
                 } else {
@@ -153,7 +152,7 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
                         reminderListener.getScheduledFuture().cancel(false);
                     }
                     reminderListener.setScheduledFuture(reminderListener.getSes()
-                            .schedule(new TimedReminderProcessor<>(reminderListener), ZonedDateTime.now()
+                            .schedule(new TimedReminderProcessor(reminderListener), ZonedDateTime.now()
                                     .until(reminderListener.getTimedReminders().get(0).getDeliveryTime(),
                                             ChronoUnit.SECONDS) + 1, TimeUnit.SECONDS));
                     event.respond("Reminder successfully scheduled; will be delivered at or after "
@@ -197,7 +196,7 @@ class ReminderCommandHandler<T extends PircBotX> implements CommandHandler<T> {
         return retval;
     }
 
-    private void showNoMessageError(GenericMessageEvent<T> event, List<String> commands) {
+    private void showNoMessageError(GenericMessageEvent event, List<String> commands) {
         switch (commands.get(0)) {
             case COMMAND_REMIND:
                 event.respond("Error: You have to provide a nickname and a message for the reminder!");

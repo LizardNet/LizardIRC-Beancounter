@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -33,10 +33,10 @@
 package org.lizardirc.beancounter.commands.youtube;
 
 public class ApiError {
-    private String domain;
-    private String reason;
-    private String message;
-    private String extendedHelp;
+    private final String domain;
+    private final String reason;
+    private final String message;
+    private final String extendedHelp;
 
     public ApiError(String domain, String reason, String message, String extendedHelp) {
         this.domain = domain;

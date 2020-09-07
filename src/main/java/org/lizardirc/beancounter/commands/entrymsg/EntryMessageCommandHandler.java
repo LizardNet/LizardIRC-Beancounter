@@ -1,3 +1,35 @@
+/*
+ * LIZARDIRC/BEANCOUNTER
+ * By the LizardIRC Development Team (see AUTHORS.txt file)
+ *
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
+ *
+ * License GPLv3+: GNU General Public License version 3 or later (at your choice):
+ * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
+ * change and redistribute it at your will provided that your redistribution, with
+ * or without modifications, is also licensed under the GNU GPL. (Although not
+ * required by the license, we also ask that you attribute us!) There is NO
+ * WARRANTY FOR THIS SOFTWARE to the extent permitted by law.
+ *
+ * Note that this is an official project of the LizardIRC IRC network.  For more
+ * information about LizardIRC, please visit our website at
+ * <https://www.lizardirc.org>.
+ *
+ * This is an open source project. The source Git repositories, which you are
+ * welcome to contribute to, can be found here:
+ * <https://gerrit.fastlizard4.org/r/gitweb?p=LizardIRC%2FBeancounter.git;a=summary>
+ * <https://git.fastlizard4.org/gitblit/summary/?r=LizardIRC/Beancounter.git>
+ *
+ * Gerrit Code Review for the project:
+ * <https://gerrit.fastlizard4.org/r/#/q/project:LizardIRC/Beancounter,n,z>
+ *
+ * Alternatively, the project source code can be found on the PUBLISH-ONLY mirror
+ * on GitHub: <https://github.com/LizardNet/LizardIRC-Beancounter>
+ *
+ * Note: Pull requests and patches submitted to GitHub will be transferred by a
+ * developer to Gerrit before they are acted upon.
+ */
+
 package org.lizardirc.beancounter.commands.entrymsg;
 
 import java.time.Instant;
@@ -5,13 +37,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-class EntryMessageCommandHandler<T extends PircBotX> implements CommandHandler<T> {
+class EntryMessageCommandHandler implements CommandHandler {
     private static final String CMD_ENTRYMSG = "entrymsg";
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_ENTRYMSG);
 
@@ -21,14 +52,14 @@ class EntryMessageCommandHandler<T extends PircBotX> implements CommandHandler<T
 
     private static final String PERM_GLOBAL_ENTRYMSG = "globalEntryMsg";
 
-    private final EntryMessageListener<T> parentListener;
+    private final EntryMessageListener parentListener;
 
-    public EntryMessageCommandHandler(EntryMessageListener<T> parentListener) {
+    public EntryMessageCommandHandler(EntryMessageListener parentListener) {
         this.parentListener = parentListener;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         } else {
@@ -37,7 +68,7 @@ class EntryMessageCommandHandler<T extends PircBotX> implements CommandHandler<T
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (!commands.isEmpty() && CMD_ENTRYMSG.equals(commands.get(0))) {
             if (!(event instanceof GenericChannelEvent)) {
                 event.respond("This command may only be run in a channel.");

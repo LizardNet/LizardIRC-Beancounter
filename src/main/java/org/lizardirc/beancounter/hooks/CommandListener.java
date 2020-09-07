@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -39,19 +39,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class CommandListener<T extends PircBotX> extends ListenerAdapter<T> {
-    private final CommandHandler<T> handler;
+public class CommandListener extends ListenerAdapter {
+    private final CommandHandler handler;
 
-    public CommandListener(CommandHandler<T> handler) {
+    public CommandListener(CommandHandler handler) {
         this.handler = handler;
     }
 
     @Override
-    public void onGenericMessage(GenericMessageEvent<T> event) {
+    public void onGenericMessage(GenericMessageEvent event) {
         List<String> commands = new ArrayList<>();
         Set<String> options;
         String message = event.getMessage().trim();
@@ -106,7 +105,6 @@ public class CommandListener<T extends PircBotX> extends ListenerAdapter<T> {
             if (!caps.equals(capsAndNumbers)) {
                 if (optionsMunged.put(caps, opt) != null) {
                     blacklist.add(caps);
-                    continue;
                 }
             }
         }
