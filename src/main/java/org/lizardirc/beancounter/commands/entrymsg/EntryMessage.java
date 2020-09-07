@@ -25,7 +25,7 @@ class EntryMessage {
     public EntryMessage(String message, String settingUser, Instant timestamp) {
         this.message = Objects.requireNonNull(message);
         this.settingUser = Objects.requireNonNull(settingUser);
-        this.timestamp = Objects.requireNonNull(timestamp.getEpochSecond());
+        this.timestamp = timestamp.getEpochSecond();
     }
 
     public String getMessage() {

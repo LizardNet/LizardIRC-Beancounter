@@ -37,12 +37,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
-import org.pircbotx.PircBotX;
+class TimedReminderProcessor implements Runnable {
+    private final ReminderListener reminderListener;
 
-class TimedReminderProcessor<T extends PircBotX> implements Runnable {
-    private final ReminderListener<T> reminderListener;
-
-    public TimedReminderProcessor(ReminderListener<T> reminderListener) {
+    public TimedReminderProcessor(ReminderListener reminderListener) {
         this.reminderListener = reminderListener;
     }
 

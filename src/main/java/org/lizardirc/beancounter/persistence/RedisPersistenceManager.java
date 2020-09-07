@@ -120,7 +120,7 @@ public class RedisPersistenceManager implements PersistenceManager {
     @Override
     public void setSet(String name, Set<String> value) {
         jedis.del(qualify(name));
-        jedis.sadd(qualify(name), value.toArray(new String[value.size()]));
+        jedis.sadd(qualify(name), value.toArray(new String[0]));
     }
 
     @Override

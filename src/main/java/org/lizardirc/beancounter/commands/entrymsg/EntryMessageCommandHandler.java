@@ -5,13 +5,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-class EntryMessageCommandHandler<T extends PircBotX> implements CommandHandler<T> {
+class EntryMessageCommandHandler implements CommandHandler {
     private static final String CMD_ENTRYMSG = "entrymsg";
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_ENTRYMSG);
 
@@ -21,14 +20,14 @@ class EntryMessageCommandHandler<T extends PircBotX> implements CommandHandler<T
 
     private static final String PERM_GLOBAL_ENTRYMSG = "globalEntryMsg";
 
-    private final EntryMessageListener<T> parentListener;
+    private final EntryMessageListener parentListener;
 
-    public EntryMessageCommandHandler(EntryMessageListener<T> parentListener) {
+    public EntryMessageCommandHandler(EntryMessageListener parentListener) {
         this.parentListener = parentListener;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         } else {
@@ -37,7 +36,7 @@ class EntryMessageCommandHandler<T extends PircBotX> implements CommandHandler<T
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (!commands.isEmpty() && CMD_ENTRYMSG.equals(commands.get(0))) {
             if (!(event instanceof GenericChannelEvent)) {
                 event.respond("This command may only be run in a channel.");

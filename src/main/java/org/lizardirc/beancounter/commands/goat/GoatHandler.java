@@ -39,28 +39,27 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.security.AccessControl;
 
-public class GoatHandler<T extends PircBotX> implements CommandHandler<T> {
+public class GoatHandler implements CommandHandler {
     private static final String CMD_GOAT = "goat";
     private static final String CMD_FGOAT = "fgoat";
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_GOAT, CMD_FGOAT);
 
     private static final Random random = new Random();
 
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
 
-    public GoatHandler(AccessControl<T> acl) {
+    public GoatHandler(AccessControl acl) {
         this.acl = acl;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         }
@@ -68,7 +67,7 @@ public class GoatHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.isEmpty()) {
             return;
         }

@@ -48,7 +48,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -60,7 +59,7 @@ import org.lizardirc.beancounter.utils.IrcColors;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 import org.lizardirc.beancounter.utils.MoreStrings;
 
-public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> implements CommandHandler<T> {
+public class WikipediaHandler extends ListenerAdapter implements CommandHandler {
     private static final String CMD_WIKIPEDIA = "WikiPedia";
     private static final String CMD_CFGWIKILINKS = "cfgwikilinks";
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_WIKIPEDIA, CMD_CFGWIKILINKS);
@@ -82,7 +81,7 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
         CFG_IGNORE,
         CFG_UNIGNORE);
 
-    private static final Pattern PATTERN_WIKILINK = Pattern.compile("\\[\\[([^\\[\\]|]+)(?:\\]\\]|\\|)|\\{\\{([^{\\}|]+)(?:\\}\\}|\\|)");
+    private static final Pattern PATTERN_WIKILINK = Pattern.compile("\\[\\[([^\\[\\]|]+)(?:]]|\\|)|\\{\\{([^{}|]+)(?:}}|\\|)");
 
     private final WikipediaSummaryService wikipediaSummaryService = new WikipediaSummaryService();
 
@@ -94,10 +93,11 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
     private static final String PERSISTENCE_DISABLED_AUTOLINK_CHANNELS = "disabledWikilinkExpansionChannels";
     private static final String PERSISTENCE_DISABLED_AUTOLINK_USERS = "ignoredWikilinkExpansionUsers";
 
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
     private static final String PERMISSION_CFGWIKILINKS = "cfgwikilinks";
 
-    public WikipediaHandler(PersistenceManager pm, AccessControl<T> acl) {
+    @SuppressWarnings("FuseStreamOperations")
+    public WikipediaHandler(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
         this.acl = acl;
 
@@ -131,7 +131,7 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -144,14 +144,14 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.isEmpty()) {
             return;
         }
 
         if (commands.size() == 1 && CMD_WIKIPEDIA.equals(commands.get(0))) {
             event.respond(summarizeWikiPage(remainder));
-        } else if (commands.size() >= 1 && CMD_CFGWIKILINKS.equals(commands.get(0))) {
+        } else if (CMD_CFGWIKILINKS.equals(commands.get(0))) {
             if (event instanceof GenericChannelEvent) {
                 GenericChannelEvent gce = (GenericChannelEvent) event;
 
@@ -231,7 +231,7 @@ public class WikipediaHandler<T extends PircBotX> extends ListenerAdapter<T> imp
     }
 
     @Override
-    public void onGenericMessage(GenericMessageEvent<T> event) {
+    public void onGenericMessage(GenericMessageEvent event) {
         if (event instanceof GenericChannelEvent) {
             Channel channel = ((GenericChannelEvent) event).getChannel();
             if (channel != null && disabledWikilinkExpansionChannels.contains(channel.getName().toLowerCase())) {

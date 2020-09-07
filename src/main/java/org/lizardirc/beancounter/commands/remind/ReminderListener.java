@@ -58,18 +58,19 @@ import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
-public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class ReminderListener extends ListenerAdapter {
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
     private final ScheduledExecutorService ses;
     private final Set<Reminder> reminders;
     private final List<TimedReminder> timedReminders;
-    private final CommandHandler<T> commandHandler = new ReminderCommandHandler<>(this);
+    private final CommandHandler commandHandler = new ReminderCommandHandler(this);
 
-    private T bot;
-    private ScheduledFuture scheduledFuture;
+    private PircBotX bot;
+    private ScheduledFuture<?> scheduledFuture;
 
-    public ReminderListener(PersistenceManager pm, AccessControl<T> acl, ScheduledExecutorService ses) {
+    @SuppressWarnings("FuseStreamOperations")
+    public ReminderListener(PersistenceManager pm, AccessControl acl, ScheduledExecutorService ses) {
         this.pm = pm;
         this.acl = acl;
         this.ses = ses;
@@ -86,16 +87,16 @@ public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
         );
     }
 
-    public CommandHandler<T> getCommandHandler() {
+    public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
     @Override
-    public void onConnect(ConnectEvent<T> event) {
+    public void onConnect(ConnectEvent event) {
         bot = event.getBot();
 
         if (!timedReminders.isEmpty()) {
-            scheduledFuture = ses.schedule(new TimedReminderProcessor<>(this), 20, TimeUnit.SECONDS);
+            scheduledFuture = ses.schedule(new TimedReminderProcessor(this), 20, TimeUnit.SECONDS);
         }
     }
 
@@ -176,23 +177,23 @@ public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
             System.out.println("ReminderListener: Target is a nickname");
             // We only have a nickname, which makes the matching logic a lot easier
             // Check if the target nickname is online
-            if (bot.getUserChannelDao().userExists(target)) {
+            if (bot.getUserChannelDao().containsUser(target)) {
                 if (!r.getChannel().equals("") && bot.getUserChannelDao().getChannel(r.getChannel()).getUsers().contains(bot.getUserChannelDao().getUser(target))) {
                     // Deliver in channel
                     bot.sendIRC().message(r.getChannel(), target + ": " + r.toString());
-                    return true;
                 } else {
                     // Deliver in PM
                     bot.sendIRC().message(target, r.toString());
-                    return true;
                 }
+
+                return true;
             } else {
                 return false; // User is offline; reminder delivery failed
             }
         }
     }
 
-    private synchronized void pounce(GenericUserEvent<T> event) {
+    private synchronized void pounce(GenericUserEvent event) {
         String userHostmask = event.getUser().getLogin() + '@' + event.getUser().getHostmask();
         String userNick = event.getUser().getNick();
 
@@ -209,17 +210,17 @@ public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
     }
 
     @Override
-    public void onJoin(JoinEvent<T> event) {
+    public void onJoin(JoinEvent event) {
         pounce(event);
     }
 
     @Override
-    public void onMessage(MessageEvent<T> event) {
+    public void onMessage(MessageEvent event) {
         pounce(event);
     }
 
     @Override
-    public void onAction(ActionEvent<T> event) {
+    public void onAction(ActionEvent event) {
         pounce(event);
     }
 
@@ -241,15 +242,15 @@ public class ReminderListener<T extends PircBotX> extends ListenerAdapter<T> {
         return reminders;
     }
 
-    AccessControl<T> getAcl() {
+    AccessControl getAcl() {
         return acl;
     }
 
-    ScheduledFuture getScheduledFuture() {
+    ScheduledFuture<?> getScheduledFuture() {
         return scheduledFuture;
     }
 
-    void setScheduledFuture(ScheduledFuture scheduledFuture) {
+    void setScheduledFuture(ScheduledFuture<?> scheduledFuture) {
         this.scheduledFuture = scheduledFuture;
     }
 

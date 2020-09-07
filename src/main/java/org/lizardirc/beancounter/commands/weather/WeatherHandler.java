@@ -41,6 +41,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericChannelEvent;
@@ -63,7 +63,7 @@ import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
-public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
+public class WeatherHandler implements CommandHandler {
     private static final String COMMAND_WEATHER = "weather";
     private static final String COMMAND_USER_WEATHER = "userweather";
     private static final String COMMAND_WEATHER_CONFIG = "cfgweather";
@@ -93,7 +93,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
 
     private final String httpUserAgent;
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
     private final Map<String, String> defaultLocations;
     private final WeatherApiRateLimiter rateLimiter;
 
@@ -101,7 +101,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
     private String apiKey;
     private boolean enableAlerts;
 
-    public WeatherHandler(PersistenceManager pm, AccessControl<T> acl) {
+    public WeatherHandler(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
         this.acl = acl;
 
@@ -127,7 +127,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -151,7 +151,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() < 1) {
             return;
         }
@@ -399,7 +399,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
         // rateLimiter.sync() calls pm.sync()
     }
 
-    private String resolveLocation(GenericMessageEvent<T> event, String query) {
+    private String resolveLocation(GenericMessageEvent event, String query) {
         LocationApiResponse locations;
         Gson gson = new Gson();
         try {
@@ -432,7 +432,7 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
         }
     }
 
-    private void getWeather(GenericMessageEvent<T> event, String arg) {
+    private void getWeather(GenericMessageEvent event, String arg) {
         String queryLocation;
         queryLocation = resolveLocation(event, arg);
         if (queryLocation != null) {
@@ -514,7 +514,8 @@ public class WeatherHandler<T extends PircBotX> implements CommandHandler<T> {
             throw new IOException("Error interacting with API: Got return status " + httpURLConnection.getResponseCode());
         }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader((InputStream) httpURLConnection.getContent(), "UTF-8"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader((InputStream) httpURLConnection.getContent(),
+                StandardCharsets.UTF_8));
 
         if (httpURLConnection.getHeaderField("X-API-Error") != null) {
             if (httpURLConnection.getHeaderField("X-API-Error").equals("true")) {

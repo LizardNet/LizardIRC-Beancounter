@@ -45,7 +45,7 @@ import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.hooks.MultiCommandHandler;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
-public class HelpHandler<T extends PircBotX> implements CommandHandler<T> {
+public class HelpHandler implements CommandHandler {
     private static final String COMMAND_HELP = "help";
     private static final String COMMAND_COMMANDS = "commands";
     private static final Set<String> COMMANDS = ImmutableSet.of(COMMAND_HELP, COMMAND_COMMANDS); // ARE YOU CONFUSED YET?!
@@ -53,14 +53,14 @@ public class HelpHandler<T extends PircBotX> implements CommandHandler<T> {
     private static final String MESSAGE_HELP = "My documentation, including a list of commands I support, can be found on LizardIRC's website: <https://www.lizardirc.org/index.php?page=beancounter>; " +
         "my source code can be found on GitHub: <https://github.com/LizardNet/LizardIRC-Beancounter>. You can also use the \"commands\" command to get a list of commands.";
 
-    private final MultiCommandHandler<T> multiCommandListener;
+    private final MultiCommandHandler multiCommandListener;
 
-    public HelpHandler(MultiCommandHandler<T> multiCommandListener) {
+    public HelpHandler(MultiCommandHandler multiCommandListener) {
         this.multiCommandListener = multiCommandListener;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         }
@@ -69,7 +69,7 @@ public class HelpHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() == 1) {
             switch (commands.get(0)) {
                 case COMMAND_HELP:

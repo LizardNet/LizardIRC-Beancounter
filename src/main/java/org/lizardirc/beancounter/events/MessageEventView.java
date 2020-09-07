@@ -34,20 +34,18 @@ package org.lizardirc.beancounter.events;
 
 import java.util.Objects;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.events.MessageEvent;
 
-public class MessageEventView<T extends PircBotX> extends MessageEvent<T> {
-    private final MessageEvent<T> childEvent;
+public class MessageEventView extends MessageEvent {
+
+    private final MessageEvent childEvent;
     private final String newMessage;
 
-    public MessageEventView(MessageEvent<T> childEvent, String newMessage) {
-        super(childEvent.getBot(), childEvent.getChannel(), childEvent.getUser(), newMessage);
+    public MessageEventView(MessageEvent childEvent, String newMessage) {
+        super(childEvent.getBot(), childEvent.getChannel(), childEvent.getChannelSource(), childEvent.getUserHostmask(),
+                childEvent.getUser(), newMessage, childEvent.getTags());
         this.childEvent = childEvent;
         this.newMessage = newMessage;
-        if (newMessage == null) {
-            throw new IllegalArgumentException("newMessage cannot be null");
-        }
     }
 
     @Override
@@ -58,10 +56,10 @@ public class MessageEventView<T extends PircBotX> extends MessageEvent<T> {
     @Override
     public boolean equals(Object o) {
         if (o instanceof MessageEventView) {
-            MessageEventView<?> that = (MessageEventView<?>) o;
+            MessageEventView that = (MessageEventView) o;
             return that.canEqual(this)
-                && newMessage.equals(that.newMessage)
-                && super.equals(that);
+                    && newMessage.equals(that.newMessage)
+                    && super.equals(that);
         }
         return false;
     }

@@ -48,14 +48,13 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.EvictingQueue;
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ActionEvent;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class SedListener extends ListenerAdapter {
     // There are several substring types that we match.
     // A) any character except \
     // B) 0 or more copies of either an escaped character, or something other than \
@@ -86,6 +85,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     private final LoadingCache<User, Queue<UserMessage>> windows;
     private final ExecutorService executorService;
 
+    @SuppressWarnings("UnstableApiUsage")
     public SedListener(ExecutorService executorService, int windowSize) {
         windows = CacheBuilder.newBuilder()
             .build(CacheLoader.from(() -> EvictingQueue.create(windowSize)));
@@ -93,7 +93,7 @@ public class SedListener<T extends PircBotX> extends ListenerAdapter<T> {
     }
 
     @Override
-    public void onGenericMessage(GenericMessageEvent<T> event) throws Exception {
+    public void onGenericMessage(GenericMessageEvent event) throws Exception {
         if (!(event instanceof GenericChannelEvent)) {
             return;
         }

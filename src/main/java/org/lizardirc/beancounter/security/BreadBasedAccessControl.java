@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -44,7 +44,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.hooks.types.GenericUserEvent;
@@ -55,17 +54,17 @@ import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
 // This pun is entirely TLUL's fault.
-public class BreadBasedAccessControl<T extends PircBotX> implements AccessControl<T> {
+public class BreadBasedAccessControl implements AccessControl {
     private enum RemoveFromMultimapResults {
         SUCCESS,
         E_NOSUCHKEY,
         E_NOSUCHVALUE
     }
 
-    private final BreadBasedAccessControlHandler<T> listener = new BreadBasedAccessControlHandler<>();
-    private Map<String, Set<String>> hostmasksToRoles;
-    private Map<String, Set<String>> rolesToPermissions;
-    private PersistenceManager pm;
+    private final BreadBasedAccessControlHandler listener = new BreadBasedAccessControlHandler();
+    private final Map<String, Set<String>> hostmasksToRoles;
+    private final Map<String, Set<String>> rolesToPermissions;
+    private final PersistenceManager pm;
 
     private final Set<String> seenPermissions = new HashSet<>();
 
@@ -85,7 +84,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
     }
 
     @Override
-    public synchronized boolean hasPermission(GenericUserEvent<?> event, String checkPermission) {
+    public synchronized boolean hasPermission(GenericUserEvent event, String checkPermission) {
         seenPermissions.add(checkPermission);
 
         return getPermissionStream(event)
@@ -93,11 +92,11 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
     }
 
     @Override
-    public synchronized Set<String> getPermissions(GenericUserEvent<?> event) {
+    public synchronized Set<String> getPermissions(GenericUserEvent event) {
         return getPermissionStream(event).collect(Collectors.toSet());
     }
 
-    private synchronized Stream<String> getPermissionStream(GenericUserEvent<?> event) {
+    private synchronized Stream<String> getPermissionStream(GenericUserEvent event) {
         String userHostmask = event.getUser().getNick() + "!" + event.getUser().getLogin() + "@" + event.getUser().getHostmask();
 
         return hostmasksToRoles.entrySet().stream()
@@ -243,7 +242,7 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
     }
 
     @Override
-    public CommandHandler<T> getHandler() {
+    public CommandHandler getHandler() {
         return listener;
     }
 
@@ -257,7 +256,12 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
     Into the mouth of Hell
     Rode the six hundred. */
 
-    private class BreadBasedAccessControlHandler<PlsStopT extends PircBotX> implements CommandHandler<PlsStopT> {
+    /* UPDATE 7 Sep 2020:
+      "Did you remove the generics?"
+      "Yes..."
+      "What did it cost?"
+      "Everything." */
+    private class BreadBasedAccessControlHandler implements CommandHandler {
         private static final String COMMAND_ACL = "acl";
         private static final String COMMAND_MYPERMS = "myperms";
         private final Set<String> COMMANDS = ImmutableSet.of(COMMAND_ACL, COMMAND_MYPERMS);
@@ -280,33 +284,29 @@ public class BreadBasedAccessControl<T extends PircBotX> implements AccessContro
         private final Set<String> LIST_OPTIONS = ImmutableSet.of(LIST_OPTION_AVAILABLE, "");
 
         @Override
-        public Set<String> getSubCommands(GenericMessageEvent<PlsStopT> event, List<String> commands) {
+        public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
             switch (commands.size()) {
                 case 0:
                     return COMMANDS;
                 case 1:
                     return OPERATIONS;
                 case 2:
-                    switch (commands.get(1)) {
-                        case OPERATION_DELETE:
-                            return OPERANDS_DELETE;
-                        default:
-                            return OPERANDS;
+                    if (OPERATION_DELETE.equals(commands.get(1))) {
+                        return OPERANDS_DELETE;
                     }
+                    return OPERANDS;
                 case 3:
-                    switch (commands.get(1)) {
-                        case OPERATION_LIST:
-                            return LIST_OPTIONS;
-                        default:
-                            return Collections.emptySet();
+                    if (OPERATION_LIST.equals(commands.get(1))) {
+                        return LIST_OPTIONS;
                     }
+                    return Collections.emptySet();
                 default:
                     return Collections.emptySet();
             }
         }
 
         @Override
-        public synchronized void handleCommand(GenericMessageEvent<PlsStopT> event, List<String> commands, String remainder) {
+        public synchronized void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
             if (commands.size() == 0) {
                 return;
             }

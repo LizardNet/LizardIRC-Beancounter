@@ -53,7 +53,7 @@ public class MorseDecoder {
         this.ambiguousMorse = ImmutableList.of("...", ".", "-");
     }
 
-    public class DecodeResult {
+    public static class DecodeResult {
         public final String result;
         public final int detectedCharacters;
 

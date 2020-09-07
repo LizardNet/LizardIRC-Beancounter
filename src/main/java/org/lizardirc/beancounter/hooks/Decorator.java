@@ -32,20 +32,19 @@
 
 package org.lizardirc.beancounter.hooks;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.ListenerAdapter;
 
-public class Decorator<T extends PircBotX> extends ListenerAdapter<T> {
-    protected final Listener<T> childListener;
+public class Decorator extends ListenerAdapter {
+    protected final Listener childListener;
 
-    public Decorator(Listener<T> childListener) {
+    public Decorator(Listener childListener) {
         this.childListener = childListener;
     }
 
     @Override
-    public void onEvent(Event<T> event) throws Exception {
+    public void onEvent(Event event) throws Exception {
         childListener.onEvent(event);
     }
 }

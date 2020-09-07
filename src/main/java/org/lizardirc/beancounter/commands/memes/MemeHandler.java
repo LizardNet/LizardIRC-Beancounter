@@ -45,13 +45,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.Beancounter;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
+public class MemeHandler implements CommandHandler {
     private static final String LOOK_OF_DISAPPROVAL = "LookOfDisapproval";
     private static final String LENNY = "Lenny";
     private static final String ANGRY_LENNY = "AngryLenny";
@@ -101,7 +100,7 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public Set<String> getSubCommands(final GenericMessageEvent<T> event, final List<String> commands) {
+    public Set<String> getSubCommands(final GenericMessageEvent event, final List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         }
@@ -110,7 +109,7 @@ public class MemeHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(final GenericMessageEvent<T> event, final List<String> commands, String remainder) {
+    public void handleCommand(final GenericMessageEvent event, final List<String> commands, String remainder) {
         String message;
 
         if (!remainder.isEmpty()) {
