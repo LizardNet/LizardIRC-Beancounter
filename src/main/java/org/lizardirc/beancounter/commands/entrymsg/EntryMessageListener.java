@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.JoinEvent;
 import org.pircbotx.hooks.types.GenericChannelEvent;
@@ -18,18 +17,18 @@ import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 
-public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class EntryMessageListener extends ListenerAdapter {
     /** This must match the type of the {@link #entryMessages} field */
     private static final Type PERSISTENCE_TYPE_TOKEN = new TypeToken<Map<String, EntryMessage>>(){}.getType();
 
     private static final String MESSAGE_OUTPUT_FORMAT = "%s (Set by %s (%s) at %s)";
 
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
     private final Map<String, EntryMessage> entryMessages;
-    private final EntryMessageCommandHandler<T> commandHandler;
+    private final EntryMessageCommandHandler commandHandler;
 
-    public EntryMessageListener(PersistenceManager pm, AccessControl<T> acl) {
+    public EntryMessageListener(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
         this.acl = acl;
 
@@ -46,7 +45,7 @@ public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T>
             entryMessages = new HashMap<>();
         }
 
-        this.commandHandler = new EntryMessageCommandHandler<>(this);
+        this.commandHandler = new EntryMessageCommandHandler(this);
     }
 
     private synchronized void sync() {
@@ -55,11 +54,11 @@ public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T>
         pm.sync();
     }
 
-    public CommandHandler<T> getCommandHandler() {
+    public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
-    AccessControl<T> getAccessControl() {
+    AccessControl getAccessControl() {
         return acl;
     }
 
@@ -77,7 +76,7 @@ public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T>
         sync();
     }
 
-    String generateMessageString(GenericChannelEvent<?> event) {
+    String generateMessageString(GenericChannelEvent event) {
         EntryMessage message = getEntryMessage(event.getChannel().getName());
         if (message != null) {
             String[] settingUser = message.getSettingUser().split("!");
@@ -89,8 +88,8 @@ public class EntryMessageListener<T extends PircBotX> extends ListenerAdapter<T>
     }
 
     @Override
-    public void onJoin(JoinEvent<T> event) {
-        if (event.getUser().equals(event.getBot().getUserBot())) {
+    public void onJoin(JoinEvent event) {
+        if (event.getBot().getUserBot().equals(event.getUser())) {
             return;
         }
 

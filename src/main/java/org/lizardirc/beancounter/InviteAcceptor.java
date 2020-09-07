@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.InviteEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -47,27 +46,27 @@ import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
-public class InviteAcceptor<T extends PircBotX> extends ListenerAdapter<T> {
+public class InviteAcceptor extends ListenerAdapter {
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
-    private final InviteAcceptorHandler<T> commandHandler = new InviteAcceptorHandler<>();
+    private final AccessControl acl;
+    private final InviteAcceptorHandler commandHandler = new InviteAcceptorHandler();
 
     private boolean allowInvites;
 
-    public InviteAcceptor(PersistenceManager pm, AccessControl<T> acl) {
+    public InviteAcceptor(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
         this.acl = acl;
         allowInvites = pm.getBoolean("allowInvites").orElse(true);
     }
 
-    public void onInvite(InviteEvent<T> event) {
+    public void onInvite(InviteEvent event) {
         if (allowInvites) {
             event.getBot().sendIRC().joinChannel(event.getChannel());
             event.getBot().sendIRC().message(event.getChannel(), "I was invited to join this channel by " + event.getUser() + ".");
         }
     }
 
-    public CommandHandler<T> getCommandHandler() {
+    public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
@@ -76,7 +75,7 @@ public class InviteAcceptor<T extends PircBotX> extends ListenerAdapter<T> {
         pm.sync();
     }
 
-    private class InviteAcceptorHandler<T2 extends PircBotX> implements CommandHandler<T2> {
+    private class InviteAcceptorHandler implements CommandHandler {
         private static final String CMD_CFG_INVITES = "cfginvites";
         private final Set<String> COMMANDS = ImmutableSet.of(CMD_CFG_INVITES);
 
@@ -87,7 +86,7 @@ public class InviteAcceptor<T extends PircBotX> extends ListenerAdapter<T> {
         private static final String PERM_CFG_INVITES = CMD_CFG_INVITES;
 
         @Override
-        public Set<String> getSubCommands(GenericMessageEvent<T2> event, List<String> commands) {
+        public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
             if (commands.isEmpty()) {
                 return COMMANDS;
             }
@@ -100,7 +99,7 @@ public class InviteAcceptor<T extends PircBotX> extends ListenerAdapter<T> {
         }
 
         @Override
-        public void handleCommand(GenericMessageEvent<T2> event, List<String> commands, String remainder) {
+        public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
             if (commands.size() == 1) {
                 event.respond("I am currently configured to " + (allowInvites ? "accept" : "reject") + " invitations to join channels");
                 if (acl.hasPermission(event, PERM_CFG_INVITES)) {

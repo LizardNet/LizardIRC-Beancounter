@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -39,7 +39,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableSet;
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.pircbotx.output.OutputIRC;
@@ -48,7 +47,7 @@ import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.security.AccessControl;
 import org.lizardirc.beancounter.utils.Miscellaneous;
 
-public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
+public class AdminHandler implements CommandHandler {
     private static final String CMD_QUIT = "quit";
     private static final String CMD_NICK = "nick";
     private static final String CMD_JOIN = "join";
@@ -70,14 +69,14 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
 
     private static final String E_PERMFAIL = "No u! (You don't have the necessary permissions to do this.)";
 
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
 
-    public AdminHandler(AccessControl<T> acl) {
+    public AdminHandler(AccessControl acl) {
         this.acl = acl;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -85,7 +84,7 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         String[] args;
         OutputIRC outputIRC = event.getBot().sendIRC();
         String actor = event.getUser().getNick();
@@ -220,7 +219,7 @@ public class AdminHandler<T extends PircBotX> implements CommandHandler<T> {
         }
     }
 
-    private void sendToChannel(GenericMessageEvent<?> event, String what, String remainder) {
+    private void sendToChannel(GenericMessageEvent event, String what, String remainder) {
         String[] args;
         OutputIRC outputIRC = event.getBot().sendIRC();
 

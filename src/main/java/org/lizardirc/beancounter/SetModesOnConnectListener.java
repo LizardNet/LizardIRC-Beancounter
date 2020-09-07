@@ -32,18 +32,17 @@
 
 package org.lizardirc.beancounter;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
 
-public class SetModesOnConnectListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class SetModesOnConnectListener extends ListenerAdapter {
     private final String modesToSet;
 
     public SetModesOnConnectListener(String modesToSet) {
         this.modesToSet = modesToSet;
     }
 
-    public void onConnect(ConnectEvent<T> event) throws Exception {
+    public void onConnect(ConnectEvent event) throws Exception {
         event.getBot().sendIRC().mode(event.getBot().getNick(), modesToSet);
     }
 }

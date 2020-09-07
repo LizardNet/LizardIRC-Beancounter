@@ -33,14 +33,13 @@ package org.lizardirc.beancounter.commands.morse;
 
 import com.google.common.collect.ImmutableSet;
 import org.lizardirc.beancounter.hooks.CommandHandler;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.util.List;
 import java.util.Set;
 
-class MorseCommandHandler<T extends PircBotX> implements CommandHandler<T> {
+class MorseCommandHandler implements CommandHandler {
     private static final String CMD_MORSE = "morse";
 
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_MORSE);
@@ -52,14 +51,14 @@ class MorseCommandHandler<T extends PircBotX> implements CommandHandler<T> {
 
     private static final String PERM_GLOBAL_MORSE = "globalMorse";
 
-    private final MorseListener<T> parentListener;
+    private final MorseListener parentListener;
 
-    MorseCommandHandler(MorseListener<T> parentListener) {
+    MorseCommandHandler(MorseListener parentListener) {
         this.parentListener = parentListener;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         } else {
@@ -68,7 +67,7 @@ class MorseCommandHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.isEmpty() || !CMD_MORSE.equals(commands.get(0))) {
             return;
         }

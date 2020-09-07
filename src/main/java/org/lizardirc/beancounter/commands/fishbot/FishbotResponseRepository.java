@@ -42,8 +42,8 @@ import com.google.gson.Gson;
 import org.lizardirc.beancounter.Beancounter;
 
 public class FishbotResponseRepository {
-    private List<FishbotResponse> messages;
-    private List<FishbotResponse> actions;
+    private final List<FishbotResponse> messages;
+    private final List<FishbotResponse> actions;
 
     private FishbotResponseRepository(List<FishbotResponse> messages, List<FishbotResponse> actions) {
         this.messages = messages;

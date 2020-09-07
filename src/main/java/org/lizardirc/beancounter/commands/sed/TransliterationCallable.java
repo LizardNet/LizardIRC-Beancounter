@@ -56,7 +56,7 @@ class TransliterationCallable implements Callable<Optional<UserMessage>> {
     }
 
     @Override
-    public Optional<UserMessage> call() throws Exception {
+    public Optional<UserMessage> call()  {
         String[] toReplace = this.toReplace.split("");
         String[] replacements = this.replacement.split("");
 
@@ -80,11 +80,7 @@ class TransliterationCallable implements Callable<Optional<UserMessage>> {
                 String[] message = item.getRight().toString().split("");
                 StringBuilder sb = new StringBuilder();
                 for (String key : message) {
-                    if (h.containsKey(key)) {
-                        sb.append(h.get(key));
-                    } else {
-                        sb.append(key);
-                    }
+                    sb.append(h.getOrDefault(key, key));
                 }
 
                 return new UserMessage(item.getLeft(), sb.toString());

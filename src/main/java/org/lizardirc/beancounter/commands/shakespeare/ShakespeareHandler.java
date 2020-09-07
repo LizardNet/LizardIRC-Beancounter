@@ -43,21 +43,20 @@ import com.google.common.collect.ImmutableSet;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-public class ShakespeareHandler<T extends PircBotX> implements CommandHandler<T> {
+public class ShakespeareHandler implements CommandHandler {
     private static final String COMMAND_INSULT = "insult";
     private static final String COMMAND_SHAKESPEARE = "shakespeare";
 
     public static final ImmutableSet<String> COMMANDS = ImmutableSet.of(COMMAND_INSULT, COMMAND_SHAKESPEARE);
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -73,7 +72,7 @@ public class ShakespeareHandler<T extends PircBotX> implements CommandHandler<T>
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (!COMMANDS.contains(commands.get(0))) {
             return;
         }

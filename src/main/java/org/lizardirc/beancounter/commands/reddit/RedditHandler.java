@@ -39,12 +39,11 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-public class RedditHandler<T extends PircBotX> implements CommandHandler<T> {
+public class RedditHandler implements CommandHandler {
     private static final String COMMAND_REDDITOR = "redditor";
     private final RedditService redditService;
 
@@ -53,7 +52,7 @@ public class RedditHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return ImmutableSet.of(COMMAND_REDDITOR);
         }
@@ -62,7 +61,7 @@ public class RedditHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (remainder.startsWith("/u/")) {
             remainder = remainder.substring(3);
         } else if (remainder.startsWith("/user/")) {

@@ -38,7 +38,6 @@ import org.lizardirc.beancounter.Beancounter;
 import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericChannelEvent;
@@ -54,29 +53,30 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class MorseListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class MorseListener extends ListenerAdapter {
 
     private static final Type PERSISTENCE_TYPE_TOKEN = new TypeToken<Set<String>>(){}.getType();
     private static final String PERSISTENCE_KEY = "morseEnabled";
 
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
 
-    private final MorseCommandHandler<T> commandHandler;
+    private final MorseCommandHandler commandHandler;
 
     private final Set<String> enabledChannels;
     private MorseDecoder decoder;
 
-    public MorseListener(PersistenceManager pm, AccessControl<T> acl) {
+    public MorseListener(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
         this.acl = acl;
-        this.commandHandler = new MorseCommandHandler<>(this);
+        this.commandHandler = new MorseCommandHandler(this);
 
         Gson gson = new Gson();
         Optional<String> serialisedMorseChannels = pm.get(PERSISTENCE_KEY);
         if (serialisedMorseChannels.isPresent()) {
             Set<String> persistedEnabledChannels = gson.fromJson(serialisedMorseChannels.get(), PERSISTENCE_TYPE_TOKEN);
 
+            //noinspection FuseStreamOperations
             this.enabledChannels = new HashSet<>(persistedEnabledChannels.stream()
                     .map(String::toLowerCase)
                     .collect(Collectors.toList()));
@@ -96,12 +96,12 @@ public class MorseListener<T extends PircBotX> extends ListenerAdapter<T> {
         }
     }
 
-    public CommandHandler<T> getCommandHandler() {
+    public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
     @Override
-    public void onGenericChannel(GenericChannelEvent<T> event) throws Exception {
+    public void onGenericChannel(GenericChannelEvent event) {
         if (!(event instanceof GenericMessageEvent)) {
             return;
         }
@@ -124,12 +124,10 @@ public class MorseListener<T extends PircBotX> extends ListenerAdapter<T> {
         MorseDecoder.DecodeResult decodeResult = this.decoder.decodeMorse(message);
 
         if(decodeResult.detectedCharacters >= 2) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(user.getNick());
-            sb.append(" meant to say: ");
-            sb.append(decodeResult.result);
-
-            event.getChannel().send().message(sb.toString());
+            String sb = user.getNick()
+                    + " meant to say: "
+                    + decodeResult.result;
+            event.getChannel().send().message(sb);
         }
     }
 
@@ -142,9 +140,7 @@ public class MorseListener<T extends PircBotX> extends ListenerAdapter<T> {
     synchronized void disable(String channelName) {
         String lowerChannelName = channelName.toLowerCase();
 
-        if (enabledChannels.contains(lowerChannelName)) {
-            enabledChannels.remove(lowerChannelName);
-        }
+        enabledChannels.remove(lowerChannelName);
 
         sync();
     }
@@ -152,9 +148,7 @@ public class MorseListener<T extends PircBotX> extends ListenerAdapter<T> {
     synchronized void enable(String channelName) {
         String lowerChannelName = channelName.toLowerCase();
 
-        if (!enabledChannels.contains(lowerChannelName)) {
-            enabledChannels.add(lowerChannelName);
-        }
+        enabledChannels.add(lowerChannelName);
 
         sync();
     }
@@ -165,7 +159,7 @@ public class MorseListener<T extends PircBotX> extends ListenerAdapter<T> {
         pm.sync();
     }
 
-    AccessControl<T> getAccessControl() {
+    AccessControl getAccessControl() {
         return acl;
     }
 }
