@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015-2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -40,7 +40,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -48,9 +47,9 @@ import org.lizardirc.beancounter.hooks.CommandHandler;
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 import org.lizardirc.beancounter.security.AccessControl;
 
-public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T> {
+public class UserLastSeenListener extends ListenerAdapter {
     private final PersistenceManager pm;
-    private final AccessControl<T> acl;
+    private final AccessControl acl;
 
     // This is a mapping of user@hosts to an object that contains the channel they last spoke in, and the time
     private final Map<String, ChannelAndTime> lastSeen;
@@ -60,12 +59,13 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
     // command.  The bot will also automatically not track channels that are set as secret (mode +s usually).
     private final Set<String> doNotTrackChannels;
 
-    private final CommandHandler<T> commandHandler = new UserLastSeenCommandHandler<>(this);
+    private final CommandHandler commandHandler = new UserLastSeenCommandHandler(this);
 
-    public UserLastSeenListener(PersistenceManager pm, AccessControl<T> acl) {
+    public UserLastSeenListener(PersistenceManager pm, AccessControl acl) {
         this.pm = pm;
         this.acl = acl;
 
+        //noinspection FuseStreamOperations
         doNotTrackChannels = new HashSet<>(pm.getSet("doNotTrackChannels").stream()
             .map(String::toLowerCase)
             .collect(Collectors.toSet())
@@ -76,7 +76,7 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
         lastSeen = getLastSeenMap();
     }
 
-    public synchronized void onMessage(MessageEvent<T> event) {
+    public synchronized void onMessage(MessageEvent event) {
         if (doNotTrackChannels.contains(event.getChannel().getName().toLowerCase()) || event.getChannel().isSecret()) {
             return;
         }
@@ -114,11 +114,11 @@ public class UserLastSeenListener<T extends PircBotX> extends ListenerAdapter<T>
         );
     }
 
-    public CommandHandler<T> getCommandHandler() {
+    public CommandHandler getCommandHandler() {
         return commandHandler;
     }
 
-    AccessControl<T> getAcl() {
+    AccessControl getAcl() {
         return acl;
     }
 

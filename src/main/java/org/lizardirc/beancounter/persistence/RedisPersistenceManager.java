@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -120,7 +120,7 @@ public class RedisPersistenceManager implements PersistenceManager {
     @Override
     public void setSet(String name, Set<String> value) {
         jedis.del(qualify(name));
-        jedis.sadd(qualify(name), value.toArray(new String[value.size()]));
+        jedis.sadd(qualify(name), value.toArray(new String[0]));
     }
 
     @Override

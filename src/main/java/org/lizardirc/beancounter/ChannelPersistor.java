@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -34,7 +34,6 @@ package org.lizardirc.beancounter;
 
 import java.util.Set;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.JoinEvent;
@@ -43,7 +42,7 @@ import org.pircbotx.hooks.events.PartEvent;
 
 import org.lizardirc.beancounter.persistence.PersistenceManager;
 
-public class ChannelPersistor<T extends PircBotX> extends ListenerAdapter<T> {
+public class ChannelPersistor extends ListenerAdapter {
     private static final String PERSIST_CHANNELS = "channels";
     private final Set<String> channels;
     private final PersistenceManager pm;
@@ -54,25 +53,25 @@ public class ChannelPersistor<T extends PircBotX> extends ListenerAdapter<T> {
         channels = pm.getSet(PERSIST_CHANNELS);
     }
 
-    public synchronized void onConnect(ConnectEvent<T> event) throws Exception {
+    public synchronized void onConnect(ConnectEvent event) {
         channels.forEach(event.getBot().sendIRC()::joinChannel);
     }
 
-    public synchronized void onJoin(JoinEvent<T> event) throws Exception {
+    public synchronized void onJoin(JoinEvent event) {
         if (event.getBot().getUserBot().equals(event.getUser())) {
             channels.add(event.getChannel().getName());
             sync();
         }
     }
 
-    public synchronized void onKick(KickEvent<T> event) throws Exception {
+    public synchronized void onKick(KickEvent event) {
         if (event.getBot().getUserBot().equals(event.getRecipient())) {
             channels.remove(event.getChannel().getName());
             sync();
         }
     }
 
-    public synchronized void onPart(PartEvent<T> event) throws Exception {
+    public synchronized void onPart(PartEvent event) {
         if (event.getBot().getUserBot().getNick().equals(event.getUser().getNick())) {
             channels.remove(event.getChannel().getName());
             sync();

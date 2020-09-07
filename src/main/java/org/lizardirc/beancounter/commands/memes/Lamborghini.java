@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -86,35 +86,35 @@ class Lamborghini {
         if (transformers == null || input.isEmpty()) {
             return input;
         } else {
-            String output = input;
+            StringBuilder output = new StringBuilder(input);
 
             for (LamborghiniTransformers transformer : transformers) {
                 switch (transformer) {
                     case ADDITIONAL_PREPEND:
                         // Silently do nothing if the "additional" is unspecified
                         if (additional != null) {
-                            output = additional + output;
+                            output.insert(0, additional);
                         }
                         break;
                     case ADDITIONAL_APPEND:
                         // Silently do nothing if the "additional" is unspecified
                         if (additional != null) {
-                            output += additional;
+                            output.append(additional);
                         }
                         break;
                     case ALL_CAPS:
-                        output = output.toUpperCase();
+                        output = new StringBuilder(output.toString().toUpperCase());
                         break;
                     case PAD_LEFT:
-                        output = ' ' + output;
+                        output.insert(0, ' ');
                         break;
                     case PAD_RIGHT:
-                        output += ' ';
+                        output.append(' ');
                         break;
                 }
             }
 
-            return output;
+            return output.toString();
         }
     }
 }

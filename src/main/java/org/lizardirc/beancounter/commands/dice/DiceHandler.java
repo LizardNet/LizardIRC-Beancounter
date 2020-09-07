@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015-2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -41,13 +41,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-public class DiceHandler<T extends PircBotX> implements CommandHandler<T> {
+public class DiceHandler implements CommandHandler {
     private static final Set<String> COMMANDS = ImmutableSet.of("coin", "dice", "more", "roll");
     private static final Pattern DESCRIPTOR = Pattern.compile("(?:([0-9]+)?d)?([0-9]+)");
 
@@ -56,7 +55,7 @@ public class DiceHandler<T extends PircBotX> implements CommandHandler<T> {
     private String moreInfo = null;
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.size() == 0) {
             return COMMANDS;
         }
@@ -64,7 +63,7 @@ public class DiceHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public synchronized void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public synchronized void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.size() == 0) {
             return;
         }

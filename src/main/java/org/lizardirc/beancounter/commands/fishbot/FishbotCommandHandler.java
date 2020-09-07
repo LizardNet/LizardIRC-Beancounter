@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2016 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2016-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -35,13 +35,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.lizardirc.beancounter.hooks.CommandHandler;
 
-class FishbotCommandHandler<T extends PircBotX> implements CommandHandler<T> {
+class FishbotCommandHandler implements CommandHandler {
     private static final String CMD_FISHBOT = "fishbot";
 
     private static final Set<String> COMMANDS = ImmutableSet.of(CMD_FISHBOT);
@@ -53,14 +52,14 @@ class FishbotCommandHandler<T extends PircBotX> implements CommandHandler<T> {
 
     private static final String PERM_GLOBAL_FISHBOT = "globalFishbot";
 
-    private final FishbotListener<T> parentListener;
+    private final FishbotListener parentListener;
 
-    FishbotCommandHandler(FishbotListener<T> parentListener) {
+    FishbotCommandHandler(FishbotListener parentListener) {
         this.parentListener = parentListener;
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         if (commands.isEmpty()) {
             return COMMANDS;
         } else {
@@ -69,7 +68,7 @@ class FishbotCommandHandler<T extends PircBotX> implements CommandHandler<T> {
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         if (commands.isEmpty() || !CMD_FISHBOT.equals(commands.get(0))) {
             return;
         }

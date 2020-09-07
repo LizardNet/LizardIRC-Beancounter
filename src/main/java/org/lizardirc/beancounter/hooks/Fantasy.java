@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -35,7 +35,6 @@ package org.lizardirc.beancounter.hooks;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.Listener;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -44,30 +43,30 @@ import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.lizardirc.beancounter.events.MessageEventView;
 import org.lizardirc.beancounter.events.PrivateMessageEventView;
 
-public class Fantasy<T extends PircBotX> extends Decorator<T> {
+public class Fantasy extends Decorator {
     private static final Pattern ADDRESSED_PATTERN = Pattern.compile("^ *[,:] *(.*)$");
     private final String fantasyPrefix;
     private final int fantasyLength;
 
-    public Fantasy(Listener<T> childListener, String fantasyPrefix) {
+    public Fantasy(Listener childListener, String fantasyPrefix) {
         super(childListener);
         this.fantasyPrefix = fantasyPrefix;
         this.fantasyLength = fantasyPrefix.length();
     }
 
     @Override
-    public void onEvent(Event<T> event) throws Exception {
+    public void onEvent(Event event) throws Exception {
         if (event instanceof MessageEvent) {
-            MessageEvent<T> me = (MessageEvent<T>) event;
+            MessageEvent me = (MessageEvent) event;
             String newMessage = processMessage(me.getMessage().trim(), event.getBot().getNick());
             if (newMessage != null) {
-                super.onEvent(new MessageEventView<>(me, newMessage));
+                super.onEvent(new MessageEventView(me, newMessage));
             }
         } else if (event instanceof PrivateMessageEvent) {
-            PrivateMessageEvent<T> me = (PrivateMessageEvent<T>) event;
+            PrivateMessageEvent me = (PrivateMessageEvent) event;
             String newMessage = processMessage(me.getMessage().trim(), event.getBot().getNick());
             if (newMessage != null) {
-                super.onEvent(new PrivateMessageEventView<>(me, newMessage));
+                super.onEvent(new PrivateMessageEventView(me, newMessage));
             } else {
                 super.onEvent(me);
             }

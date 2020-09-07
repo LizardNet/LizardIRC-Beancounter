@@ -2,7 +2,7 @@
  * LIZARDIRC/BEANCOUNTER
  * By the LizardIRC Development Team (see AUTHORS.txt file)
  *
- * Copyright (C) 2015 by the LizardIRC Development Team. Some rights reserved.
+ * Copyright (C) 2015-2020 by the LizardIRC Development Team. Some rights reserved.
  *
  * License GPLv3+: GNU General Public License version 3 or later (at your choice):
  * <http://gnu.org/licenses/gpl.html>. This is free software: you are free to
@@ -43,26 +43,26 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.types.GenericChannelEvent;
 import org.pircbotx.hooks.types.GenericEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class PerChannelCommand<T extends PircBotX> implements CommandHandler<T> {
-    private final LoadingCache<Channel, ? extends CommandHandler<T>> childListeners;
+@SuppressWarnings("Guava")
+public class PerChannelCommand implements CommandHandler {
+    private final LoadingCache<Channel, ? extends CommandHandler> childListeners;
 
-    public PerChannelCommand(Function<Channel, ? extends CommandHandler<T>> childFunction) {
+    public PerChannelCommand(Function<Channel, ? extends CommandHandler> childFunction) {
         childListeners = CacheBuilder.newBuilder()
             .build(CacheLoader.from(childFunction));
     }
 
-    public PerChannelCommand(Supplier<? extends CommandHandler<T>> childSupplier) {
+    public PerChannelCommand(Supplier<? extends CommandHandler> childSupplier) {
         childListeners = CacheBuilder.newBuilder()
             .build(CacheLoader.from(childSupplier));
     }
 
     @Override
-    public Set<String> getSubCommands(GenericMessageEvent<T> event, List<String> commands) {
+    public Set<String> getSubCommands(GenericMessageEvent event, List<String> commands) {
         Channel channel = getChannel(event);
         if (channel != null) {
             try {
@@ -75,7 +75,7 @@ public class PerChannelCommand<T extends PircBotX> implements CommandHandler<T> 
     }
 
     @Override
-    public void handleCommand(GenericMessageEvent<T> event, List<String> commands, String remainder) {
+    public void handleCommand(GenericMessageEvent event, List<String> commands, String remainder) {
         Channel channel = getChannel(event);
         if (channel != null) {
             try {
@@ -86,7 +86,7 @@ public class PerChannelCommand<T extends PircBotX> implements CommandHandler<T> 
         }
     }
 
-    private Channel getChannel(GenericEvent<T> event) {
+    private Channel getChannel(GenericEvent event) {
         if (event instanceof GenericChannelEvent) {
             GenericChannelEvent gce = (GenericChannelEvent) event;
             return gce.getChannel();
