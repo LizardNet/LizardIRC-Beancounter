@@ -70,6 +70,24 @@
       "revId": "6fefffc147cb388a077d5bbcf1e72d7571dd1f1b",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd40efa7_740da3c1",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/earthquake/FeedChecker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-12-02T22:38:24Z",
+      "side": 1,
+      "message": "s/PS 4/PS 5/g",
+      "parentUuid": "7424412f_a4879759",
+      "revId": "6fefffc147cb388a077d5bbcf1e72d7571dd1f1b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
