@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e691d0b6_7c6027f3",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/earthquake/FeedChecker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2020-12-02T18:41:03Z",
+      "side": 1,
+      "message": "What\u0027s the reasoning for suppressing warnings here? What does this warning warn about?",
+      "revId": "6fefffc147cb388a077d5bbcf1e72d7571dd1f1b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    }
+  ]
+}
