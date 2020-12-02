@@ -52,6 +52,24 @@
       "revId": "6fefffc147cb388a077d5bbcf1e72d7571dd1f1b",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7424412f_a4879759",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/earthquake/FeedChecker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-12-02T22:37:07Z",
+      "side": 1,
+      "message": "Fixed in PS 4",
+      "parentUuid": "f79d6c5a_a2fea731",
+      "revId": "6fefffc147cb388a077d5bbcf1e72d7571dd1f1b",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": false
     }
   ]
 }
