@@ -182,10 +182,13 @@
     "default_replacement": "GOLD",
     "transformers": ["all_caps"]
   },
-
   {
     "quote": "\u0002\u00034%1$s MUST CONSTRUCT FORTY-SEVEN ADDITIONAL PYLONS FOR YOUR PYLON ACCOUNT\u000f",
     "default_replacement": "YOU",
     "transformers": ["all_caps"]
+  },
+  {
+    "quote": "What the fuck did you just fucking say about me, you little %1$s? I'll have you know I graduated top of my class in my garage, and I've been involved in numerous secret TEDx talks where I talk about Warren Buffett, and I bought over 300 confirmed new books. I am trained in knowledge and I'm the top billionaire in the entire Hollywood Hills. You are nothing to me but just another lamborghini. And a few more lamborghinis. I will teach you with knowledge the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with only 47 dollars in your bank account? Think again, sucker. As we speak I am contacting my secret network of mentors across the USA and your IP is on my website right now so you better prepare for the knowledge. The knowledge that fills up the pathetic little thing you call your bookshelf. You're fucking optimistic, kid. I can drive anywhere, anytime, and I can read over seven hundred books a day, and that's just with my bare hands. Not only am I extensively trained in \"get rich quick\" schemes, but I have access to the entire arsenal of my garage and I will use it to its full extent to drive up here in the Hollywood Hills. If only you could have known what three tips made all the difference in my life, maybe you would have become a billionaire. But you couldn't, you didn't, and now you're out of fuel units, you goddamn idiot. I will give you a reminder that dreams are still possible and you will drown in them. I'll see you on my website, kiddo.",
+    "default_replacement": "lamborghini"
   }
 ]
