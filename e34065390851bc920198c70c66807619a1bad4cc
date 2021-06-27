@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88c26a50_25a9bfd1",
+        "filename": "src/main/java/org/lizardirc/beancounter/Listeners.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "Alternate joke: hey, where did all my diamonds go?",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 36
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f66bab_7f306886",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/entrymsg/EntryMessageListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "If we\u0027re debating which of these can be null, there\u0027s always this:\n\n    Objects.equal(event.getUser(), event.getBot.getUserBot())",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affa7cbb_8c0b8e58",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "We mutate enabledChannels below, so we still need to wrap this in our own HashSet (Collectors.toSet() isn\u0027t guaranteed to be mutable).",
+      "range": {
+        "startLine": 85,
+        "startChar": 30,
+        "endLine": 87,
+        "endChar": 49
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ad3172_d569c8d0",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "e.g. right here",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 49
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78220e3_262acce4",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/remind/ReminderListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "Same notes on mutability here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628023de_1bd02428",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/seen/UserLastSeenCommandHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "Honestly the joke isn\u0027t really understandable post-change, might as well remove the comment too.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3201d8e9_c14b30ec",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/seen/UserLastSeenListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "Mutability",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574d9f35_840b1f4f",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/IrcColors.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "*snrk*",
+      "range": {
+        "startLine": 38,
+        "startChar": 30,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4841f2_95d9a196",
+        "filename": "src/main/java/org/lizardirc/beancounter/utils/Miscellaneous.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:14:01Z",
+      "side": 1,
+      "message": "Does the return type from .chars() let us do a .contains(...) call? This feels like a contains(...) call.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 43
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    }
+  ]
+}
