@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "4b2c0fd0_c678f2a9",
+        "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2021-06-27T12:22:13Z",
+      "side": 1,
+      "message": "I have just learned that you can use:\n\n    .collect(Collectors.toCollection(HashSet::new))",
+      "parentUuid": "affa7cbb_8c0b8e58",
+      "range": {
+        "startLine": 85,
+        "startChar": 30,
+        "endLine": 87,
+        "endChar": 49
+      },
+      "revId": "e34065390851bc920198c70c66807619a1bad4cc",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28ad3172_d569c8d0",
         "filename": "src/main/java/org/lizardirc/beancounter/commands/fishbot/FishbotListener.java",
         "patchSetId": 5
