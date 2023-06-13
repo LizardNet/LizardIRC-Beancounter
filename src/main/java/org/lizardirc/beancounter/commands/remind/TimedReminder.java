@@ -35,6 +35,7 @@ package org.lizardirc.beancounter.commands.remind;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -54,6 +55,17 @@ class TimedReminder extends Reminder implements Comparable<TimedReminder> {
     @Override
     public int compareTo(TimedReminder o) {
         return Long.compare(this.getDeliveryTimeEpoch(), o.getDeliveryTimeEpoch());
+    }
+
+    public StringBuilder getResponseMessagePrefix(boolean showRequestTimeBreakdown, boolean showDeliverTime) {
+        StringBuilder response = super.getResponseMessagePrefix(showRequestTimeBreakdown);
+
+        if (showDeliverTime) {
+            response.append(" at ")
+                .append(deliverAt.format(DateTimeFormatter.RFC_1123_DATE_TIME));
+        }
+
+        return response;
     }
 
     @Override

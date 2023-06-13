@@ -67,14 +67,13 @@ class Reminder {
 
     @Override
     public String toString() {
-        long seconds = enteredTime.until(ZonedDateTime.now(), ChronoUnit.SECONDS);
-        long days = seconds / (24 * 60 * 60);
-        seconds %= (24 * 60 * 60);
-        long hours = seconds / (60 * 60);
-        seconds %= (60 * 60);
-        long minutes = seconds / 60;
-        seconds %= 60;
+        return getResponseMessagePrefix(true)
+            .append(": ")
+            .append(message)
+            .toString();
+    }
 
+    public StringBuilder getResponseMessagePrefix(boolean showRequestTimeBreakdown) {
         String[] sender = from.split("!");
 
         StringBuilder response = new StringBuilder();
@@ -87,9 +86,33 @@ class Reminder {
                 .append(")");
         }
 
-        response.append(" asked me at ")
+        response.append(" asked me ");
+
+        response.append("at ")
             .append(enteredTime.format(DateTimeFormatter.RFC_1123_DATE_TIME))
-            .append(" (")
+            .append(" ");
+
+        if (showRequestTimeBreakdown) {
+            response.append(breakDownTime(this.enteredTime)).append(" ");
+        }
+
+        response.append("to remind you");
+
+        return response;
+    }
+
+    protected StringBuilder breakDownTime(ZonedDateTime enteredTime) {
+        long seconds = enteredTime.until(ZonedDateTime.now(), ChronoUnit.SECONDS);
+        long days = seconds / (24 * 60 * 60);
+        seconds %= (24 * 60 * 60);
+        long hours = seconds / (60 * 60);
+        seconds %= (60 * 60);
+        long minutes = seconds / 60;
+        seconds %= 60;
+
+        StringBuilder response = new StringBuilder();
+
+        response.append("(")
             .append(days)
             .append(" days, ")
             .append(hours)
@@ -97,10 +120,9 @@ class Reminder {
             .append(minutes)
             .append(" minutes, and ")
             .append(seconds)
-            .append(" seconds ago) to remind you: ")
-            .append(message);
+            .append(" seconds ago)");
 
-        return response.toString();
+        return response;
     }
 
     public String toSerializedString() {
